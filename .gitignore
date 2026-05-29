@@ -1,0 +1,16 @@
+node_modules/
+.env.local
+.env.local.*
+.env
+*.env
+config/.env*
+logs/
+tmp/
+backups/
+data/sessions/
+data/cache/
+*.log
+.DS_Store
+Thumbs.db
+trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/*.bak
+trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/logo-roma-dark.png
