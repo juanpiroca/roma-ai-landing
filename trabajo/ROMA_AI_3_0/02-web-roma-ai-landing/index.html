@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="icon" type="image/png" href="assets/logo-roma-symbol.png" sizes="128x128">
+  <link rel="stylesheet" href="/roma-webchat/webchat.css">
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js" defer></script>
 <style>
 /* ==============================
@@ -222,7 +223,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
              logo-glow 3s ease-in-out 1.4s infinite;
 }
 .logo-pill a {
-  display: flex; align-items: center; gap: 0;
+  display: flex; align-items: center; gap: 10px;
   text-decoration: none;
   background: rgba(5,8,22,0.72);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -232,7 +233,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   transition: border-color 0.3s, background 0.3s;
 }
 .logo-pill a:hover { border-color: rgba(0,229,191,0.55); background: rgba(10,16,40,0.88); }
-.logo-pill-img { height: 88px; width: auto; }
+.logo-pill-img { height: 44px; width: auto; display: block; }
 .logo-pill-label { display: flex; flex-direction: column; margin-left: 10px; line-height: 1; }
 .logo-pill-name {
   font-size: 1.05rem; font-weight: 900; letter-spacing: 0.05em;
@@ -989,7 +990,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   font-size: 0.95rem;
 }
 .trust-item { display: inline-flex; align-items: center; gap: 8px; }
-.trust-icon { font-size: 1rem; }
+.trust-icon { font-size: 1rem; display: inline-flex; align-items: center; }
 .trust-separator { opacity: 0.45; }
 .cta-urgency { margin-top: 18px; }
 .urgency-indicator {
@@ -1166,7 +1167,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
 }
 @media (max-width: 960px) {
   .logo-pill-label { display: none; }
-  .logo-pill-img { height: 50px; }
+  .logo-pill-img { height: 36px; }
   .logo-pill a { padding: 5px 10px 5px 5px; }
   .nav-hamburger { display: flex; }
   .nav-links {
@@ -1385,7 +1386,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <div class="logo-pill" id="logoPill">
     <a href="/">
-      <img src="assets/logo-roma-horizontal.png" alt="ROMA AI" class="logo-pill-img">
+      <img src="assets/logo-roma-symbol.png" alt="ROMA AI" class="logo-pill-img">
+      <div class="logo-pill-label">
+        <span class="logo-pill-name">ROMA AI</span>
+        <span class="logo-pill-sub">Inteligencia Artificial</span>
+      </div>
     </a>
   </div>
 
@@ -1444,13 +1449,13 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
         </div>
       </div>
       <div class="hero-features blur-fade d6">
-        <span class="feature-tag">WhatsApp Business<div class="feature-tooltip">Respondé mensajes automáticamente desde tu número de empresa. Disponible 24/7.</div></span>
-        <span class="feature-tag">WebChat<div class="feature-tooltip">Widget de chat para tu sitio web. Sin código, listo en 2 minutos.</div></span>
-        <span class="feature-tag">Lead Routing<div class="feature-tooltip">Cada consulta al vendedor correcto según producto, zona o disponibilidad.</div></span>
-        <span class="feature-tag">Meta Ads<div class="feature-tooltip">Conectá tus campañas de Facebook e Instagram directo al flujo de captura.</div></span>
-        <span class="feature-tag">Reportes IA<div class="feature-tooltip">Resumen semanal con métricas clave y recomendaciones automáticas.</div></span>
-        <span class="feature-tag">CRM<div class="feature-tooltip">Historial de cada lead, estado de conversación y notas del vendedor.</div></span>
-        <span class="feature-tag">Bilingüe<div class="feature-tooltip">Tu agente habla español e inglés nativamente según el idioma del cliente.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.wa">WhatsApp Business</span><div class="feature-tooltip" data-i18n="feat.wa.tip">Respondé mensajes automáticamente desde tu número de empresa. Disponible 24/7.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.webchat">WebChat</span><div class="feature-tooltip" data-i18n="feat.webchat.tip">Widget de chat para tu sitio web. Sin código, listo en 2 minutos.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.routing">Lead Routing</span><div class="feature-tooltip" data-i18n="feat.routing.tip">Cada consulta al vendedor correcto según producto, zona o disponibilidad.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.meta">Meta Ads</span><div class="feature-tooltip" data-i18n="feat.meta.tip">Conectá tus campañas de Facebook e Instagram directo al flujo de captura.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.reports">Reportes IA</span><div class="feature-tooltip" data-i18n="feat.reports.tip">Resumen semanal con métricas clave y recomendaciones automáticas.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.crm">CRM</span><div class="feature-tooltip" data-i18n="feat.crm.tip">Historial de cada lead, estado de conversación y notas del vendedor.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.bilingual">Bilingüe</span><div class="feature-tooltip" data-i18n="feat.bilingual.tip">Tu agente habla español e inglés nativamente según el idioma del cliente.</div></span>
       </div>
     </div>
   </section>
@@ -1460,8 +1465,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section class="section problem-section" data-reveal data-bg-color="#080d24">
     <div class="container">
-      <span class="eyebrow">El problema</span>
-      <h2 class="gradient-title">Sin automatización, tus leads se enfrían en minutos</h2>
+      <span class="eyebrow" data-i18n="problem.eyebrow">El problema</span>
+      <h2 class="gradient-title" data-i18n="problem.h2">Sin automatización, tus leads se enfrían en minutos</h2>
       <div class="problem-cards">
         <div class="problem-card">
           <div class="problem-img-wrap">
@@ -1469,11 +1474,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <img src="assets/problem-tiempo.jpg" alt="Tiempo de respuesta" onerror="this.style.opacity=0">
           </div>
           <div class="problem-card-body">
-            <span class="problem-tag">Tiempo de respuesta</span>
+            <span class="problem-tag" data-i18n="problem.c1.tag">Tiempo de respuesta</span>
             <div class="problem-stat">4h</div>
             <div class="problem-divider"></div>
-            <h3>Tus leads esperan 4 horas tu respuesta</h3>
-            <p>Un lead caliente se enfría en menos de 5 minutos. Para cuando respondés, ya eligieron a tu competencia.</p>
+            <h3 data-i18n="problem.c1.h3">Tus leads esperan 4 horas tu respuesta</h3>
+            <p data-i18n="problem.c1.p">Un lead caliente se enfría en menos de 5 minutos. Para cuando respondés, ya eligieron a tu competencia.</p>
           </div>
         </div>
         <div class="problem-card">
@@ -1482,11 +1487,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <img src="assets/problem-perdidos.jpg" alt="Leads perdidos" onerror="this.style.opacity=0">
           </div>
           <div class="problem-card-body">
-            <span class="problem-tag">Oportunidades perdidas</span>
+            <span class="problem-tag" data-i18n="problem.c2.tag">Oportunidades perdidas</span>
             <div class="problem-stat">40%</div>
             <div class="problem-divider"></div>
-            <h3>De tus leads se pierden para siempre</h3>
-            <p>Casi la mitad de las consultas que entran por WhatsApp desaparecen. Leads que ya pagaste con publicidad.</p>
+            <h3 data-i18n="problem.c2.h3">De tus leads se pierden para siempre</h3>
+            <p data-i18n="problem.c2.p">Casi la mitad de las consultas que entran por WhatsApp desaparecen. Leads que ya pagaste con publicidad.</p>
           </div>
         </div>
         <div class="problem-card">
@@ -1495,11 +1500,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <img src="assets/problem-horas.jpg" alt="Horas perdidas" onerror="this.style.opacity=0">
           </div>
           <div class="problem-card-body">
-            <span class="problem-tag">Productividad</span>
+            <span class="problem-tag" data-i18n="problem.c3.tag">Productividad</span>
             <div class="problem-stat">20h</div>
             <div class="problem-divider"></div>
-            <h3>Semanales que tu equipo pierde en tareas manuales</h3>
-            <p>Tu equipo pierde medio día laboral calificando y asignando leads a mano en vez de cerrar ventas.</p>
+            <h3 data-i18n="problem.c3.h3">Semanales que tu equipo pierde en tareas manuales</h3>
+            <p data-i18n="problem.c3.p">Tu equipo pierde medio día laboral calificando y asignando leads a mano en vez de cerrar ventas.</p>
           </div>
         </div>
       </div>
@@ -1511,38 +1516,38 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="features" class="section" data-reveal data-bg-color="#050816">
     <div class="container">
-      <span class="eyebrow">Funcionalidades</span>
-      <h2 class="gradient-title">Todo lo que necesitás para nunca perder un lead</h2>
+      <span class="eyebrow" data-i18n="features.eyebrow">Funcionalidades</span>
+      <h2 class="gradient-title" data-i18n="features.h2">Todo lo que necesitás para nunca perder un lead</h2>
       <div class="features-grid">
         <div class="feature-card">
           <img src="assets/icono-captura.png" alt="Captura Inteligente" class="feature-icon">
-          <h3>Captura Inteligente</h3>
-          <p>Tu IA responde 24/7 en WhatsApp, Instagram DM y web chat. Cada mensaje es un lead capturado.</p>
+          <h3 data-i18n="features.f1.h3">Captura Inteligente</h3>
+          <p data-i18n="features.f1.p">Tu IA responde 24/7 en WhatsApp, Instagram DM y web chat. Cada mensaje es un lead capturado.</p>
         </div>
         <div class="feature-card">
           <img src="assets/icono-automatizacion.png" alt="Automatizaciones" class="feature-icon">
-          <h3>Automatizaciones</h3>
-          <p>Seguimiento automático multicanal. Recordatorios, nurturing y re-engagement sin que tu equipo mueva un dedo.</p>
+          <h3 data-i18n="features.f2.h3">Automatizaciones</h3>
+          <p data-i18n="features.f2.p">Seguimiento automático multicanal. Recordatorios, nurturing y re-engagement sin que tu equipo mueva un dedo.</p>
         </div>
         <div class="feature-card">
           <img src="assets/icono-reportes.png" alt="Reportes e Inteligencia" class="feature-icon">
-          <h3>Reportes e Inteligencia</h3>
-          <p>Dashboard en tiempo real. Reportes IA semanales que llegan a tu email cada lunes. Sin preparar nada.</p>
+          <h3 data-i18n="features.f3.h3">Reportes e Inteligencia</h3>
+          <p data-i18n="features.f3.p">Dashboard en tiempo real. Reportes IA semanales que llegan a tu email cada lunes. Sin preparar nada.</p>
         </div>
         <div class="feature-card">
           <img src="assets/icono-routing.png" alt="Lead Routing Avanzado" class="feature-icon">
-          <h3>Lead Routing Avanzado</h3>
-          <p>Cada lead al vendedor correcto al instante. Por geografía, producto o disponibilidad.</p>
+          <h3 data-i18n="features.f4.h3">Lead Routing Avanzado</h3>
+          <p data-i18n="features.f4.p">Cada lead al vendedor correcto al instante. Por geografía, producto o disponibilidad.</p>
         </div>
         <div class="feature-card">
           <img src="assets/icono-multichannel.png" alt="Omnicanal Unificado" class="feature-icon">
-          <h3>Omnicanal Unificado</h3>
-          <p>Todas tus conversaciones en una sola bandeja. WhatsApp, web, Instagram, Facebook.</p>
+          <h3 data-i18n="features.f5.h3">Omnicanal Unificado</h3>
+          <p data-i18n="features.f5.p">Todas tus conversaciones en una sola bandeja. WhatsApp, web, Instagram, Facebook.</p>
         </div>
         <div class="feature-card">
           <img src="assets/icono-ia.png" alt="IA Entrenada para Vos" class="feature-icon">
-          <h3>IA Entrenada para Vos</h3>
-          <p>No es un chatbot genérico. ROMA aprende de tu negocio, tus productos y tu tono.</p>
+          <h3 data-i18n="features.f6.h3">IA Entrenada para Vos</h3>
+          <p data-i18n="features.f6.p">No es un chatbot genérico. ROMA aprende de tu negocio, tus productos y tu tono.</p>
         </div>
       </div>
     </div>
@@ -1553,8 +1558,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="how" class="section" data-reveal data-bg-color="#141b32">
     <div class="container">
-      <span class="eyebrow">Proceso</span>
-      <h2 class="gradient-title">Así de fácil empezás a <em class="gradient-subtitle">capturar más leads</em></h2>
+      <span class="eyebrow" data-i18n="how.eyebrow">Proceso</span>
+      <h2 class="gradient-title" data-i18n="how.h2">Así de fácil empezás a <em class="gradient-subtitle">capturar más leads</em></h2>
       <div class="process-container">
         <div class="gears-wrapper">
           <div class="gear-system">
@@ -1579,8 +1584,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
                 <div class="gear-content">1</div>
               </div>
               <div class="gear-info">
-                <h3>Conectá tus canales</h3>
-                <p>Vinculá WhatsApp, web chat y redes en 2 minutos. ROMA empieza a escuchar al instante y capturar cada mensaje.</p>
+                <h3 data-i18n="how.s1.h3">Conectá tus canales</h3>
+                <p data-i18n="how.s1.p">Vinculá WhatsApp, web chat y redes en 2 minutos. ROMA empieza a escuchar al instante y capturar cada mensaje.</p>
               </div>
             </div>
             <div class="connection-line line-1"></div>
@@ -1605,8 +1610,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
                 <div class="gear-content">2</div>
               </div>
               <div class="gear-info">
-                <h3>La IA toma el control</h3>
-                <p>Responde, califica y asigna cada lead automáticamente usando inteligencia artificial. Tus vendedores reciben leads listos para cerrar.</p>
+                <h3 data-i18n="how.s2.h3">La IA toma el control</h3>
+                <p data-i18n="how.s2.p">Responde, califica y asigna cada lead automáticamente usando inteligencia artificial. Tus vendedores reciben leads listos para cerrar.</p>
               </div>
             </div>
             <div class="connection-line line-2"></div>
@@ -1633,8 +1638,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
                 <div class="gear-content">3</div>
               </div>
               <div class="gear-info">
-                <h3>Medí y escalá</h3>
-                <p>Dashboard en tiempo real con métricas clave. Reportes IA cada lunes. Datos claros para tomar decisiones y escalar tu negocio.</p>
+                <h3 data-i18n="how.s3.h3">Medí y escalá</h3>
+                <p data-i18n="how.s3.p">Dashboard en tiempo real con métricas clave. Reportes IA cada lunes. Datos claros para tomar decisiones y escalar tu negocio.</p>
               </div>
             </div>
           </div>
@@ -1648,8 +1653,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="dashboard" class="section" data-reveal data-bg-color="#0d1233">
     <div class="container">
-      <span class="eyebrow">Dashboard</span>
-      <h2 class="gradient-title">Control total en tiempo real</h2>
+      <span class="eyebrow" data-i18n="dash.eyebrow">Dashboard</span>
+      <h2 class="gradient-title" data-i18n="dash.h2">Control total en tiempo real</h2>
       <div class="dashboard-wrap">
         <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image">
       </div>
@@ -1760,24 +1765,24 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="faq" class="section" data-reveal data-bg-color="#0a0f26">
     <div class="container">
-      <span class="eyebrow">FAQ</span>
-      <h2 class="gradient-title">Preguntas frecuentes</h2>
+      <span class="eyebrow" data-i18n="faq.eyebrow">FAQ</span>
+      <h2 class="gradient-title" data-i18n="faq.h2">Preguntas frecuentes</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary>¿Necesito conocimientos técnicos?</summary>
-          <p>No. Conectás WhatsApp en 2 minutos. No necesitás desarrolladores.</p>
+          <summary data-i18n="faq.q1">¿Necesito conocimientos técnicos?</summary>
+          <p data-i18n="faq.a1">No. Conectás WhatsApp en 2 minutos. No necesitás desarrolladores.</p>
         </details>
         <details class="faq-item">
-          <summary>¿Cuánto tarda ver resultados?</summary>
-          <p>El primer día mejoran los tiempos de respuesta. El ROI se ve en el primer mes.</p>
+          <summary data-i18n="faq.q2">¿Cuánto tarda ver resultados?</summary>
+          <p data-i18n="faq.a2">El primer día mejoran los tiempos de respuesta. El ROI se ve en el primer mes.</p>
         </details>
         <details class="faq-item">
-          <summary>¿La IA suena a robot?</summary>
-          <p>ROMA aprende tu tono de voz. El 90% de los leads no distingue que habla con IA.</p>
+          <summary data-i18n="faq.q3">¿La IA suena a robot?</summary>
+          <p data-i18n="faq.a3">ROMA aprende tu tono de voz. El 90% de los leads no distingue que habla con IA.</p>
         </details>
         <details class="faq-item">
-          <summary>¿Puedo cancelar cuando quiera?</summary>
-          <p>Sí, sin permanencia. Exportás tus datos y listo.</p>
+          <summary data-i18n="faq.q4">¿Puedo cancelar cuando quiera?</summary>
+          <p data-i18n="faq.a4">Sí, sin permanencia. Exportás tus datos y listo.</p>
         </details>
       </div>
     </div>
@@ -1789,17 +1794,17 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <section id="cta-final" class="section cta-section" data-reveal data-bg-color="#0a0e1a">
     <div class="container">
       <div class="cta-content">
-        <h2 class="gradient-title">Dejá de perder leads mientras leés esto</h2>
+        <h2 class="gradient-title" data-i18n="cta.h2">Dejá de perder leads mientras leés esto</h2>
         <p class="cta-description" data-i18n="cta.desc">15 días de garantía. Sin contrato. Roma te ayuda a elegir el plan correcto.</p>
         <div class="cta-buttons">
           <button class="btn btn-primary btn-lg cta-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="cta.btn"><span>💬</span> Hablar con Roma ahora</button>
         </div>
         <div class="trust-indicators">
-          <div class="trust-item"><span class="trust-icon">💳</span><span class="trust-text">Sin tarjeta de crédito</span></div>
+          <div class="trust-item"><svg class="trust-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span class="trust-text" data-i18n="cta.trust1">Sin tarjeta de crédito</span></div>
           <div class="trust-separator">·</div>
-          <div class="trust-item"><span class="trust-icon">⚡</span><span class="trust-text">Cancelá cuando quieras</span></div>
+          <div class="trust-item"><svg class="trust-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="trust-text" data-i18n="cta.trust2">Cancelá cuando quieras</span></div>
           <div class="trust-separator">·</div>
-          <div class="trust-item"><span class="trust-icon">🇦🇷</span><span class="trust-text">Soporte real en español</span></div>
+          <div class="trust-item"><svg class="trust-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><span class="trust-text" data-i18n="cta.trust3">Soporte real en español</span></div>
         </div>
         <div class="cta-urgency">
           <div class="urgency-indicator"><div class="urgency-pulse"></div><span data-i18n="cta.urgency">Negocios latinos en USA están automatizando sus ventas ahora mismo</span></div>
@@ -1817,7 +1822,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
         <a href="/" class="nav-logo footer-brand-link">
           <img src="assets/logo-roma-horizontal.png" alt="ROMA AI" class="footer-logo">
         </a>
-        <p>ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.</p>
+        <p data-i18n="footer.desc">ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.</p>
       </div>
       <div class="footer-columns">
         <div class="footer-col">
@@ -2145,6 +2150,48 @@ const TRANSLATIONS = {
     'cases.c3.quote': '"Real estate moves fast. ROMA qualifies leads in minutes and routes them to the right agent."',
     'cases.c3.name': 'Agencia Inmobiliaria', 'cases.c3.location': 'Houston, TX — Plan Enterprise',
     'cta.urgency': 'Negocios latinos en USA están automatizando sus ventas ahora mismo',
+    'cta.h2': 'Dejá de perder leads mientras leés esto',
+    'cta.trust1': 'Sin tarjeta de crédito',
+    'cta.trust2': 'Cancelá cuando quieras',
+    'cta.trust3': 'Soporte real en español',
+    'problem.eyebrow': 'El problema',
+    'problem.h2': 'Sin automatización, tus leads se enfrían en minutos',
+    'problem.c1.tag': 'Tiempo de respuesta',
+    'problem.c1.h3': 'Tus leads esperan 4 horas tu respuesta',
+    'problem.c1.p': 'Un lead caliente se enfría en menos de 5 minutos. Para cuando respondés, ya eligieron a tu competencia.',
+    'problem.c2.tag': 'Oportunidades perdidas',
+    'problem.c2.h3': 'De tus leads se pierden para siempre',
+    'problem.c2.p': 'Casi la mitad de las consultas que entran por WhatsApp desaparecen. Leads que ya pagaste con publicidad.',
+    'problem.c3.tag': 'Productividad',
+    'problem.c3.h3': 'Semanales que tu equipo pierde en tareas manuales',
+    'problem.c3.p': 'Tu equipo pierde medio día laboral calificando y asignando leads a mano en vez de cerrar ventas.',
+    'features.eyebrow': 'Funcionalidades',
+    'features.h2': 'Todo lo que necesitás para nunca perder un lead',
+    'features.f1.h3': 'Captura Inteligente', 'features.f1.p': 'Tu IA responde 24/7 en WhatsApp, Instagram DM y web chat. Cada mensaje es un lead capturado.',
+    'features.f2.h3': 'Automatizaciones', 'features.f2.p': 'Seguimiento automático multicanal. Recordatorios, nurturing y re-engagement sin que tu equipo mueva un dedo.',
+    'features.f3.h3': 'Reportes e Inteligencia', 'features.f3.p': 'Dashboard en tiempo real. Reportes IA semanales que llegan a tu email cada lunes. Sin preparar nada.',
+    'features.f4.h3': 'Lead Routing Avanzado', 'features.f4.p': 'Cada lead al vendedor correcto al instante. Por geografía, producto o disponibilidad.',
+    'features.f5.h3': 'Omnicanal Unificado', 'features.f5.p': 'Todas tus conversaciones en una sola bandeja. WhatsApp, web, Instagram, Facebook.',
+    'features.f6.h3': 'IA Entrenada para Vos', 'features.f6.p': 'No es un chatbot genérico. ROMA aprende de tu negocio, tus productos y tu tono.',
+    'how.eyebrow': 'Proceso',
+    'how.h2': 'Así de fácil empezás a <em class="gradient-subtitle">capturar más leads</em>',
+    'how.s1.h3': 'Conectá tus canales', 'how.s1.p': 'Vinculá WhatsApp, web chat y redes en 2 minutos. ROMA empieza a escuchar al instante y capturar cada mensaje.',
+    'how.s2.h3': 'La IA toma el control', 'how.s2.p': 'Responde, califica y asigna cada lead automáticamente usando inteligencia artificial. Tus vendedores reciben leads listos para cerrar.',
+    'how.s3.h3': 'Medí y escalá', 'how.s3.p': 'Dashboard en tiempo real con métricas clave. Reportes IA cada lunes. Datos claros para tomar decisiones y escalar tu negocio.',
+    'dash.eyebrow': 'Dashboard', 'dash.h2': 'Control total en tiempo real',
+    'faq.eyebrow': 'FAQ', 'faq.h2': 'Preguntas frecuentes',
+    'faq.q1': '¿Necesito conocimientos técnicos?', 'faq.a1': 'No. Conectás WhatsApp en 2 minutos. No necesitás desarrolladores.',
+    'faq.q2': '¿Cuánto tarda ver resultados?', 'faq.a2': 'El primer día mejoran los tiempos de respuesta. El ROI se ve en el primer mes.',
+    'faq.q3': '¿La IA suena a robot?', 'faq.a3': 'ROMA aprende tu tono de voz. El 90% de los leads no distingue que habla con IA.',
+    'faq.q4': '¿Puedo cancelar cuando quiera?', 'faq.a4': 'Sí, sin permanencia. Exportás tus datos y listo.',
+    'footer.desc': 'ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.',
+    'feat.wa': 'WhatsApp Business', 'feat.wa.tip': 'Respondé mensajes automáticamente desde tu número de empresa. Disponible 24/7.',
+    'feat.webchat': 'WebChat', 'feat.webchat.tip': 'Widget de chat para tu sitio web. Sin código, listo en 2 minutos.',
+    'feat.routing': 'Lead Routing', 'feat.routing.tip': 'Cada consulta al vendedor correcto según producto, zona o disponibilidad.',
+    'feat.meta': 'Meta Ads', 'feat.meta.tip': 'Conectá tus campañas de Facebook e Instagram directo al flujo de captura.',
+    'feat.reports': 'Reportes IA', 'feat.reports.tip': 'Resumen semanal con métricas clave y recomendaciones automáticas.',
+    'feat.crm': 'CRM', 'feat.crm.tip': 'Historial de cada lead, estado de conversación y notas del vendedor.',
+    'feat.bilingual': 'Bilingüe', 'feat.bilingual.tip': 'Tu agente habla español e inglés nativamente según el idioma del cliente.',
   },
   en: {
     'nav.cta': 'Start Free',
@@ -2306,7 +2353,6 @@ if (hamburger) {
 }
 </script>
 
-<link rel="stylesheet" href="/roma-webchat/webchat.css">
 <script defer src="/roma-webchat/webchat.js"></script>
 
 </body></html>
