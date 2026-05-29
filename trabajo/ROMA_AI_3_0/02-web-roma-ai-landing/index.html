@@ -1296,10 +1296,10 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
         <li><a href="#how" data-i18n="nav.how">Cómo funciona</a></li>
         <li><a href="#testimonials" data-i18n="nav.cases">Casos reales</a></li>
         <li><a href="#pricing" data-i18n="nav.pricing">Precios</a></li>
-        <li><a href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20comenzar%20gratis" class="nav-cta-mobile" target="_blank" rel="noreferrer" data-i18n="nav.cta">Comenzar gratis →</a></li>
+        <li><button class="nav-cta-mobile" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="nav.cta">Hablar con Roma →</button></li>
       </ul>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES / EN</button>
-      <a href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20comenzar%20gratis" class="nav-cta" id="navCta" target="_blank" rel="noreferrer" data-i18n="nav.cta">Comenzar gratis</a>
+      <button class="nav-cta" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="nav.cta">Hablar con Roma</button>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menú">
         <span></span><span></span><span></span>
       </button>
@@ -1325,7 +1325,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     </div>
     <div class="hero-center-band">
       <div class="hero-buttons blur-fade d4">
-        <a href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20comenzar%20gratis" class="btn btn-primary" target="_blank" rel="noreferrer" data-i18n="hero.cta1">Comenzar gratis →</a>
+        <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="hero.cta1">Hablar con Roma →</button>
         <a href="#how" class="btn btn-secondary" data-i18n="hero.cta2">Ver cómo funciona</a>
       </div>
       <div class="hero-stats blur-fade d5">
@@ -1633,7 +1633,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <li data-i18n="pricing.base.f4">Dashboard en tiempo real</li>
             <li data-i18n="pricing.base.f5">Reportes mensuales IA</li>
           </ul>
-          <a class="btn btn-primary" href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20el%20plan%20Base" target="_blank" rel="noreferrer" data-i18n="pricing.cta_start">Comenzar</a>
+          <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_start">Hablar con Roma</button>
         </div>
         <div class="pricing-card">
           <div class="pricing-badge" data-i18n="pricing.pro.badge">MÁS POPULAR</div>
@@ -1648,7 +1648,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <li data-i18n="pricing.pro.f5">CRM integrado</li>
             <li data-i18n="pricing.pro.f6">Soporte prioritario</li>
           </ul>
-          <a class="btn btn-primary" href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20probar%20el%20plan%20Pro" target="_blank" rel="noreferrer" data-i18n="pricing.cta_trial">Empezar — 15 días sin riesgo</a>
+          <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_trial">Hablar con Roma — 15 días sin riesgo</button>
         </div>
         <div class="pricing-card">
           <h3 data-i18n="pricing.ent.name">Enterprise</h3>
@@ -1661,7 +1661,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <li data-i18n="pricing.ent.f4">Gerente de cuenta dedicado</li>
             <li data-i18n="pricing.ent.f5">Soporte 24/7</li>
           </ul>
-          <a class="btn btn-secondary" href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20Enterprise" target="_blank" rel="noreferrer" data-i18n="pricing.cta_contact">Hablar con ventas</a>
+          <button class="btn btn-secondary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_contact">Hablar con Roma</button>
         </div>
       </div>
     </div>
@@ -1702,9 +1702,9 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <div class="container">
       <div class="cta-content">
         <h2 class="gradient-title">Dejá de perder leads mientras leés esto</h2>
-        <p class="cta-description">14 días gratis. Sin tarjeta. Sin compromiso. Conectá WhatsApp en 2 minutos.</p>
+        <p class="cta-description" data-i18n="cta.desc">15 días de garantía. Sin contrato. Roma te ayuda a elegir el plan correcto.</p>
         <div class="cta-buttons">
-          <a href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20comenzar%20gratis" class="btn btn-primary btn-lg cta-primary" target="_blank" rel="noreferrer"><span>🚀</span> Comenzar gratis →</a>
+          <button class="btn btn-primary btn-lg cta-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="cta.btn"><span>💬</span> Hablar con Roma ahora</button>
         </div>
         <div class="trust-indicators">
           <div class="trust-item"><span class="trust-icon">💳</span><span class="trust-text">Sin tarjeta de crédito</span></div>
@@ -2016,7 +2016,13 @@ document.querySelectorAll('[data-bg-color]').forEach(section => {
 // ===== BILINGUAL SYSTEM (ES / EN) =====
 const TRANSLATIONS = {
   es: {
-    'nav.cta': 'Comenzar gratis',
+    'nav.cta': 'Hablar con Roma',
+    'cta.desc': '15 días de garantía. Sin contrato. Roma te ayuda a elegir el plan correcto.',
+    'cta.btn': '💬 Hablar con Roma ahora',
+    'pricing.cta_start': 'Hablar con Roma',
+    'pricing.cta_trial': 'Hablar con Roma — 15 días sin riesgo',
+    'pricing.cta_contact': 'Hablar con Roma',
+    'hero.cta1': 'Hablar con Roma →',
     'nav.features': 'Funcionalidades', 'nav.how': 'Cómo funciona',
     'nav.cases': 'Casos reales', 'nav.pricing': 'Precios',
     'hero.eyebrow': 'IA conversacional para equipos de ventas',
