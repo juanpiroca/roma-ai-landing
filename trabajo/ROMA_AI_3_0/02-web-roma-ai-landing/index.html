@@ -228,11 +228,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(79,110,247,0.32);
   border-radius: 60px;
-  padding: 5px 18px 5px 5px;
+  padding: 5px;
   transition: border-color 0.3s, background 0.3s;
 }
 .logo-pill a:hover { border-color: rgba(0,229,191,0.55); background: rgba(10,16,40,0.88); }
-.logo-pill-img { height: 58px; width: auto; }
+.logo-pill-img { height: 76px; width: auto; }
 .logo-pill-label { display: flex; flex-direction: column; margin-left: 10px; line-height: 1; }
 .logo-pill-name {
   font-size: 1.05rem; font-weight: 900; letter-spacing: 0.05em;
@@ -559,7 +559,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   pointer-events: none;
 }
 /* ── MAGAZINE CARDS ── */
-.problem-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; align-items: start; }
+.problem-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; align-items: stretch; }
 .problem-card {
   border-radius: var(--radius); background: var(--bg-card);
   border: 1px solid var(--border); overflow: hidden;
@@ -1133,7 +1133,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text);
   margin-bottom: 16px;
 }
-.footer-logo { height: 90px; width: auto; border-radius: 0; animation: logo-glow 3.2s ease-in-out infinite; }
+.footer-logo { height: 110px; width: auto; border-radius: 0; animation: logo-glow 3.2s ease-in-out infinite; }
 .footer-brand-name { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
 .footer-brand p { font-size: 0.88rem; color: var(--text-dim); max-width: 400px; margin: 0 auto; line-height: 1.7; }
 .footer-columns { display: grid; grid-template-columns: repeat(4,1fr); gap: 50px; margin-bottom: 50px; }
@@ -1253,6 +1253,81 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   .chat-bubble { max-width: 92%; }
   .footer-columns { grid-template-columns: 1fr; }
 }
+/* ==============================
+   FEATURE TAGS (hero row)
+   ============================== */
+.hero-features {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin: 40px auto 0; max-width: 860px;
+}
+.feature-tag {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-muted); font-size: 0.85rem; font-weight: 500; white-space: nowrap;
+  cursor: default;
+  transition: all 0.25s var(--easing);
+  user-select: none;
+}
+.feature-tag:hover {
+  background: rgba(0,229,191,0.08);
+  border-color: rgba(0,229,191,0.4);
+  color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,229,191,0.12);
+}
+.feature-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%; transform: translateX(-50%);
+  width: 210px;
+  background: rgba(8,12,30,0.97);
+  border: 1px solid rgba(79,110,247,0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.78rem; color: var(--text); text-align: center; line-height: 1.55;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  z-index: 20;
+  transform: translateX(-50%) translateY(4px);
+}
+.feature-tooltip::after {
+  content: '';
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(8,12,30,0.97);
+}
+.feature-tag:hover .feature-tooltip {
+  opacity: 1; visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==============================
+   WEBCHAT FAB — circular avatar
+   ============================== */
+#roma-webchat-btn {
+  width: 76px !important;
+  height: 76px !important;
+  background-image: url('/assets/avatar-roma-real.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-color: transparent !important;
+  border: 3px solid rgba(79,110,247,0.5) !important;
+  box-shadow: 0 8px 30px rgba(79,110,247,0.35), 0 0 0 4px rgba(79,110,247,0.08) !important;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s !important;
+}
+#roma-webchat-btn:hover {
+  border-color: rgba(0,229,191,0.7) !important;
+  box-shadow: 0 12px 40px rgba(79,110,247,0.45), 0 0 0 6px rgba(0,229,191,0.1) !important;
+  transform: scale(1.07) !important;
+}
+#roma-webchat-btn svg { display: none !important; }
+#roma-webchat { bottom: 112px !important; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1279,10 +1354,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <div class="logo-pill" id="logoPill">
     <a href="/">
       <img src="assets/logo-roma-symbol.png" alt="ROMA AI" class="logo-pill-img">
-      <div class="logo-pill-label">
-        <span class="logo-pill-name">ROMA AI</span>
-        <span class="logo-pill-sub">Intelligent Automation</span>
-      </div>
     </a>
   </div>
 
@@ -1324,10 +1395,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
 </div>
     </div>
     <div class="hero-center-band">
-      <div class="hero-buttons blur-fade d4">
-        <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="hero.cta1">Hablar con Roma →</button>
-        <a href="#how" class="btn btn-secondary" data-i18n="hero.cta2">Ver cómo funciona</a>
-      </div>
       <div class="hero-stats blur-fade d5">
         <div class="stat-item">
           <span class="stat-number" data-i18n="stats.n1">&lt; 2min</span>
@@ -1346,23 +1413,14 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           <span class="stat-label" data-i18n="stats.l4">garantía devolución</span>
         </div>
       </div>
-      <div class="hero-marquee blur-fade d6">
-        <div class="marquee-track">
-          <span>WhatsApp Business</span>
-          <span>WebChat</span>
-          <span>Lead Routing</span>
-          <span>Meta Ads</span>
-          <span>Reportes IA</span>
-          <span>CRM</span>
-          <span>Bilingüe</span>
-          <span>WhatsApp Business</span>
-          <span>WebChat</span>
-          <span>Lead Routing</span>
-          <span>Meta Ads</span>
-          <span>Reportes IA</span>
-          <span>CRM</span>
-          <span>Bilingüe</span>
-        </div>
+      <div class="hero-features blur-fade d6">
+        <span class="feature-tag">WhatsApp Business<div class="feature-tooltip">Respondé mensajes automáticamente desde tu número de empresa. Disponible 24/7.</div></span>
+        <span class="feature-tag">WebChat<div class="feature-tooltip">Widget de chat para tu sitio web. Sin código, listo en 2 minutos.</div></span>
+        <span class="feature-tag">Lead Routing<div class="feature-tooltip">Cada consulta al vendedor correcto según producto, zona o disponibilidad.</div></span>
+        <span class="feature-tag">Meta Ads<div class="feature-tooltip">Conectá tus campañas de Facebook e Instagram directo al flujo de captura.</div></span>
+        <span class="feature-tag">Reportes IA<div class="feature-tooltip">Resumen semanal con métricas clave y recomendaciones automáticas.</div></span>
+        <span class="feature-tag">CRM<div class="feature-tooltip">Historial de cada lead, estado de conversación y notas del vendedor.</div></span>
+        <span class="feature-tag">Bilingüe<div class="feature-tooltip">Tu agente habla español e inglés nativamente según el idioma del cliente.</div></span>
       </div>
     </div>
   </section>
@@ -1580,7 +1638,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           <div class="testimonial-stars" style="font-size:2rem">🏥</div>
           <p class="testimonial-quote" data-i18n="cases.c1.quote">"Mi clínica recibe consultas a las 3am. Roma responde, agenda y yo llego con clientes confirmados."</p>
           <div class="testimonial-author-wrap">
-            <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.3rem">👩‍⚕️</div>
+            <img src="assets/avatar-ana.png" alt="Ana" class="testimonial-avatar">
             <div class="testimonial-author">
               <strong data-i18n="cases.c1.name">Clínica de Estética</strong>
               <span data-i18n="cases.c1.location">Miami, FL — Plan Base</span>
@@ -1591,7 +1649,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           <div class="testimonial-stars" style="font-size:2rem">🍕</div>
           <p class="testimonial-quote" data-i18n="cases.c2.quote">"Los pedidos por WhatsApp se perdían. Ahora Roma los captura todos y los rutea al equipo correcto."</p>
           <div class="testimonial-author-wrap">
-            <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--purple),var(--primary));display:flex;align-items:center;justify-content:center;font-size:1.3rem">👨‍🍳</div>
+            <img src="assets/avatar-carlos.png" alt="Carlos" class="testimonial-avatar">
             <div class="testimonial-author">
               <strong data-i18n="cases.c2.name">Cadena de Restaurantes</strong>
               <span data-i18n="cases.c2.location">Los Angeles, CA — Plan Pro</span>
@@ -1602,7 +1660,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           <div class="testimonial-stars" style="font-size:2rem">🏡</div>
           <p class="testimonial-quote" data-i18n="cases.c3.quote">"Real estate moves fast. ROMA qualifies leads in minutes and routes them to the right agent."</p>
           <div class="testimonial-author-wrap">
-            <div class="testimonial-avatar" style="background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:1.3rem">🏘️</div>
+            <img src="assets/avatar-laura.png" alt="Laura" class="testimonial-avatar">
             <div class="testimonial-author">
               <strong data-i18n="cases.c3.name">Agencia Inmobiliaria</strong>
               <span data-i18n="cases.c3.location">Houston, TX — Plan Enterprise</span>
@@ -1727,7 +1785,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <div class="footer-container">
       <div class="footer-brand">
         <a href="/" class="nav-logo footer-brand-link">
-          <img src="assets/logo-roma-full.png" alt="ROMA AI" class="footer-logo">
+          <img src="assets/logo-roma-symbol.png" alt="ROMA AI" class="footer-logo">
         </a>
         <p>ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.</p>
       </div>
@@ -1738,7 +1796,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <li><a href="#features">Funcionalidades</a></li>
             <li><a href="#how">Cómo funciona</a></li>
             <li><a href="#pricing">Precios</a></li>
-            <li><a href="https://wa.me/12019696812?text=Hola%20Roma%2C%20quiero%20comenzar%20gratis" target="_blank" rel="noreferrer">Comenzar gratis</a></li>
+            <li><a href="#" onclick="document.getElementById('roma-webchat-btn')?.click();return false;">Hablar con Roma</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1766,7 +1824,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     </div>
 </footer>
 
-<script src="/roma-webchat/roma-webchat.js" defer></script>
 <script>
 // ===== CUSTOM CURSOR =====
 const cursorDot = document.createElement('div'); cursorDot.className = 'cursor-dot';
