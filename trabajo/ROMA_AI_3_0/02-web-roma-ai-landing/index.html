@@ -217,7 +217,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
 }
 /* FLOATING LOGO PILL — fixed, independent, stays on scroll */
 .logo-pill {
-  position: fixed; top: 14px; left: 20px; z-index: 10000;
+  position: fixed; top: 14px; left: 36px; z-index: 10000;
   animation: logo-reveal 1.4s cubic-bezier(0.22,1,0.36,1) both,
              logo-glow 3s ease-in-out 1.4s infinite;
 }
@@ -232,7 +232,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   transition: border-color 0.3s, background 0.3s;
 }
 .logo-pill a:hover { border-color: rgba(0,229,191,0.55); background: rgba(10,16,40,0.88); }
-.logo-pill-img { height: 76px; width: auto; }
+.logo-pill-img { height: 88px; width: auto; }
 .logo-pill-label { display: flex; flex-direction: column; margin-left: 10px; line-height: 1; }
 .logo-pill-name {
   font-size: 1.05rem; font-weight: 900; letter-spacing: 0.05em;
@@ -321,11 +321,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: flex; flex-direction: column; align-items: flex-start; margin: 0;
 }
 .hero-right {
-  flex: 0 0 560px; max-width: 560px; height: 580px; position: absolute;
-  right: -30px; top: -30px; overflow: visible;
+  flex: 0 0 640px; max-width: 640px; height: 680px; position: absolute;
+  right: -80px; top: -60px; overflow: visible;
 }
 .hero-right spline-viewer {
-  width: 100%; height: 100%; display: block; transform: translateY(0) scale(0.95); transform-origin: center center;
+  width: 100%; height: 100%; display: block; transform: none;
 }
 #hero .hero-left p {
   font-size: 1.18rem; color: var(--text-muted);
@@ -1133,7 +1133,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text);
   margin-bottom: 16px;
 }
-.footer-logo { height: 110px; width: auto; border-radius: 0; animation: logo-glow 3.2s ease-in-out infinite; }
+.footer-logo { height: 127px; width: auto; border-radius: 0; animation: logo-glow 3.2s ease-in-out infinite; }
 .footer-brand-name { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
 .footer-brand p { font-size: 0.88rem; color: var(--text-dim); max-width: 400px; margin: 0 auto; line-height: 1.7; }
 .footer-columns { display: grid; grid-template-columns: repeat(4,1fr); gap: 50px; margin-bottom: 50px; }
@@ -1254,6 +1254,15 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   .footer-columns { grid-template-columns: 1fr; }
 }
 /* ==============================
+   TESTIMONIAL ICON (top of card)
+   ============================== */
+.testimonial-icon {
+  width: 52px; height: 52px; margin-bottom: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0,229,191,0.25));
+}
+
+/* ==============================
    FEATURE TAGS (hero row)
    ============================== */
 .hero-features {
@@ -1309,9 +1318,13 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
 /* ==============================
    WEBCHAT FAB — circular avatar
    ============================== */
+@keyframes bubble-pop {
+  from { opacity: 0; transform: scale(0.7) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
 #roma-webchat-btn {
-  width: 76px !important;
-  height: 76px !important;
+  width: 90px !important;
+  height: 90px !important;
   background-image: url('/assets/avatar-roma-real.jpg') !important;
   background-size: cover !important;
   background-position: center !important;
@@ -1319,6 +1332,25 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   border: 3px solid rgba(79,110,247,0.5) !important;
   box-shadow: 0 8px 30px rgba(79,110,247,0.35), 0 0 0 4px rgba(79,110,247,0.08) !important;
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s !important;
+  overflow: visible !important;
+}
+#roma-webchat-btn::before {
+  content: 'Hablamos 👋';
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: -4px;
+  background: rgba(8,12,30,0.96);
+  border: 1px solid rgba(79,110,247,0.35);
+  border-radius: 14px 14px 4px 14px;
+  padding: 9px 16px;
+  font-size: 0.82rem; font-weight: 700;
+  color: #f1f5f9;
+  white-space: nowrap;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.01em;
+  pointer-events: none;
+  animation: bubble-pop 0.5s cubic-bezier(0.22,1,0.36,1) 2.8s both;
 }
 #roma-webchat-btn:hover {
   border-color: rgba(0,229,191,0.7) !important;
@@ -1326,7 +1358,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   transform: scale(1.07) !important;
 }
 #roma-webchat-btn svg { display: none !important; }
-#roma-webchat { bottom: 112px !important; }
+#roma-webchat { bottom: 130px !important; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1353,7 +1385,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <div class="logo-pill" id="logoPill">
     <a href="/">
-      <img src="assets/logo-roma-symbol.png" alt="ROMA AI" class="logo-pill-img">
+      <img src="assets/logo-roma-horizontal.png" alt="ROMA AI" class="logo-pill-img">
     </a>
   </div>
 
@@ -1367,10 +1399,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
         <li><a href="#how" data-i18n="nav.how">Cómo funciona</a></li>
         <li><a href="#testimonials" data-i18n="nav.cases">Casos reales</a></li>
         <li><a href="#pricing" data-i18n="nav.pricing">Precios</a></li>
-        <li><button class="nav-cta-mobile" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="nav.cta">Hablar con Roma →</button></li>
       </ul>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES / EN</button>
-      <button class="nav-cta" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="nav.cta">Hablar con Roma</button>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menú">
         <span></span><span></span><span></span>
       </button>
@@ -1635,7 +1665,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
       <h2 class="gradient-title" data-i18n="cases.title">Negocios latinos que automatizan sus ventas</h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <div class="testimonial-stars" style="font-size:2rem">🏥</div>
+          <img src="assets/icono-ia.png" alt="" class="testimonial-icon">
           <p class="testimonial-quote" data-i18n="cases.c1.quote">"Mi clínica recibe consultas a las 3am. Roma responde, agenda y yo llego con clientes confirmados."</p>
           <div class="testimonial-author-wrap">
             <img src="assets/avatar-ana.png" alt="Ana" class="testimonial-avatar">
@@ -1646,7 +1676,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-stars" style="font-size:2rem">🍕</div>
+          <img src="assets/icono-multichannel.png" alt="" class="testimonial-icon">
           <p class="testimonial-quote" data-i18n="cases.c2.quote">"Los pedidos por WhatsApp se perdían. Ahora Roma los captura todos y los rutea al equipo correcto."</p>
           <div class="testimonial-author-wrap">
             <img src="assets/avatar-carlos.png" alt="Carlos" class="testimonial-avatar">
@@ -1657,7 +1687,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-stars" style="font-size:2rem">🏡</div>
+          <img src="assets/icono-routing.png" alt="" class="testimonial-icon">
           <p class="testimonial-quote" data-i18n="cases.c3.quote">"Real estate moves fast. ROMA qualifies leads in minutes and routes them to the right agent."</p>
           <div class="testimonial-author-wrap">
             <img src="assets/avatar-laura.png" alt="Laura" class="testimonial-avatar">
@@ -1785,7 +1815,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <div class="footer-container">
       <div class="footer-brand">
         <a href="/" class="nav-logo footer-brand-link">
-          <img src="assets/logo-roma-symbol.png" alt="ROMA AI" class="footer-logo">
+          <img src="assets/logo-roma-horizontal.png" alt="ROMA AI" class="footer-logo">
         </a>
         <p>ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.</p>
       </div>
