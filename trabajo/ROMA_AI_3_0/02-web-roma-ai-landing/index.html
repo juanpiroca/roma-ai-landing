@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROMA AI — Marketing digital con IA para negocios latinos | Desde $79/mes</title>
-  <meta name="description" content="Agencia de marketing digital con IA para pequeños negocios latinos en USA. Redes sociales, web, anuncios y más — desde $79/mes. Resultados reales sin contratos largos.">
-  <meta property="og:title" content="ROMA AI — Marketing digital que entiende tu negocio latino">
-  <meta property="og:description" content="Contenido, anuncios, web y automatización para tu negocio. Desde $79/mes. Resultados desde la primera semana.">
+  <title>ROMA AI — Automatización inteligente para equipos de ventas</title>
+  <meta name="description" content="ROMA AI automatiza tus ventas por WhatsApp, Instagram y web. Responde 24/7, califica leads y routea al vendedor correcto. 14 días gratis.">
+  <meta property="og:title" content="ROMA AI — Tu agente de ventas en WhatsApp">
+  <meta property="og:description" content="Respondé 24/7 en WhatsApp, calificá leads y convertí más sin sumar equipo.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://roma.dementetv.com/">
   <meta property="og:image" content="https://roma.dementetv.com/assets/logo-roma-official.png">
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png" sizes="128x128">
-  <link rel="stylesheet" href="/roma-webchat/roma-webchat.css">
+  <link rel="stylesheet" href="/roma-webchat/webchat.css">
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js" defer></script>
 <style>
 /* ==============================
@@ -137,33 +137,15 @@ body {
   65%  { opacity: 0.92; filter: blur(1px) drop-shadow(0 0 24px rgba(0,229,191,0.7)); transform: scale(1.04); }
   100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(0,229,191,0.35)); transform: scale(1); }
 }
-/* LOGO PARTICLE CANVAS — hair particles + orbit */
+/* LOGO PARTICLE CANVAS — dot que orbita */
 #logoParticleCanvas {
   position: fixed; top: 0; left: 0;
-  width: 300px; height: 220px;
+  width: 220px; height: 120px;
   pointer-events: none; z-index: 9999;
   opacity: 0; animation: logoCanvasFadeIn 0.5s ease-out 1.8s forwards;
 }
 @keyframes logoCanvasFadeIn {
   from { opacity: 0; } to { opacity: 1; }
-}
-/* LOGO HOVER FLASH */
-.logo-pill a { position: relative; overflow: hidden; }
-.logo-pill a::after {
-  content: ''; position: absolute; inset: -4px;
-  border-radius: 64px;
-  background: radial-gradient(ellipse at 40% 40%, rgba(0,229,191,0.55) 0%, rgba(79,110,247,0.3) 40%, transparent 70%);
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.1s;
-}
-.logo-pill a:hover::after {
-  opacity: 1;
-  animation: logo-hover-flash 0.35s ease-out forwards;
-}
-@keyframes logo-hover-flash {
-  0%   { opacity: 0; transform: scale(0.85); }
-  35%  { opacity: 1; transform: scale(1.08); }
-  100% { opacity: 0; transform: scale(1.25); }
 }
 @keyframes gear-spin         { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
 @keyframes gear-spin-reverse { from { transform: rotate(0deg); }   to { transform: rotate(-360deg); } }
@@ -235,22 +217,22 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
 }
 /* FLOATING LOGO PILL — fixed, independent, stays on scroll */
 .logo-pill {
-  position: fixed; top: 16px; left: calc(50% - 580px); z-index: 10000;
+  position: fixed; top: 14px; left: 36px; z-index: 10000;
   animation: logo-reveal 1.4s cubic-bezier(0.22,1,0.36,1) both,
              logo-glow 3s ease-in-out 1.4s infinite;
 }
 .logo-pill a {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: center; gap: 10px;
   text-decoration: none;
   background: rgba(5,8,22,0.72);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(79,110,247,0.32);
   border-radius: 60px;
-  padding: 4px 12px 4px 4px;
+  padding: 5px;
   transition: border-color 0.3s, background 0.3s;
 }
 .logo-pill a:hover { border-color: rgba(0,229,191,0.55); background: rgba(10,16,40,0.88); }
-.logo-pill-img { height: 94px; width: auto; display: block; margin-top: 3px; }
+.logo-pill-img { height: 50px; width: auto; display: block; }
 .logo-pill-label { display: flex; flex-direction: column; margin-left: 10px; line-height: 1; }
 .logo-pill-name {
   font-size: 1.05rem; font-weight: 900; letter-spacing: 0.05em;
@@ -296,29 +278,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   transition: all 0.25s;
 }
 .nav-cta:hover { background: #3d5ce0; transform: translateY(-1px); box-shadow: 0 8px 30px var(--primary-glow); }
-.nav-login-btn {
-  padding: 9px 20px; border-radius: var(--radius-pill);
-  border: 1px solid rgba(0,229,191,0.35);
-  color: var(--accent) !important;
-  font-weight: 600; font-size: 0.85rem;
-  background: rgba(0,229,191,0.05);
-  transition: all 0.25s;
-  position: relative; overflow: hidden;
-}
-.nav-login-btn::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(0,229,191,0.25) 0%, transparent 70%);
-  opacity: 0; transition: opacity 0.2s;
-  border-radius: inherit;
-}
-.nav-login-btn:hover::before { opacity: 1; }
-.nav-login-btn:hover {
-  border-color: var(--accent);
-  background: rgba(0,229,191,0.1);
-  box-shadow: 0 0 24px rgba(0,229,191,0.18), 0 0 8px rgba(0,229,191,0.08);
-  transform: translateY(-1px);
-}
-.nav-login-btn:hover::after { transform: scaleX(0) !important; }
 .lang-toggle {
   padding: 7px 14px; border-radius: var(--radius-pill);
   background: transparent; color: var(--text-muted);
@@ -338,14 +297,15 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 150px 24px 80px;
   overflow: visible;
+  overflow-x: clip;
   background: var(--bg-deep);
 }
 #hero::before {
-  content: ''; position: absolute; inset: 0; width: 100%; height: 100%;
+  content: ''; position: absolute; inset: -50%; width: 200%; height: 200%;
   background:
-    radial-gradient(ellipse at 30% 30%, rgba(0,229,191,0.09) 0%, transparent 35%),
-    radial-gradient(ellipse at 70% 25%, rgba(167,139,250,0.09) 0%, transparent 35%),
-    radial-gradient(ellipse at 50% 65%, rgba(79,110,247,0.08) 0%, transparent 40%);
+    radial-gradient(ellipse at 25% 30%, rgba(0,229,191,0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at 75% 20%, rgba(167,139,250,0.08) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 70%, rgba(79,110,247,0.07) 0%, transparent 40%);
   animation: gradient-shift 15s var(--easing) infinite alternate;
   pointer-events: none; z-index: 0;
 }
@@ -361,12 +321,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: flex; flex-direction: column; align-items: flex-start; margin: 0;
 }
 .hero-right {
-  flex: 0 0 460px; max-width: 460px; height: 520px;
-  position: relative; right: auto; top: auto; margin: 10px 0 0;
-  overflow: visible;
+  flex: 0 0 640px; max-width: 640px; height: 680px; position: absolute;
+  right: -80px; top: -60px; overflow: visible;
 }
 .hero-right spline-viewer {
-  width: 100%; height: 100%; display: block;
+  width: 100%; height: 100%; display: block; transform: none;
 }
 #hero .hero-left p {
   font-size: 1.18rem; color: var(--text-muted);
@@ -410,48 +369,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   border-radius: 50%;
   border: 1px solid rgba(0,229,191,0.12);
   animation: destello-ring-outer 4s ease-in-out infinite 0.5s;
-}
-.hero-robot {
-  position: absolute; top: -60px; right: 40px; z-index: 2;
-  animation: robot-float 4s ease-in-out infinite;
-}
-@keyframes robot-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-16px); }
-}
-.robot-body {
-  width: 64px; height: 80px; background: linear-gradient(135deg, #4f6ef7, #00e5bf);
-  border-radius: 12px; position: relative; box-shadow: 0 8px 24px rgba(0,229,191,0.3);
-}
-.robot-head {
-  width: 48px; height: 48px; background: rgba(0,229,191,0.2);
-  border-radius: 8px; position: absolute; top: 8px; left: 8px;
-  border: 2px solid rgba(0,229,191,0.5);
-}
-.robot-antenna {
-  width: 2px; height: 24px; background: var(--accent);
-  position: absolute; top: -20px; left: 31px;
-  animation: antenna-wave 2s ease-in-out infinite;
-}
-@keyframes antenna-wave {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(6deg); }
-}
-.robot-antenna::before {
-  content: ''; position: absolute; width: 8px; height: 8px;
-  background: var(--accent); border-radius: 50%; top: -6px; left: -3px;
-}
-.robot-eyes {
-  display: flex; gap: 12px; position: absolute; top: 16px; left: 8px;
-}
-.robot-eye {
-  width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
-  animation: eye-blink 3s ease-in-out infinite;
-}
-.robot-eye:nth-child(2) { animation-delay: 0.2s; }
-@keyframes eye-blink {
-  0%, 10%, 15%, 100% { opacity: 1; }
-  5% { opacity: 0; }
 }
 .hero-center-band {
   width: 100%; max-width: 1200px; margin: 28px auto 0;
@@ -706,49 +623,33 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
 #features {
   background: linear-gradient(180deg, #071029 0%, #0a1433 100%);
 }
-.features-grid {
-  display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth;
-  padding-bottom: 20px; justify-content: center;
-  scroll-snap-type: x mandatory;
-}
-.features-grid::-webkit-scrollbar { height: 6px; }
-.features-grid::-webkit-scrollbar-track { background: rgba(79,110,247,0.1); border-radius: 3px; }
-.features-grid::-webkit-scrollbar-thumb { background: rgba(0,229,191,0.3); border-radius: 3px; }
-.features-grid::-webkit-scrollbar-thumb:hover { background: rgba(0,229,191,0.5); }
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 .feature-card {
-  flex: 0 0 160px; min-width: 160px;
-  padding: 16px 20px; border-radius: 16px;
-  background: transparent; border: 2px solid rgba(0,229,191,0.3);
-  cursor: pointer; transition: all 0.3s var(--easing);
-  position: relative; overflow: visible;
-  display: flex; align-items: center; justify-content: center;
-  height: 60px; scroll-snap-align: center;
-  animation: none;
+  padding: 40px 32px; border-radius: var(--radius);
+  background: var(--bg-card); border: 1px solid var(--border);
+  transition: all 0.4s var(--easing); position: relative; overflow: hidden;
+  animation: slideInUp 0.7s var(--easing) forwards;
+  opacity: 0;
 }
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.1s; }
+.feature-card:nth-child(5) { animation-delay: 0.2s; }
+.feature-card:nth-child(6) { animation-delay: 0.3s; }
+.feature-card::after {
+  content: ''; position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(79,110,247,0.08) 0%, transparent 60%);
+  transition: opacity 0.3s; pointer-events: none; z-index: 0;
+}
+.feature-card:hover::after { opacity: 1; }
 .feature-card:hover {
-  border-color: var(--accent); background: rgba(0,229,191,0.08);
-  box-shadow: 0 12px 32px rgba(0,229,191,0.2);
+  border-color: var(--border-glow); transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
 }
-.feature-card::after { display: none; }
-.feature-icon { display: none; }
-.feature-card h3 {
-  font-size: 0.95rem; font-weight: 600; margin: 0; color: var(--text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.feature-card p { display: none; }
-.feature-popup {
-  position: absolute; bottom: 100%; left: 50%;
-  background: rgba(10,15,38,0.98); border: 1px solid var(--border);
-  border-radius: 12px; padding: 14px 18px; font-size: 0.85rem;
-  color: var(--text-muted); white-space: normal; width: 240px;
-  text-align: center; z-index: 10; opacity: 0; pointer-events: none;
-  transition: all 0.3s var(--easing);
-  margin-bottom: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  transform: translateX(-50%) translateY(8px);
-}
-.feature-card:hover .feature-popup {
-  opacity: 1; transform: translateX(-50%) translateY(-8px); pointer-events: auto;
-}
+.feature-icon { width: 56px; height: 56px; margin-bottom: 22px; position: relative; z-index: 1; }
+.feature-card h3 { font-size: 1.18rem; font-weight: 700; margin-bottom: 10px; position: relative; z-index: 1; }
+.feature-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; position: relative; z-index: 1; }
 
 /* ==============================
    HOW IT WORKS
@@ -867,36 +768,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   transform-style: preserve-3d; perspective: 1000px;
 }
 .dashboard-image { width: 100%; display: block; border-radius: 12px; }
-.dashboard-insights {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  list-style: none;
-  padding: 0;
-}
-.dashboard-insights li {
-  background: rgba(8,12,30,0.55);
-  border: 1px solid rgba(79,110,247,0.26);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 0.84rem;
-  color: var(--text-muted);
-}
-.dashboard-insights strong {
-  display: block;
-  color: var(--text);
-  font-size: 0.96rem;
-  margin-bottom: 2px;
-}
-@media (max-width: 960px) {
-  .dashboard-wrap { box-shadow: none; }
-  .dashboard-image { max-height: 220px; object-fit: cover; }
-}
-@media (max-width: 600px) {
-  .dashboard-image { display: none; }
-  .dashboard-insights { grid-template-columns: 1fr; }
-}
 
 /* ==============================
    TESTIMONIALS
@@ -1262,14 +1133,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text);
   margin-bottom: 16px;
 }
-.footer-logo-wrap { position: relative; display: inline-block; }
-.footer-logo { height: 160px; width: auto; display: block; animation: logo-glow 3.2s ease-in-out infinite; }
-#logoFooterCanvas {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 340px; height: 340px;
-  pointer-events: none;
-}
+.footer-logo { height: 127px; width: auto; border-radius: 12px; animation: logo-glow 3.2s ease-in-out infinite; }
 .footer-brand-name { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; }
 .footer-brand p { font-size: 0.88rem; color: var(--text-dim); max-width: 400px; margin: 0 auto; line-height: 1.7; }
 .footer-columns { display: grid; grid-template-columns: repeat(4,1fr); gap: 50px; margin-bottom: 50px; }
@@ -1287,7 +1151,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   #hero { padding: 144px 28px 56px; }
   .hero-split { gap: 28px; align-items: center; }
   .hero-left { flex-basis: 54%; max-width: 54%; }
-  .hero-right { flex-basis: 42%; max-width: 42%; height: 360px; position: relative; right: auto; top: auto; margin: 0; }
+  .hero-right { flex-basis: 42%; max-width: 42%; height: 360px; top: 0; }
   .hero-buttons { gap: 12px; }
   .hero-stats { gap: 24px; }
   .scroll-indicator { bottom: 22px; }
@@ -1301,23 +1165,9 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   .footer-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
 }
 @media (max-width: 960px) {
-  .logo-pill {
-    left: 16px;
-    transform: none;
-    top: 12px;
-    z-index: 10001;
-  }
   .logo-pill-label { display: none; }
-  .logo-pill-img { height: 50px; }
+  .logo-pill-img { height: 42px; }
   .logo-pill a { padding: 5px 10px 5px 5px; }
-  .hero-features {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    max-width: 520px;
-    gap: 10px;
-  }
-  .hero-features .feature-tag:nth-child(n+7) { display: none; }
   .nav-hamburger { display: flex; }
   .nav-links {
     display: none; position: fixed; inset: 0; z-index: 9999;
@@ -1369,19 +1219,12 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   html { cursor: auto; }
 }
 @media (max-width: 600px) {
-  .logo-pill {
-    top: 10px;
-    left: 12px;
-    transform: none;
-  }
-  .logo-pill-img { height: 40px; }
-  .logo-pill a { padding: 4px 8px 4px 4px; }
   #hero { padding: 118px 16px 44px; }
-  .section { padding: 48px 16px; }
+  .section { padding: 56px 16px; }
   .hero-split { gap: 22px; }
   .hero-buttons { flex-direction: column; align-items: stretch; }
   .hero-buttons .btn { width: 100%; }
-  .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 100%; }
+  .hero-stats { grid-template-columns: 1fr; gap: 14px; max-width: 100%; }
   .hero-stats .stat-item { padding: 14px 10px; }
   .hero-marquee { margin-top: 28px; }
   .marquee-track { gap: 10px; }
@@ -1435,24 +1278,13 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   cursor: default;
   transition: all 0.25s var(--easing);
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
 }
-@media (hover: hover) {
-  .feature-tag:hover {
-    background: rgba(0,229,191,0.08);
-    border-color: rgba(0,229,191,0.4);
-    color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,229,191,0.12);
-  }
-}
-.feature-tag.active,
-.feature-tag:active {
-  background: rgba(0,229,191,0.12);
-  border-color: rgba(0,229,191,0.55);
+.feature-tag:hover {
+  background: rgba(0,229,191,0.08);
+  border-color: rgba(0,229,191,0.4);
   color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(0,229,191,0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,229,191,0.12);
 }
 .feature-tooltip {
   position: absolute;
@@ -1478,16 +1310,9 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   border: 6px solid transparent;
   border-top-color: rgba(8,12,30,0.97);
 }
-.feature-tag:hover .feature-tooltip,
-.feature-tag.active .feature-tooltip {
+.feature-tag:hover .feature-tooltip {
   opacity: 1; visibility: visible;
   transform: translateX(-50%) translateY(0);
-}
-@media (max-width: 960px) {
-  .feature-tooltip {
-    width: 170px;
-    font-size: 0.72rem;
-  }
 }
 
 /* ==============================
@@ -1560,7 +1385,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <div class="logo-pill" id="logoPill">
     <a href="#">
-      <img src="assets/logo-roma-symbol-official.png" alt="ROMA AI" class="logo-pill-img">
+      <img src="assets/logo-roma-official.png" alt="ROMA AI" class="logo-pill-img">
     </a>
   </div>
 
@@ -1574,7 +1399,6 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
         <li><a href="#how" data-i18n="nav.how">Cómo funciona</a></li>
         <li><a href="#testimonials" data-i18n="nav.cases">Casos reales</a></li>
         <li><a href="#pricing" data-i18n="nav.pricing">Precios</a></li>
-        <li><a href="/login" class="nav-login-btn" data-i18n="nav.login">Iniciar sesión</a></li>
       </ul>
       <button class="lang-toggle" id="langToggle" aria-label="Switch language">ES / EN</button>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menú">
@@ -1590,21 +1414,11 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <canvas id="heroCanvas"></canvas>
     <div class="hero-split">
       <div class="hero-left">
-        <span class="eyebrow blur-fade d1 visible">Marketing digital para negocios latinos</span>
-        <h1 class="blur-fade d2 visible"><span class="hero-title-flow">Marketing digital que entiende tu negocio latino</span></h1>
-        <p class="blur-fade d3">Contenido para redes, anuncios en Google y Meta, web, WhatsApp automatizado y reportes IA. Todo lo que tu negocio necesita para crecer online — desde $79/mes.</p>
+        <span class="eyebrow blur-fade d1 visible" data-i18n="hero.eyebrow">IA conversacional para equipos de ventas</span>
+        <h1 class="blur-fade d2 visible"><span class="hero-title-flow" data-i18n="hero.h1">Convertí cada conversación en una venta cerrada</span></h1>
+        <p class="blur-fade d3" data-i18n="hero.p">ROMA AI responde 24/7 en WhatsApp, Instagram y tu web. Captura, califica y asigna cada lead al vendedor correcto. Mientras dormís, tu equipo vende.</p>
       </div>
 <div class="hero-right revealed" data-reveal="">
-  <div class="hero-robot">
-    <div class="robot-body">
-      <div class="robot-head"></div>
-      <div class="robot-antenna"></div>
-      <div class="robot-eyes">
-        <div class="robot-eye"></div>
-        <div class="robot-eye"></div>
-      </div>
-    </div>
-  </div>
   <div class="hero-destello"></div>
   <div class="hero-destello-ring"></div>
   <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
@@ -1613,30 +1427,30 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <div class="hero-center-band">
       <div class="hero-stats blur-fade d5">
         <div class="stat-item">
-          <span class="stat-number" data-i18n="stats.n1">+300%</span>
-          <span class="stat-label" data-i18n="stats.l1">alcance orgánico promedio</span>
+          <span class="stat-number" data-i18n="stats.n1">&lt; 2min</span>
+          <span class="stat-label" data-i18n="stats.l1">respuesta automática</span>
         </div>
         <div class="stat-item">
           <span class="stat-number" data-i18n="stats.n2">24/7</span>
-          <span class="stat-label" data-i18n="stats.l2">presencia digital activa</span>
+          <span class="stat-label" data-i18n="stats.l2">captura de leads</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number" data-i18n="stats.n3">70%</span>
-          <span class="stat-label" data-i18n="stats.l3">menos que una agencia tradicional</span>
+          <span class="stat-number" data-i18n="stats.n3">20h</span>
+          <span class="stat-label" data-i18n="stats.l3">ahorradas por semana</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number" data-i18n="stats.n4">30d</span>
-          <span class="stat-label" data-i18n="stats.l4">garantía de satisfacción</span>
+          <span class="stat-number" data-i18n="stats.n4">15d</span>
+          <span class="stat-label" data-i18n="stats.l4">garantía devolución</span>
         </div>
       </div>
       <div class="hero-features blur-fade d6">
-        <span class="feature-tag"><span data-i18n="feat.wa">Redes Sociales</span><div class="feature-tooltip" data-i18n="feat.wa.tip">Posts, reels e historias para Instagram y Facebook. Contenido fresco todas las semanas.</div></span>
-        <span class="feature-tag"><span data-i18n="feat.webchat">Google Ads</span><div class="feature-tooltip" data-i18n="feat.webchat.tip">Campañas en Google Search y Maps para que clientes te encuentren cuando buscan lo que ofrecés.</div></span>
-        <span class="feature-tag"><span data-i18n="feat.routing">Meta Ads</span><div class="feature-tooltip" data-i18n="feat.routing.tip">Anuncios en Facebook e Instagram segmentados a tu comunidad latina local.</div></span>
-        <span class="feature-tag"><span data-i18n="feat.meta">Web Profesional</span><div class="feature-tooltip" data-i18n="feat.meta.tip">Landing page o sitio web completo optimizado para celulares y Google.</div></span>
-        <span class="feature-tag"><span data-i18n="feat.reports">WhatsApp Bot</span><div class="feature-tooltip" data-i18n="feat.reports.tip">Chatbot inteligente que responde 24/7, captura pedidos y califica clientes automáticamente.</div></span>
-        <span class="feature-tag"><span data-i18n="feat.crm">GMB</span><div class="feature-tooltip" data-i18n="feat.crm.tip">Optimización de Google Mi Negocio para salir en los primeros resultados de Maps y Search.</div></span>
-        <span class="feature-tag"><span data-i18n="feat.bilingual">Reportes IA</span><div class="feature-tooltip" data-i18n="feat.bilingual.tip">Resumen semanal con métricas de alcance, engagement y resultados. Decisiones basadas en datos.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.wa">WhatsApp Business</span><div class="feature-tooltip" data-i18n="feat.wa.tip">Respondé mensajes automáticamente desde tu número de empresa. Disponible 24/7.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.webchat">WebChat</span><div class="feature-tooltip" data-i18n="feat.webchat.tip">Widget de chat para tu sitio web. Sin código, listo en 2 minutos.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.routing">Lead Routing</span><div class="feature-tooltip" data-i18n="feat.routing.tip">Cada consulta al vendedor correcto según producto, zona o disponibilidad.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.meta">Meta Ads</span><div class="feature-tooltip" data-i18n="feat.meta.tip">Conectá tus campañas de Facebook e Instagram directo al flujo de captura.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.reports">Reportes IA</span><div class="feature-tooltip" data-i18n="feat.reports.tip">Resumen semanal con métricas clave y recomendaciones automáticas.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.crm">CRM</span><div class="feature-tooltip" data-i18n="feat.crm.tip">Historial de cada lead, estado de conversación y notas del vendedor.</div></span>
+        <span class="feature-tag"><span data-i18n="feat.bilingual">Bilingüe</span><div class="feature-tooltip" data-i18n="feat.bilingual.tip">Tu agente habla español e inglés nativamente según el idioma del cliente.</div></span>
       </div>
     </div>
   </section>
@@ -1647,45 +1461,45 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <section class="section problem-section" data-reveal data-bg-color="#080d24">
     <div class="container">
       <span class="eyebrow" data-i18n="problem.eyebrow">El problema</span>
-      <h2 class="gradient-title" data-i18n="problem.h2">Tu negocio latino está invisible online</h2>
+      <h2 class="gradient-title" data-i18n="problem.h2">Sin automatización, tus leads se enfrían en minutos</h2>
       <div class="problem-cards">
         <div class="problem-card">
           <div class="problem-img-wrap">
             <div class="problem-img-placeholder problem-img-placeholder--1"></div>
-            <img src="assets/problem-tiempo.jpg" alt="Sin presencia digital" onerror="this.style.opacity=0">
+            <img src="assets/problem-tiempo.jpg" alt="Tiempo de respuesta" onerror="this.style.opacity=0">
           </div>
           <div class="problem-card-body">
-            <span class="problem-tag" data-i18n="problem.c1.tag">Sin presencia digital</span>
-            <div class="problem-stat">64%</div>
+            <span class="problem-tag" data-i18n="problem.c1.tag">Tiempo de respuesta</span>
+            <div class="problem-stat">4h</div>
             <div class="problem-divider"></div>
-            <h3 data-i18n="problem.c1.h3">De latinos en USA no encuentra tu negocio en Google</h3>
-            <p data-i18n="problem.c1.p">Si no salís en Google Maps o tenés redes sin actividad, tus clientes te buscan y no te encuentran. Van directo a tu competencia.</p>
+            <h3 data-i18n="problem.c1.h3">Tus leads esperan 4 horas tu respuesta</h3>
+            <p data-i18n="problem.c1.p">Un lead caliente se enfría en menos de 5 minutos. Para cuando respondés, ya eligieron a tu competencia.</p>
           </div>
         </div>
         <div class="problem-card">
           <div class="problem-img-wrap">
             <div class="problem-img-placeholder problem-img-placeholder--2"></div>
-            <img src="assets/problem-perdidos.jpg" alt="Clientes perdidos" onerror="this.style.opacity=0">
+            <img src="assets/problem-perdidos.jpg" alt="Leads perdidos" onerror="this.style.opacity=0">
           </div>
           <div class="problem-card-body">
             <span class="problem-tag" data-i18n="problem.c2.tag">Oportunidades perdidas</span>
-            <div class="problem-stat">95%</div>
+            <div class="problem-stat">40%</div>
             <div class="problem-divider"></div>
-            <h3 data-i18n="problem.c2.h3">De negocios latinos no tienen estrategia digital activa</h3>
-            <p data-i18n="problem.c2.p">Mientras otros dueños avanzan, los que no invierten en marketing digital pierden clientes todos los días sin saberlo.</p>
+            <h3 data-i18n="problem.c2.h3">De tus leads se pierden para siempre</h3>
+            <p data-i18n="problem.c2.p">Casi la mitad de las consultas que entran por WhatsApp desaparecen. Leads que ya pagaste con publicidad.</p>
           </div>
         </div>
         <div class="problem-card">
           <div class="problem-img-wrap">
             <div class="problem-img-placeholder problem-img-placeholder--3"></div>
-            <img src="assets/problem-horas.jpg" alt="Costo agencia" onerror="this.style.opacity=0">
+            <img src="assets/problem-horas.jpg" alt="Horas perdidas" onerror="this.style.opacity=0">
           </div>
           <div class="problem-card-body">
-            <span class="problem-tag" data-i18n="problem.c3.tag">Costo de agencia</span>
-            <div class="problem-stat">5-10x</div>
+            <span class="problem-tag" data-i18n="problem.c3.tag">Productividad</span>
+            <div class="problem-stat">20h</div>
             <div class="problem-divider"></div>
-            <h3 data-i18n="problem.c3.h3">Más caro que hacerlo con Roma AI</h3>
-            <p data-i18n="problem.c3.p">Una agencia tradicional te cobra $800-$2,000/mes. Roma AI usa inteligencia artificial para ofrecer el mismo servicio desde $79/mes.</p>
+            <h3 data-i18n="problem.c3.h3">Semanales que tu equipo pierde en tareas manuales</h3>
+            <p data-i18n="problem.c3.p">Tu equipo pierde medio día laboral calificando y asignando leads a mano en vez de cerrar ventas.</p>
           </div>
         </div>
       </div>
@@ -1697,32 +1511,38 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="features" class="section" data-reveal data-bg-color="#050816">
     <div class="container">
-      <span class="eyebrow">Servicios incluidos</span>
-      <h2 class="gradient-title">Todo lo que tu negocio necesita para crecer</h2>
+      <span class="eyebrow" data-i18n="features.eyebrow">Funcionalidades</span>
+      <h2 class="gradient-title" data-i18n="features.h2">Todo lo que necesitás para nunca perder un lead</h2>
       <div class="features-grid">
         <div class="feature-card">
-          <h3>Redes Sociales</h3>
-          <div class="feature-popup">Posts, reels e historias para Instagram y Facebook. Contenido fresco todas las semanas.</div>
+          <img src="assets/icono-captura.png" alt="Captura Inteligente" class="feature-icon">
+          <h3 data-i18n="features.f1.h3">Captura Inteligente</h3>
+          <p data-i18n="features.f1.p">Tu IA responde 24/7 en WhatsApp, Instagram DM y web chat. Cada mensaje es un lead capturado.</p>
         </div>
         <div class="feature-card">
-          <h3>Google Ads</h3>
-          <div class="feature-popup">Campañas en Google Search y Maps para que clientes te encuentren. Presupuesto desde $50/mes.</div>
+          <img src="assets/icono-automatizacion.png" alt="Automatizaciones" class="feature-icon">
+          <h3 data-i18n="features.f2.h3">Automatizaciones</h3>
+          <p data-i18n="features.f2.p">Seguimiento automático multicanal. Recordatorios, nurturing y re-engagement sin que tu equipo mueva un dedo.</p>
         </div>
         <div class="feature-card">
-          <h3>Meta Ads</h3>
-          <div class="feature-popup">Anuncios en Facebook e Instagram segmentados a tu comunidad latina local. Resultados medibles.</div>
+          <img src="assets/icono-reportes.png" alt="Reportes e Inteligencia" class="feature-icon">
+          <h3 data-i18n="features.f3.h3">Reportes e Inteligencia</h3>
+          <p data-i18n="features.f3.p">Dashboard en tiempo real. Reportes IA semanales que llegan a tu email cada lunes. Sin preparar nada.</p>
         </div>
         <div class="feature-card">
-          <h3>Web Profesional</h3>
-          <div class="feature-popup">Landing page o sitio web completo optimizado para celulares y Google. Diseñado para convertir.</div>
+          <img src="assets/icono-routing.png" alt="Lead Routing Avanzado" class="feature-icon">
+          <h3 data-i18n="features.f4.h3">Lead Routing Avanzado</h3>
+          <p data-i18n="features.f4.p">Cada lead al vendedor correcto al instante. Por geografía, producto o disponibilidad.</p>
         </div>
         <div class="feature-card">
-          <h3>WhatsApp Bot</h3>
-          <div class="feature-popup">Chatbot inteligente que responde 24/7, captura pedidos y califica clientes automáticamente.</div>
+          <img src="assets/icono-multichannel.png" alt="Omnicanal Unificado" class="feature-icon">
+          <h3 data-i18n="features.f5.h3">Omnicanal Unificado</h3>
+          <p data-i18n="features.f5.p">Todas tus conversaciones en una sola bandeja. WhatsApp, web, Instagram, Facebook.</p>
         </div>
         <div class="feature-card">
-          <h3>Reportes IA</h3>
-          <div class="feature-popup">Cada semana un resumen claro de alcance, engagement y resultados. Sin complicaciones.</div>
+          <img src="assets/icono-ia.png" alt="IA Entrenada para Vos" class="feature-icon">
+          <h3 data-i18n="features.f6.h3">IA Entrenada para Vos</h3>
+          <p data-i18n="features.f6.p">No es un chatbot genérico. ROMA aprende de tu negocio, tus productos y tu tono.</p>
         </div>
       </div>
     </div>
@@ -1733,8 +1553,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="how" class="section" data-reveal data-bg-color="#141b32">
     <div class="container">
-      <span class="eyebrow">Es simple</span>
-      <h2 class="gradient-title">Tres pasos y <em class="gradient-subtitle">tu negocio visible online</em></h2>
+      <span class="eyebrow" data-i18n="how.eyebrow">Proceso</span>
+      <h2 class="gradient-title" data-i18n="how.h2">Así de fácil empezás a <em class="gradient-subtitle">capturar más leads</em></h2>
       <div class="process-container">
         <div class="gears-wrapper">
           <div class="gear-system">
@@ -1759,8 +1579,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
                 <div class="gear-content">1</div>
               </div>
               <div class="gear-info">
-                <h3>Elegí tu plan</h3>
-                <p>Seleccionás el plan que mejor se adapte a tu negocio. Desde redes sociales hasta web completa con anuncios.</p>
+                <h3 data-i18n="how.s1.h3">Conectá tus canales</h3>
+                <p data-i18n="how.s1.p">Vinculá WhatsApp, web chat y redes en 2 minutos. ROMA empieza a escuchar al instante y capturar cada mensaje.</p>
               </div>
             </div>
             <div class="connection-line line-1"></div>
@@ -1785,8 +1605,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
                 <div class="gear-content">2</div>
               </div>
               <div class="gear-info">
-                <h3>ROMA crea tu contenido</h3>
-                <p>Publicamos en tus redes, configuramos tus anuncios y optimizamos tu web y Google Mi Negocio. Resultados desde la primera semana.</p>
+                <h3 data-i18n="how.s2.h3">La IA toma el control</h3>
+                <p data-i18n="how.s2.p">Responde, califica y asigna cada lead automáticamente usando inteligencia artificial. Tus vendedores reciben leads listos para cerrar.</p>
               </div>
             </div>
             <div class="connection-line line-2"></div>
@@ -1813,8 +1633,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
                 <div class="gear-content">3</div>
               </div>
               <div class="gear-info">
-                <h3>Medí tu crecimiento</h3>
-                <p>Dashboard con métricas de alcance, engagement y resultados. Reportes semanales IA con recomendaciones para seguir creciendo.</p>
+                <h3 data-i18n="how.s3.h3">Medí y escalá</h3>
+                <p data-i18n="how.s3.p">Dashboard en tiempo real con métricas clave. Reportes IA cada lunes. Datos claros para tomar decisiones y escalar tu negocio.</p>
               </div>
             </div>
           </div>
@@ -1831,14 +1651,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
       <span class="eyebrow" data-i18n="dash.eyebrow">Dashboard</span>
       <h2 class="gradient-title" data-i18n="dash.h2">Control total en tiempo real</h2>
       <div class="dashboard-wrap">
-        <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image" loading="lazy" decoding="async">
+        <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image">
       </div>
-      <ul class="dashboard-insights">
-        <li><strong data-i18n="dash.kpi1.n">Post semanal</strong><span data-i18n="dash.kpi1.l">contenido fresco para tus redes todas las semanas</span></li>
-        <li><strong data-i18n="dash.kpi2.n">+300%</strong><span data-i18n="dash.kpi2.l">alcance orgánico promedio en primeros 60 días</span></li>
-        <li><strong data-i18n="dash.kpi3.n">GMB optimizado</strong><span data-i18n="dash.kpi3.l">tu negocio visible en Google Maps y Search</span></li>
-        <li><strong data-i18n="dash.kpi4.n">Reportes IA</strong><span data-i18n="dash.kpi4.l">resumen semanal con métricas y recomendaciones</span></li>
-      </ul>
     </div>
   </section>
 
@@ -1847,8 +1661,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <section id="testimonials" class="section" data-reveal data-bg-color="#050816">
     <div class="container">
-      <span class="eyebrow" data-i18n="cases.eyebrow">Casos reales</span>
-      <h2 class="gradient-title" data-i18n="cases.title">Negocios latinos que crecen con Roma AI</h2>
+      <span class="eyebrow" data-i18n="cases.eyebrow">Cómo lo usan nuestros clientes</span>
+      <h2 class="gradient-title" data-i18n="cases.title">Negocios latinos que automatizan sus ventas</h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
           <img src="assets/icono-ia.png" alt="" class="testimonial-icon">
@@ -1893,47 +1707,47 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <section class="section" id="pricing">
     <div class="container">
       <span class="eyebrow" data-i18n="pricing.eyebrow">Planes y precios</span>
-      <h2 class="gradient-title">Marketing digital desde $79/mes. Sin contratos largos.</h2>
-      <p class="pricing-note" data-i18n="pricing.note">Sin permanencia. Cancelá cuando quieras. Garantía de satisfacción <strong>30 días</strong>. La pauta publicitaria se factura aparte.</p>
+      <h2 class="gradient-title" data-i18n="pricing.title">Empezá hoy. Pagás mes a mes, sin contrato.</h2>
+      <p class="pricing-note" data-i18n="pricing.note">Configuración inicial <strong>$299 – $599</strong> (único pago). Sin permanencia. Garantía de devolución 15 días.</p>
       <div class="pricing-grid">
         <div class="pricing-card">
-          <h3 data-i18n="pricing.base.name">Básico</h3>
-          <div class="pricing-price">$79<span data-i18n="pricing.per_month">/mes</span></div>
-          <div class="pricing-setup" data-i18n="pricing.base.setup">Sin costo de setup</div>
+          <h3 data-i18n="pricing.base.name">Base</h3>
+          <div class="pricing-price">$99<span data-i18n="pricing.per_month">/mes</span></div>
+          <div class="pricing-setup" data-i18n="pricing.base.setup">Setup único: $299</div>
           <ul class="pricing-features">
-            <li data-i18n="pricing.base.f1">GMB optimizado + 1 post/semana</li>
-            <li data-i18n="pricing.base.f2">Respuestas automáticas hasta 10/sem</li>
-            <li data-i18n="pricing.base.f3">Dashboard con métricas básicas</li>
-            <li data-i18n="pricing.base.f4">Reporte mensual IA</li>
-            <li data-i18n="pricing.base.f5">Soporte por WhatsApp</li>
+            <li data-i18n="pricing.base.f1">1 canal WhatsApp</li>
+            <li data-i18n="pricing.base.f2">Chat web incluido</li>
+            <li data-i18n="pricing.base.f3">Calificación automática de leads</li>
+            <li data-i18n="pricing.base.f4">Dashboard en tiempo real</li>
+            <li data-i18n="pricing.base.f5">Reportes mensuales IA</li>
           </ul>
-          <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_start">Empezar ahora</button>
+          <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_start">Hablar con Roma</button>
         </div>
         <div class="pricing-card">
           <div class="pricing-badge" data-i18n="pricing.pro.badge">MÁS POPULAR</div>
-          <h3 data-i18n="pricing.pro.name">Intermedio</h3>
+          <h3 data-i18n="pricing.pro.name">Pro</h3>
           <div class="pricing-price">$199<span data-i18n="pricing.per_month">/mes</span></div>
-          <div class="pricing-setup" data-i18n="pricing.pro.setup">Setup único: $299</div>
+          <div class="pricing-setup" data-i18n="pricing.pro.setup">Setup único: $599</div>
           <ul class="pricing-features">
-            <li data-i18n="pricing.pro.f1">3 posts/semana en redes</li>
-            <li data-i18n="pricing.pro.f2">Google Ads $50 + WhatsApp setup</li>
-            <li data-i18n="pricing.pro.f3">2 reels/mes + stories</li>
+            <li data-i18n="pricing.pro.f1">3 canales multicanal</li>
+            <li data-i18n="pricing.pro.f2">Meta Ads routing automático</li>
+            <li data-i18n="pricing.pro.f3">Calificación IA avanzada</li>
             <li data-i18n="pricing.pro.f4">Reportes semanales IA</li>
-            <li data-i18n="pricing.pro.f5">Chatbot WhatsApp incluido</li>
+            <li data-i18n="pricing.pro.f5">CRM integrado</li>
             <li data-i18n="pricing.pro.f6">Soporte prioritario</li>
           </ul>
-          <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_trial">Empezar — 30 días sin riesgo</button>
+          <button class="btn btn-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_trial">Hablar con Roma — 15 días sin riesgo</button>
         </div>
         <div class="pricing-card">
-          <h3 data-i18n="pricing.ent.name">Full</h3>
-          <div class="pricing-price">$399<span data-i18n="pricing.per_month">/mes</span></div>
-          <div class="pricing-setup" data-i18n="pricing.ent.setup">Setup único: $599</div>
+          <h3 data-i18n="pricing.ent.name">Enterprise</h3>
+          <div class="pricing-price" data-i18n="pricing.ent.price">A medida</div>
+          <div class="pricing-setup" data-i18n="pricing.ent.setup">Cotización personalizada</div>
           <ul class="pricing-features">
-            <li data-i18n="pricing.ent.f1">5 posts/semana multicanal</li>
-            <li data-i18n="pricing.ent.f2">Meta Ads $100 + Google Ads $100</li>
-            <li data-i18n="pricing.ent.f3">Diseño gráfico incluido</li>
-            <li data-i18n="pricing.ent.f4">Web profesional + GMB completo</li>
-            <li data-i18n="pricing.ent.f5">Consultoría mensual estratégica</li>
+            <li data-i18n="pricing.ent.f1">Canales ilimitados</li>
+            <li data-i18n="pricing.ent.f2">IA entrenada en tu negocio</li>
+            <li data-i18n="pricing.ent.f3">API y webhooks completos</li>
+            <li data-i18n="pricing.ent.f4">Gerente de cuenta dedicado</li>
+            <li data-i18n="pricing.ent.f5">Soporte 24/7</li>
           </ul>
           <button class="btn btn-secondary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="pricing.cta_contact">Hablar con Roma</button>
         </div>
@@ -1950,36 +1764,20 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
       <h2 class="gradient-title" data-i18n="faq.h2">Preguntas frecuentes</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary data-i18n="faq.q1">¿Qué tipo de negocios atienden?</summary>
-          <p data-i18n="faq.a1">Restaurantes, salones de belleza, barberías, clínicas, talleres, tiendas de ropa y cualquier negocio latino local en USA que quiera crecer online.</p>
+          <summary data-i18n="faq.q1">¿Necesito conocimientos técnicos?</summary>
+          <p data-i18n="faq.a1">No. Conectás WhatsApp en 2 minutos. No necesitás desarrolladores.</p>
         </details>
         <details class="faq-item">
-          <summary data-i18n="faq.q2">¿Cuánto cuesta realmente?</summary>
-          <p data-i18n="faq.a2">Desde $79/mes todo incluido. No hay costos ocultos. La pauta publicitaria (Google Ads, Meta Ads) se factura aparte y vos elegís cuánto invertir.</p>
+          <summary data-i18n="faq.q2">¿Cuánto tarda ver resultados?</summary>
+          <p data-i18n="faq.a2">El primer día mejoran los tiempos de respuesta. El ROI se ve en el primer mes.</p>
         </details>
         <details class="faq-item">
-          <summary data-i18n="faq.q3">¿En cuánto tiempo veo resultados?</summary>
-          <p data-i18n="faq.a3">Las primeras señales se ven en 2-4 semanas. Resultados sólidos en 60-90 días con ejecución constante. Te enviamos reportes semanales para que veas el progreso.</p>
+          <summary data-i18n="faq.q3">¿La IA suena a robot?</summary>
+          <p data-i18n="faq.a3">ROMA aprende tu tono de voz. El 90% de los leads no distingue que habla con IA.</p>
         </details>
         <details class="faq-item">
-          <summary data-i18n="faq.q4">¿Tengo que firmar contrato?</summary>
-          <p data-i18n="faq.a4">No. Mes a mes, sin permanencia. Cancelás cuando quieras. También tenemos 15% de descuento si preferís contratar anual.</p>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q5">¿Qué incluye exactamente cada plan?</summary>
-          <p data-i18n="faq.a5">Cada plan incluye contenido para redes, gestión de Google Mi Negocio, chatbot WhatsApp, reportes IA y soporte. Los planes más avanzados agregan Google Ads, Meta Ads, reels, diseño gráfico y web profesional.</p>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q6">¿Puedo hacer cambios en el contenido?</summary>
-          <p data-i18n="faq.a6">Sí. Trabajamos con tu feedback. El contenido se ajusta a tu marca, tono y preferencias. Vos revisás antes de publicar.</p>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q7">¿Qué pasa si mi negocio ya tiene agencia?</summary>
-          <p data-i18n="faq.a7">Podemos entrar por una auditoría gratuita y optimización puntual, o integrar el chatbot WhatsApp como complemento a lo que ya tenés.</p>
-        </details>
-        <details class="faq-item">
-          <summary data-i18n="faq.q8">¿Atienden en inglés también?</summary>
-          <p data-i18n="faq.a8">Sí. Todo nuestro servicio es bilingüe español e inglés. El chatbot responde en el idioma del cliente automáticamente.</p>
+          <summary data-i18n="faq.q4">¿Puedo cancelar cuando quiera?</summary>
+          <p data-i18n="faq.a4">Sí, sin permanencia. Exportás tus datos y listo.</p>
         </details>
       </div>
     </div>
@@ -1991,10 +1789,10 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <section id="cta-final" class="section cta-section" data-reveal data-bg-color="#0a0e1a">
     <div class="container">
       <div class="cta-content">
-        <h2 class="gradient-title" data-i18n="cta.h2">Tu negocio merece estar visible online</h2>
-        <p class="cta-description" data-i18n="cta.desc">30 días de garantía. Sin contrato. Empezá desde $79/mes y Roma se encarga de todo.</p>
+        <h2 class="gradient-title" data-i18n="cta.h2">Dejá de perder leads mientras leés esto</h2>
+        <p class="cta-description" data-i18n="cta.desc">15 días de garantía. Sin contrato. Roma te ayuda a elegir el plan correcto.</p>
         <div class="cta-buttons">
-          <button class="btn btn-primary btn-lg cta-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="cta.btn"><span>💬</span> Empezar desde $79/mes</button>
+          <button class="btn btn-primary btn-lg cta-primary" onclick="document.getElementById('roma-webchat-btn')?.click()" data-i18n="cta.btn"><span>💬</span> Hablar con Roma ahora</button>
         </div>
         <div class="trust-indicators">
           <div class="trust-item"><svg class="trust-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span class="trust-text" data-i18n="cta.trust1">Sin tarjeta de crédito</span></div>
@@ -2004,7 +1802,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           <div class="trust-item"><svg class="trust-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg><span class="trust-text" data-i18n="cta.trust3">Soporte real en español</span></div>
         </div>
         <div class="cta-urgency">
-          <div class="urgency-indicator"><div class="urgency-pulse"></div><span data-i18n="cta.urgency">Negocios latinos en USA ya están haciendo crecer su negocio con Roma AI</span></div>
+          <div class="urgency-indicator"><div class="urgency-pulse"></div><span data-i18n="cta.urgency">Negocios latinos en USA están automatizando sus ventas ahora mismo</span></div>
         </div>
       </div>
     </div>
@@ -2017,12 +1815,9 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <div class="footer-container">
       <div class="footer-brand">
         <a href="/" class="nav-logo footer-brand-link">
-          <div class="footer-logo-wrap">
-            <canvas id="logoFooterCanvas"></canvas>
-            <img src="assets/logo-roma-official.png" alt="ROMA AI" class="footer-logo">
-          </div>
+          <img src="assets/logo-roma-official.png" alt="ROMA AI" class="footer-logo">
         </a>
-        <p data-i18n="footer.desc">ROMA AI es una agencia de marketing digital con inteligencia artificial para pequeños negocios latinos en USA. Redes sociales, web, anuncios y automatización — desde $79/mes.</p>
+        <p data-i18n="footer.desc">ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.</p>
       </div>
       <div class="footer-columns">
         <div class="footer-col">
@@ -2031,7 +1826,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
             <li><a href="#features">Funcionalidades</a></li>
             <li><a href="#how">Cómo funciona</a></li>
             <li><a href="#pricing">Precios</a></li>
-            <li><a href="#" onclick="document.getElementById('roma-webchat-btn')?.click();return false;">Probá gratis</a></li>
+            <li><a href="#" onclick="document.getElementById('roma-webchat-btn')?.click();return false;">Hablar con Roma</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -2260,31 +2055,14 @@ document.querySelectorAll('details.faq-item').forEach(detail => {
 // ===== DASHBOARD TILT =====
 const dw = document.querySelector('.dashboard-wrap');
 if (dw) {
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (finePointer) {
-    dw.addEventListener('mousemove', e => {
-      const rect = dw.getBoundingClientRect();
-      const x = e.clientX - rect.left, y = e.clientY - rect.top;
-      const cx = rect.width / 2, cy = rect.height / 2;
-      const rx = ((y - cy) / cy) * -5, ry = ((x - cx) / cx) * 8;
-      dw.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-    });
-    dw.addEventListener('mouseleave', () => { dw.style.transform = ''; });
-  }
-}
-
-// ===== FEATURE TAGS — TOUCH 6 ACTIVO =====
-const featureTags = Array.from(document.querySelectorAll('.hero-features .feature-tag')).slice(0, 6);
-const hasTouch = window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0;
-if (featureTags.length) {
-  featureTags.forEach(tag => {
-    tag.addEventListener('click', () => {
-      if (!hasTouch) return;
-      const willActivate = !tag.classList.contains('active');
-      featureTags.forEach(t => t.classList.remove('active'));
-      if (willActivate) tag.classList.add('active');
-    });
+  dw.addEventListener('mousemove', e => {
+    const rect = dw.getBoundingClientRect();
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const cx = rect.width / 2, cy = rect.height / 2;
+    const rx = ((y - cy) / cy) * -5, ry = ((x - cx) / cx) * 8;
+    dw.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
   });
+  dw.addEventListener('mouseleave', () => { dw.style.transform = ''; });
 }
 
 // ===== FEATURE MOUSE TRACKING =====
@@ -2325,188 +2103,172 @@ document.querySelectorAll('[data-bg-color]').forEach(section => {
 // ===== BILINGUAL SYSTEM (ES / EN) =====
 const TRANSLATIONS = {
   es: {
-    'nav.cta': 'Empezar ahora',
-    'cta.desc': '30 días de garantía. Sin contrato. Empezá desde $79/mes y Roma se encarga de todo.',
-    'cta.btn': '💬 Empezar desde $79/mes',
-    'pricing.cta_start': 'Empezar ahora',
-    'pricing.cta_trial': 'Empezar — 30 días sin riesgo',
+    'nav.cta': 'Hablar con Roma',
+    'cta.desc': '15 días de garantía. Sin contrato. Roma te ayuda a elegir el plan correcto.',
+    'cta.btn': '💬 Hablar con Roma ahora',
+    'pricing.cta_start': 'Hablar con Roma',
+    'pricing.cta_trial': 'Hablar con Roma — 15 días sin riesgo',
     'pricing.cta_contact': 'Hablar con Roma',
-    'hero.cta1': 'Empezar desde $79/mes →',
-    'nav.features': 'Servicios', 'nav.how': 'Cómo funciona',
-    'nav.cases': 'Casos reales', 'nav.pricing': 'Precios', 'nav.login': 'Iniciar sesión',
-    'hero.eyebrow': 'Marketing digital para negocios latinos',
-    'hero.h1': 'Marketing digital que entiende tu negocio latino',
-    'hero.p': 'Contenido para redes, anuncios en Google y Meta, web, WhatsApp automatizado y reportes IA. Todo lo que tu negocio necesita para crecer online — desde $79/mes.',
-    'hero.cta1': 'Empezar desde $79/mes →', 'hero.cta2': 'Ver servicios',
-    'stats.n1': '+300%', 'stats.l1': 'alcance orgánico promedio',
-    'stats.n2': '24/7', 'stats.l2': 'presencia digital activa',
-    'stats.n3': '70%', 'stats.l3': 'menos que una agencia tradicional',
-    'stats.n4': '30d', 'stats.l4': 'garantía de satisfacción',
+    'hero.cta1': 'Hablar con Roma →',
+    'nav.features': 'Funcionalidades', 'nav.how': 'Cómo funciona',
+    'nav.cases': 'Casos reales', 'nav.pricing': 'Precios',
+    'hero.eyebrow': 'IA conversacional para equipos de ventas',
+    'hero.h1': 'Convertí cada conversación en una venta cerrada',
+    'hero.p': 'ROMA AI responde 24/7 en WhatsApp, Instagram y tu web. Captura, califica y asigna cada lead al vendedor correcto. Mientras dormís, tu equipo vende.',
+    'hero.cta1': 'Comenzar gratis →', 'hero.cta2': 'Ver cómo funciona',
+    'stats.n1': '< 2min', 'stats.l1': 'respuesta automática',
+    'stats.n2': '24/7', 'stats.l2': 'captura de leads',
+    'stats.n3': '20h', 'stats.l3': 'ahorradas por semana',
+    'stats.n4': '15d', 'stats.l4': 'garantía devolución',
     'pricing.eyebrow': 'Planes y precios',
-    'pricing.title': 'Marketing digital desde $79/mes. Sin contratos largos.',
-    'pricing.note': 'Sin permanencia. Cancelá cuando quieras. Garantía de satisfacción <strong>30 días</strong>. La pauta publicitaria se factura aparte.',
+    'pricing.title': 'Empezá hoy. Pagás mes a mes, sin contrato.',
+    'pricing.note': 'Configuración inicial <strong>$299 – $599</strong> (único pago). Sin permanencia. Garantía de devolución 15 días.',
     'pricing.per_month': '/mes',
-    'pricing.base.name': 'Básico', 'pricing.base.setup': 'Sin costo de setup',
-    'pricing.base.f1': 'GMB optimizado + 1 post/semana', 'pricing.base.f2': 'Respuestas automáticas hasta 10/sem',
-    'pricing.base.f3': 'Dashboard con métricas básicas', 'pricing.base.f4': 'Reporte mensual IA', 'pricing.base.f5': 'Soporte por WhatsApp',
-    'pricing.cta_start': 'Empezar ahora',
-    'pricing.pro.badge': 'MÁS POPULAR', 'pricing.pro.name': 'Intermedio', 'pricing.pro.setup': 'Setup único: $299',
-    'pricing.pro.f1': '3 posts/semana en redes', 'pricing.pro.f2': 'Google Ads $50 + WhatsApp setup',
-    'pricing.pro.f3': '2 reels/mes + stories', 'pricing.pro.f4': 'Reportes semanales IA',
-    'pricing.pro.f5': 'Chatbot WhatsApp incluido', 'pricing.pro.f6': 'Soporte prioritario',
-    'pricing.cta_trial': 'Empezar — 30 días sin riesgo',
-    'pricing.ent.name': 'Full', 'pricing.ent.price': '$399', 'pricing.ent.setup': 'Setup único: $599',
-    'pricing.ent.f1': '5 posts/semana multicanal', 'pricing.ent.f2': 'Meta Ads $100 + Google Ads $100',
-    'pricing.ent.f3': 'Diseño gráfico incluido', 'pricing.ent.f4': 'Web profesional + GMB completo', 'pricing.ent.f5': 'Consultoría mensual estratégica',
-    'pricing.cta_contact': 'Hablar con Roma',
-    'cases.eyebrow': 'Casos reales', 'cases.title': 'Negocios latinos que crecen con Roma AI',
+    'pricing.base.name': 'Base', 'pricing.base.setup': 'Setup único: $299',
+    'pricing.base.f1': '1 canal WhatsApp', 'pricing.base.f2': 'Chat web incluido',
+    'pricing.base.f3': 'Calificación automática de leads', 'pricing.base.f4': 'Dashboard en tiempo real', 'pricing.base.f5': 'Reportes mensuales IA',
+    'pricing.cta_start': 'Comenzar',
+    'pricing.pro.badge': 'MÁS POPULAR', 'pricing.pro.name': 'Pro', 'pricing.pro.setup': 'Setup único: $599',
+    'pricing.pro.f1': '3 canales multicanal', 'pricing.pro.f2': 'Meta Ads routing automático',
+    'pricing.pro.f3': 'Calificación IA avanzada', 'pricing.pro.f4': 'Reportes semanales IA',
+    'pricing.pro.f5': 'CRM integrado', 'pricing.pro.f6': 'Soporte prioritario',
+    'pricing.cta_trial': 'Empezar — 15 días sin riesgo',
+    'pricing.ent.name': 'Enterprise', 'pricing.ent.price': 'A medida', 'pricing.ent.setup': 'Cotización personalizada',
+    'pricing.ent.f1': 'Canales ilimitados', 'pricing.ent.f2': 'IA entrenada en tu negocio',
+    'pricing.ent.f3': 'API y webhooks completos', 'pricing.ent.f4': 'Gerente de cuenta dedicado', 'pricing.ent.f5': 'Soporte 24/7',
+    'pricing.cta_contact': 'Hablar con ventas',
+    'cases.eyebrow': 'Cómo lo usan nuestros clientes', 'cases.title': 'Negocios latinos que automatizan sus ventas',
     'cases.c1.quote': '"Mi clínica recibe consultas a las 3am. Roma responde, agenda y yo llego con clientes confirmados."',
-    'cases.c1.name': 'Clínica de Estética', 'cases.c1.location': 'Miami, FL — Plan Básico',
+    'cases.c1.name': 'Clínica de Estética', 'cases.c1.location': 'Miami, FL — Plan Base',
     'cases.c2.quote': '"Los pedidos por WhatsApp se perdían. Ahora Roma los captura todos y los rutea al equipo correcto."',
-    'cases.c2.name': 'Cadena de Restaurantes', 'cases.c2.location': 'Los Angeles, CA — Plan Intermedio',
+    'cases.c2.name': 'Cadena de Restaurantes', 'cases.c2.location': 'Los Angeles, CA — Plan Pro',
     'cases.c3.quote': '"Real estate moves fast. ROMA qualifies leads in minutes and routes them to the right agent."',
-    'cases.c3.name': 'Agencia Inmobiliaria', 'cases.c3.location': 'Houston, TX — Plan Full',
-    'cta.urgency': 'Negocios latinos en USA ya están haciendo crecer su negocio con Roma AI',
-    'cta.h2': 'Tu negocio merece estar visible online',
+    'cases.c3.name': 'Agencia Inmobiliaria', 'cases.c3.location': 'Houston, TX — Plan Enterprise',
+    'cta.urgency': 'Negocios latinos en USA están automatizando sus ventas ahora mismo',
+    'cta.h2': 'Dejá de perder leads mientras leés esto',
     'cta.trust1': 'Sin tarjeta de crédito',
     'cta.trust2': 'Cancelá cuando quieras',
     'cta.trust3': 'Soporte real en español',
     'problem.eyebrow': 'El problema',
-    'problem.h2': 'Tu negocio latino está invisible online',
-    'problem.c1.tag': 'Sin presencia digital',
-    'problem.c1.h3': 'De latinos en USA no encuentra tu negocio en Google',
-    'problem.c1.p': 'Si no salís en Google Maps o tenés redes sin actividad, tus clientes te buscan y no te encuentran. Van directo a tu competencia.',
+    'problem.h2': 'Sin automatización, tus leads se enfrían en minutos',
+    'problem.c1.tag': 'Tiempo de respuesta',
+    'problem.c1.h3': 'Tus leads esperan 4 horas tu respuesta',
+    'problem.c1.p': 'Un lead caliente se enfría en menos de 5 minutos. Para cuando respondés, ya eligieron a tu competencia.',
     'problem.c2.tag': 'Oportunidades perdidas',
-    'problem.c2.h3': 'De negocios latinos no tienen estrategia digital activa',
-    'problem.c2.p': 'Mientras otros dueños avanzan, los que no invierten en marketing digital pierden clientes todos los días sin saberlo.',
-    'problem.c3.tag': 'Costo de agencia',
-    'problem.c3.h3': 'Más caro que hacerlo con Roma AI',
-    'problem.c3.p': 'Una agencia tradicional te cobra $800-$2,000/mes. Roma AI usa inteligencia artificial para ofrecer el mismo servicio desde $79/mes.',
-    'features.eyebrow': 'Servicios incluidos',
-    'features.h2': 'Todo lo que tu negocio necesita para crecer',
-    'features.f1.h3': 'Redes Sociales', 'features.f1.p': 'Posts, reels e historias para Instagram y Facebook. Contenido fresco todas las semanas.',
-    'features.f2.h3': 'Google Ads', 'features.f2.p': 'Campañas en Google Search y Maps para que clientes te encuentren. Presupuesto desde $50/mes.',
-    'features.f3.h3': 'Meta Ads', 'features.f3.p': 'Anuncios en Facebook e Instagram segmentados a tu comunidad latina local. Resultados medibles.',
-    'features.f4.h3': 'Web Profesional', 'features.f4.p': 'Landing page o sitio web completo optimizado para celulares y Google. Diseñado para convertir.',
-    'features.f5.h3': 'WhatsApp Bot', 'features.f5.p': 'Chatbot inteligente que responde 24/7, captura pedidos y califica clientes automáticamente.',
-    'features.f6.h3': 'Reportes IA', 'features.f6.p': 'Cada semana un resumen claro de alcance, engagement y resultados. Sin complicaciones.',
-    'how.eyebrow': 'Es simple',
-    'how.h2': 'Tres pasos y <em class="gradient-subtitle">tu negocio visible online</em>',
-    'how.s1.h3': 'Elegí tu plan', 'how.s1.p': 'Seleccionás el plan que mejor se adapte a tu negocio. Desde redes sociales hasta web completa con anuncios.',
-    'how.s2.h3': 'ROMA crea tu contenido', 'how.s2.p': 'Publicamos en tus redes, configuramos tus anuncios y optimizamos tu web y Google Mi Negocio. Resultados desde la primera semana.',
-    'how.s3.h3': 'Medí tu crecimiento', 'how.s3.p': 'Dashboard con métricas de alcance, engagement y resultados. Reportes semanales IA con recomendaciones para seguir creciendo.',
+    'problem.c2.h3': 'De tus leads se pierden para siempre',
+    'problem.c2.p': 'Casi la mitad de las consultas que entran por WhatsApp desaparecen. Leads que ya pagaste con publicidad.',
+    'problem.c3.tag': 'Productividad',
+    'problem.c3.h3': 'Semanales que tu equipo pierde en tareas manuales',
+    'problem.c3.p': 'Tu equipo pierde medio día laboral calificando y asignando leads a mano en vez de cerrar ventas.',
+    'features.eyebrow': 'Funcionalidades',
+    'features.h2': 'Todo lo que necesitás para nunca perder un lead',
+    'features.f1.h3': 'Captura Inteligente', 'features.f1.p': 'Tu IA responde 24/7 en WhatsApp, Instagram DM y web chat. Cada mensaje es un lead capturado.',
+    'features.f2.h3': 'Automatizaciones', 'features.f2.p': 'Seguimiento automático multicanal. Recordatorios, nurturing y re-engagement sin que tu equipo mueva un dedo.',
+    'features.f3.h3': 'Reportes e Inteligencia', 'features.f3.p': 'Dashboard en tiempo real. Reportes IA semanales que llegan a tu email cada lunes. Sin preparar nada.',
+    'features.f4.h3': 'Lead Routing Avanzado', 'features.f4.p': 'Cada lead al vendedor correcto al instante. Por geografía, producto o disponibilidad.',
+    'features.f5.h3': 'Omnicanal Unificado', 'features.f5.p': 'Todas tus conversaciones en una sola bandeja. WhatsApp, web, Instagram, Facebook.',
+    'features.f6.h3': 'IA Entrenada para Vos', 'features.f6.p': 'No es un chatbot genérico. ROMA aprende de tu negocio, tus productos y tu tono.',
+    'how.eyebrow': 'Proceso',
+    'how.h2': 'Así de fácil empezás a <em class="gradient-subtitle">capturar más leads</em>',
+    'how.s1.h3': 'Conectá tus canales', 'how.s1.p': 'Vinculá WhatsApp, web chat y redes en 2 minutos. ROMA empieza a escuchar al instante y capturar cada mensaje.',
+    'how.s2.h3': 'La IA toma el control', 'how.s2.p': 'Responde, califica y asigna cada lead automáticamente usando inteligencia artificial. Tus vendedores reciben leads listos para cerrar.',
+    'how.s3.h3': 'Medí y escalá', 'how.s3.p': 'Dashboard en tiempo real con métricas clave. Reportes IA cada lunes. Datos claros para tomar decisiones y escalar tu negocio.',
     'dash.eyebrow': 'Dashboard', 'dash.h2': 'Control total en tiempo real',
-    'dash.kpi1.n': 'Post semanal', 'dash.kpi1.l': 'contenido fresco para tus redes todas las semanas',
-    'dash.kpi2.n': '+300%', 'dash.kpi2.l': 'alcance orgánico promedio en primeros 60 días',
-    'dash.kpi3.n': 'GMB optimizado', 'dash.kpi3.l': 'tu negocio visible en Google Maps y Search',
-    'dash.kpi4.n': 'Reportes IA', 'dash.kpi4.l': 'resumen semanal con métricas y recomendaciones',
     'faq.eyebrow': 'FAQ', 'faq.h2': 'Preguntas frecuentes',
-    'faq.q1': '¿Qué tipo de negocios atienden?', 'faq.a1': 'Restaurantes, salones de belleza, barberías, clínicas, talleres, tiendas de ropa y cualquier negocio latino local en USA que quiera crecer online.',
-    'faq.q2': '¿Cuánto cuesta realmente?', 'faq.a2': 'Desde $79/mes todo incluido. No hay costos ocultos. La pauta publicitaria (Google Ads, Meta Ads) se factura aparte y vos elegís cuánto invertir.',
-    'faq.q3': '¿En cuánto tiempo veo resultados?', 'faq.a3': 'Las primeras señales se ven en 2-4 semanas. Resultados sólidos en 60-90 días con ejecución constante. Te enviamos reportes semanales para que veas el progreso.',
-    'faq.q4': '¿Tengo que firmar contrato?', 'faq.a4': 'No. Mes a mes, sin permanencia. Cancelás cuando quieras. También tenemos 15% de descuento si preferís contratar anual.',
-    'faq.q5': '¿Qué incluye exactamente cada plan?', 'faq.a5': 'Cada plan incluye contenido para redes, gestión de Google Mi Negocio, chatbot WhatsApp, reportes IA y soporte. Los planes más avanzados agregan Google Ads, Meta Ads, reels, diseño gráfico y web profesional.',
-    'faq.q6': '¿Puedo hacer cambios en el contenido?', 'faq.a6': 'Sí. Trabajamos con tu feedback. El contenido se ajusta a tu marca, tono y preferencias. Vos revisás antes de publicar.',
-    'faq.q7': '¿Qué pasa si mi negocio ya tiene agencia?', 'faq.a7': 'Podemos entrar por una auditoría gratuita y optimización puntual, o integrar el chatbot WhatsApp como complemento a lo que ya tenés.',
-    'faq.q8': '¿Atienden en inglés también?', 'faq.a8': 'Sí. Todo nuestro servicio es bilingüe español e inglés. El chatbot responde en el idioma del cliente automáticamente.',
-    'footer.desc': 'ROMA AI es una agencia de marketing digital con inteligencia artificial para pequeños negocios latinos en USA. Redes sociales, web, anuncios y automatización — desde $79/mes.',
-    'feat.wa': 'Redes Sociales', 'feat.wa.tip': 'Posts, reels e historias para Instagram y Facebook. Contenido fresco todas las semanas.',
-    'feat.webchat': 'Google Ads', 'feat.webchat.tip': 'Campañas en Google Search y Maps para que clientes te encuentren cuando buscan lo que ofrecés.',
-    'feat.routing': 'Meta Ads', 'feat.routing.tip': 'Anuncios en Facebook e Instagram segmentados a tu comunidad latina local.',
-    'feat.meta': 'Web Profesional', 'feat.meta.tip': 'Landing page o sitio web completo optimizado para celulares y Google.',
-    'feat.reports': 'WhatsApp Bot', 'feat.reports.tip': 'Chatbot inteligente que responde 24/7, captura pedidos y califica clientes automáticamente.',
-    'feat.crm': 'GMB', 'feat.crm.tip': 'Optimización de Google Mi Negocio para salir en los primeros resultados de Maps y Search.',
-    'feat.bilingual': 'Reportes IA', 'feat.bilingual.tip': 'Resumen semanal con métricas de alcance, engagement y resultados. Decisiones basadas en datos.',
+    'faq.q1': '¿Necesito conocimientos técnicos?', 'faq.a1': 'No. Conectás WhatsApp en 2 minutos. No necesitás desarrolladores.',
+    'faq.q2': '¿Cuánto tarda ver resultados?', 'faq.a2': 'El primer día mejoran los tiempos de respuesta. El ROI se ve en el primer mes.',
+    'faq.q3': '¿La IA suena a robot?', 'faq.a3': 'ROMA aprende tu tono de voz. El 90% de los leads no distingue que habla con IA.',
+    'faq.q4': '¿Puedo cancelar cuando quiera?', 'faq.a4': 'Sí, sin permanencia. Exportás tus datos y listo.',
+    'footer.desc': 'ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.',
+    'feat.wa': 'WhatsApp Business', 'feat.wa.tip': 'Respondé mensajes automáticamente desde tu número de empresa. Disponible 24/7.',
+    'feat.webchat': 'WebChat', 'feat.webchat.tip': 'Widget de chat para tu sitio web. Sin código, listo en 2 minutos.',
+    'feat.routing': 'Lead Routing', 'feat.routing.tip': 'Cada consulta al vendedor correcto según producto, zona o disponibilidad.',
+    'feat.meta': 'Meta Ads', 'feat.meta.tip': 'Conectá tus campañas de Facebook e Instagram directo al flujo de captura.',
+    'feat.reports': 'Reportes IA', 'feat.reports.tip': 'Resumen semanal con métricas clave y recomendaciones automáticas.',
+    'feat.crm': 'CRM', 'feat.crm.tip': 'Historial de cada lead, estado de conversación y notas del vendedor.',
+    'feat.bilingual': 'Bilingüe', 'feat.bilingual.tip': 'Tu agente habla español e inglés nativamente según el idioma del cliente.',
   },
   en: {
-    'nav.cta': 'Start Now',
-    'nav.features': 'Services', 'nav.how': 'How it works', 'nav.login': 'Sign in',
+    'nav.cta': 'Start Free',
+    'nav.features': 'Features', 'nav.how': 'How it works',
     'nav.cases': 'Success Stories', 'nav.pricing': 'Pricing',
-    'hero.eyebrow': 'Digital marketing for Latino businesses',
-    'hero.h1': 'Digital marketing that understands your Latino business',
-    'hero.p': 'Social media content, Google & Meta ads, website, WhatsApp automation and AI reports. Everything your business needs to grow online — from $79/mo.',
-    'hero.cta1': 'Start from $79/mo →', 'hero.cta2': 'See services',
-    'stats.n1': '+300%', 'stats.l1': 'avg organic reach',
-    'stats.n2': '24/7', 'stats.l2': 'active digital presence',
-    'stats.n3': '70%', 'stats.l3': 'less than traditional agency',
-    'stats.n4': '30d', 'stats.l4': 'satisfaction guarantee',
+    'hero.eyebrow': 'Conversational AI for sales teams',
+    'hero.h1': 'Turn every conversation into a closed sale',
+    'hero.p': 'ROMA AI responds 24/7 on WhatsApp, Instagram and your website. Capture, qualify and route every lead to the right salesperson. While you sleep, your team sells.',
+    'hero.cta1': 'Start Free →', 'hero.cta2': 'See how it works',
+    'stats.n1': '< 2min', 'stats.l1': 'auto response',
+    'stats.n2': '24/7', 'stats.l2': 'lead capture',
+    'stats.n3': '20h', 'stats.l3': 'saved per week',
+    'stats.n4': '15d', 'stats.l4': 'money-back guarantee',
     'pricing.eyebrow': 'Plans & Pricing',
-    'pricing.title': 'Digital marketing from $79/mo. No long contracts.',
-    'pricing.note': 'No lock-in. Cancel anytime. <strong>30-day</strong> satisfaction guarantee. Ad spend is billed separately.',
+    'pricing.title': 'Start today. Month-to-month. No contract.',
+    'pricing.note': 'One-time setup fee <strong>$299 – $599</strong>. No lock-in. 15-day money-back guarantee.',
     'pricing.per_month': '/mo',
-    'pricing.base.name': 'Basic', 'pricing.base.setup': 'No setup fee',
-    'pricing.base.f1': 'GMB optimized + 1 post/week', 'pricing.base.f2': 'Auto replies up to 10/week',
-    'pricing.base.f3': 'Dashboard with basic metrics', 'pricing.base.f4': 'Monthly AI report', 'pricing.base.f5': 'WhatsApp support',
-    'pricing.cta_start': 'Start now',
-    'pricing.pro.badge': 'MOST POPULAR', 'pricing.pro.name': 'Intermediate', 'pricing.pro.setup': 'One-time setup: $299',
-    'pricing.pro.f1': '3 posts/week on social media', 'pricing.pro.f2': 'Google Ads $50 + WhatsApp setup',
-    'pricing.pro.f3': '2 reels/month + stories', 'pricing.pro.f4': 'Weekly AI reports',
-    'pricing.pro.f5': 'WhatsApp chatbot included', 'pricing.pro.f6': 'Priority support',
-    'pricing.cta_trial': 'Start — 30 days risk-free',
-    'pricing.ent.name': 'Full', 'pricing.ent.price': '$399', 'pricing.ent.setup': 'One-time setup: $599',
-    'pricing.ent.f1': '5 posts/week multichannel', 'pricing.ent.f2': 'Meta Ads $100 + Google Ads $100',
-    'pricing.ent.f3': 'Graphic design included', 'pricing.ent.f4': 'Professional website + GMB', 'pricing.ent.f5': 'Monthly strategy consulting',
-    'pricing.cta_contact': 'Talk to Roma',
-    'cases.eyebrow': 'Real cases', 'cases.title': 'Latino businesses growing with Roma AI',
+    'pricing.base.name': 'Base', 'pricing.base.setup': 'One-time setup: $299',
+    'pricing.base.f1': '1 WhatsApp channel', 'pricing.base.f2': 'Web chat included',
+    'pricing.base.f3': 'Automatic lead qualification', 'pricing.base.f4': 'Real-time dashboard', 'pricing.base.f5': 'Monthly AI reports',
+    'pricing.cta_start': 'Get started',
+    'pricing.pro.badge': 'MOST POPULAR', 'pricing.pro.name': 'Pro', 'pricing.pro.setup': 'One-time setup: $599',
+    'pricing.pro.f1': '3 multichannel pipelines', 'pricing.pro.f2': 'Meta Ads auto-routing',
+    'pricing.pro.f3': 'Advanced AI qualification', 'pricing.pro.f4': 'Weekly AI reports',
+    'pricing.pro.f5': 'CRM integration', 'pricing.pro.f6': 'Priority support',
+    'pricing.cta_trial': 'Start — 15 days risk-free',
+    'pricing.ent.name': 'Enterprise', 'pricing.ent.price': 'Custom', 'pricing.ent.setup': 'Custom quote',
+    'pricing.ent.f1': 'Unlimited channels', 'pricing.ent.f2': 'AI trained on your business',
+    'pricing.ent.f3': 'Full API & webhooks', 'pricing.ent.f4': 'Dedicated account manager', 'pricing.ent.f5': '24/7 support',
+    'pricing.cta_contact': 'Talk to sales',
+    'cases.eyebrow': 'How our clients use ROMA', 'cases.title': 'Latino businesses automating their sales',
     'cases.c1.quote': '"My clinic gets inquiries at 3am. ROMA responds, schedules, and I arrive with confirmed patients."',
-    'cases.c1.name': 'Medical Aesthetics Clinic', 'cases.c1.location': 'Miami, FL — Basic Plan',
+    'cases.c1.name': 'Medical Aesthetics Clinic', 'cases.c1.location': 'Miami, FL — Base Plan',
     'cases.c2.quote': '"WhatsApp orders were getting lost. Now ROMA captures them all and routes to the right team."',
-    'cases.c2.name': 'Restaurant Chain', 'cases.c2.location': 'Los Angeles, CA — Intermediate Plan',
+    'cases.c2.name': 'Restaurant Chain', 'cases.c2.location': 'Los Angeles, CA — Pro Plan',
     'cases.c3.quote': '"Real estate moves fast. ROMA qualifies leads in minutes and routes them to the right agent."',
-    'cases.c3.name': 'Real Estate Agency', 'cases.c3.location': 'Houston, TX — Full Plan',
-    'cta.urgency': 'Latino businesses across the US are growing with Roma AI right now',
-    'cta.h2': 'Your business deserves to be visible online',
+    'cases.c3.name': 'Real Estate Agency', 'cases.c3.location': 'Houston, TX — Enterprise Plan',
+    'cta.urgency': 'Latino businesses across the US are automating their sales right now',
+    'cta.h2': 'Stop losing leads while you read this',
     'cta.trust1': 'No credit card required',
     'cta.trust2': 'Cancel anytime',
     'cta.trust3': 'Real support in English & Spanish',
-    'cta.desc': '30-day satisfaction guarantee. No contract. Start from $79/mo and Roma handles everything.',
-    'cta.btn': '💬 Start from $79/mo',
+    'cta.desc': '15-day money-back guarantee. No contract. Roma helps you choose the right plan.',
+    'cta.btn': '💬 Talk to Roma now',
     'problem.eyebrow': 'The Problem',
-    'problem.h2': 'Your Latino business is invisible online',
-    'problem.c1.tag': 'No digital presence',
-    'problem.c1.h3': 'Of Latinos in the US can\'t find your business on Google',
-    'problem.c1.p': 'If you\'re not on Google Maps or your social media is inactive, customers search for you and can\'t find you. They go straight to your competition.',
+    'problem.h2': 'Without automation, your leads go cold in minutes',
+    'problem.c1.tag': 'Response Time',
+    'problem.c1.h3': 'Your leads wait 4 hours for your reply',
+    'problem.c1.p': 'A hot lead goes cold in under 5 minutes. By the time you respond, they\'ve already chosen your competitor.',
     'problem.c2.tag': 'Lost Opportunities',
-    'problem.c2.h3': 'Of Latino businesses have no active digital strategy',
-    'problem.c2.p': 'While other owners move forward, those who don\'t invest in digital marketing lose customers every day without knowing it.',
-    'problem.c3.tag': 'Agency Cost',
-    'problem.c3.h3': 'More expensive than doing it with Roma AI',
-    'problem.c3.p': 'A traditional agency charges $800-$2,000/mo. Roma AI uses artificial intelligence to deliver the same service from $79/mo.',
-    'features.eyebrow': 'Services included',
-    'features.h2': 'Everything your business needs to grow',
-    'features.f1.h3': 'Social Media', 'features.f1.p': 'Posts, reels and stories for Instagram and Facebook. Fresh content every week.',
-    'features.f2.h3': 'Google Ads', 'features.f2.p': 'Campaigns on Google Search and Maps so customers find you. Budget from $50/mo.',
-    'features.f3.h3': 'Meta Ads', 'features.f3.p': 'Facebook and Instagram ads targeted to your local Latino community. Measurable results.',
-    'features.f4.h3': 'Professional Website', 'features.f4.p': 'Landing page or full website optimized for mobile and Google. Designed to convert.',
-    'features.f5.h3': 'WhatsApp Bot', 'features.f5.p': 'Smart chatbot that responds 24/7, captures orders and qualifies customers automatically.',
-    'features.f6.h3': 'AI Reports', 'features.f6.p': 'Weekly clear summary of reach, engagement and results. No complexity.',
-    'how.eyebrow': 'It\'s simple',
-    'how.h2': 'Three steps and <em class="gradient-subtitle">your business visible online</em>',
-    'how.s1.h3': 'Choose your plan', 'how.s1.p': 'Pick the plan that best fits your business. From social media to full website with ads.',
-    'how.s2.h3': 'ROMA creates your content', 'how.s2.p': 'We post on your social media, set up your ads, and optimize your website and Google Business Profile. Results from day one.',
-    'how.s3.h3': 'Measure your growth', 'how.s3.p': 'Dashboard with reach, engagement and results metrics. Weekly AI reports with recommendations to keep growing.',
+    'problem.c2.h3': 'Of your leads are lost forever',
+    'problem.c2.p': 'Almost half of WhatsApp inquiries disappear. Leads you already paid for with your ad budget.',
+    'problem.c3.tag': 'Productivity',
+    'problem.c3.h3': 'Weekly hours your team wastes on manual tasks',
+    'problem.c3.p': 'Your team wastes half a workday qualifying and assigning leads by hand instead of closing deals.',
+    'features.eyebrow': 'Features',
+    'features.h2': 'Everything you need to never miss a lead',
+    'features.f1.h3': 'Smart Lead Capture', 'features.f1.p': 'Your AI responds 24/7 on WhatsApp, Instagram DM and web chat. Every message becomes a captured lead.',
+    'features.f2.h3': 'Automations', 'features.f2.p': 'Automated multichannel follow-up. Reminders, nurturing and re-engagement without your team lifting a finger.',
+    'features.f3.h3': 'Reports & Intelligence', 'features.f3.p': 'Real-time dashboard. Weekly AI reports delivered to your inbox every Monday. Zero prep required.',
+    'features.f4.h3': 'Advanced Lead Routing', 'features.f4.p': 'Every lead to the right salesperson instantly. By geography, product or availability.',
+    'features.f5.h3': 'Unified Omnichannel', 'features.f5.p': 'All your conversations in one inbox. WhatsApp, web, Instagram, Facebook.',
+    'features.f6.h3': 'AI Trained for You', 'features.f6.p': 'Not a generic chatbot. ROMA learns your business, your products and your tone.',
+    'how.eyebrow': 'Process',
+    'how.h2': 'This simple — start <em class="gradient-subtitle">capturing more leads</em>',
+    'how.s1.h3': 'Connect your channels', 'how.s1.p': 'Link WhatsApp, web chat and social media in 2 minutes. ROMA starts listening instantly and capturing every message.',
+    'how.s2.h3': 'AI takes control', 'how.s2.p': 'Automatically responds, qualifies and assigns every lead using AI. Your salespeople receive ready-to-close leads.',
+    'how.s3.h3': 'Measure and scale', 'how.s3.p': 'Real-time dashboard with key metrics. AI reports every Monday. Clear data to make decisions and scale your business.',
     'dash.eyebrow': 'Dashboard', 'dash.h2': 'Total control in real time',
-    'dash.kpi1.n': 'Weekly post', 'dash.kpi1.l': 'fresh content for your social media every week',
-    'dash.kpi2.n': '+300%', 'dash.kpi2.l': 'avg organic reach in first 60 days',
-    'dash.kpi3.n': 'GMB optimized', 'dash.kpi3.l': 'your business visible on Google Maps and Search',
-    'dash.kpi4.n': 'AI Reports', 'dash.kpi4.l': 'weekly summary with metrics and recommendations',
     'faq.eyebrow': 'FAQ', 'faq.h2': 'Frequently Asked Questions',
-    'faq.q1': 'What type of businesses do you serve?', 'faq.a1': 'Restaurants, beauty salons, barbershops, clinics, repair shops, clothing stores and any local Latino business in the US wanting to grow online.',
-    'faq.q2': 'What does it actually cost?', 'faq.a2': 'From $79/mo all-inclusive. No hidden costs. Ad spend (Google Ads, Meta Ads) is billed separately and you choose how much to invest.',
-    'faq.q3': 'How soon will I see results?', 'faq.a3': 'First signals in 2-4 weeks. Solid results in 60-90 days with consistent execution. We send weekly reports so you can track progress.',
-    'faq.q4': 'Do I need to sign a contract?', 'faq.a4': 'No. Month to month, no commitment. Cancel anytime. We also offer 15% off if you prefer an annual plan.',
-    'faq.q5': 'What exactly is included in each plan?', 'faq.a5': 'Every plan includes social media content, Google Business Profile management, WhatsApp chatbot, AI reports and support. Advanced plans add Google Ads, Meta Ads, reels, graphic design and professional website.',
-    'faq.q6': 'Can I make changes to the content?', 'faq.a6': 'Yes. We work with your feedback. Content is adjusted to your brand, tone and preferences. You review before we publish.',
-    'faq.q7': 'What if my business already has an agency?', 'faq.a7': 'We can start with a free audit and targeted optimization, or integrate the WhatsApp chatbot as a complement to what you already have.',
-    'faq.q8': 'Do you also serve in English?', 'faq.a8': 'Yes. Our entire service is bilingual Spanish and English. The chatbot responds in the client\'s language automatically.',
-    'footer.desc': 'ROMA AI is a digital marketing agency powered by AI for small Latino businesses in the US. Social media, website, ads and automation — from $79/mo.',
-    'feat.wa': 'Social Media', 'feat.wa.tip': 'Posts, reels and stories for Instagram and Facebook. Fresh content every week.',
-    'feat.webchat': 'Google Ads', 'feat.webchat.tip': 'Campaigns on Google Search and Maps so customers find you when they search for what you offer.',
-    'feat.routing': 'Meta Ads', 'feat.routing.tip': 'Facebook and Instagram ads targeted to your local Latino community.',
-    'feat.meta': 'Professional Website', 'feat.meta.tip': 'Landing page or full website optimized for mobile and Google.',
-    'feat.reports': 'WhatsApp Bot', 'feat.reports.tip': 'Smart chatbot that responds 24/7, captures orders and qualifies customers automatically.',
-    'feat.crm': 'GMB', 'feat.crm.tip': 'Google Business Profile optimization to appear in top Maps and Search results.',
-    'feat.bilingual': 'AI Reports', 'feat.bilingual.tip': 'Weekly summary with reach, engagement and results metrics. Data-driven decisions.',
+    'faq.q1': 'Do I need technical knowledge?', 'faq.a1': 'No. Connect WhatsApp in 2 minutes. No developers needed.',
+    'faq.q2': 'How long to see results?', 'faq.a2': 'Response times improve on day one. ROI is visible within the first month.',
+    'faq.q3': 'Does the AI sound like a robot?', 'faq.a3': 'ROMA learns your voice tone. 90% of leads can\'t tell they\'re talking to AI.',
+    'faq.q4': 'Can I cancel anytime?', 'faq.a4': 'Yes, no commitment. Export your data and you\'re done.',
+    'footer.desc': 'ROMA AI automates your sales with artificial intelligence. Respond 24/7, capture more leads and close more deals.',
+    'feat.wa': 'WhatsApp Business', 'feat.wa.tip': 'Reply automatically from your business number. Available 24/7.',
+    'feat.webchat': 'WebChat', 'feat.webchat.tip': 'Chat widget for your website. No code needed, ready in 2 minutes.',
+    'feat.routing': 'Lead Routing', 'feat.routing.tip': 'Every inquiry to the right salesperson by product, area or availability.',
+    'feat.meta': 'Meta Ads', 'feat.meta.tip': 'Connect your Facebook and Instagram campaigns directly to your capture flow.',
+    'feat.reports': 'AI Reports', 'feat.reports.tip': 'Weekly summary with key metrics and automatic recommendations.',
+    'feat.crm': 'CRM', 'feat.crm.tip': 'Full lead history, conversation status and salesperson notes.',
+    'feat.bilingual': 'Bilingual', 'feat.bilingual.tip': 'Your agent speaks Spanish and English natively based on the client\'s language.',
   }
 };
 
@@ -2543,138 +2305,69 @@ if (navigator.language && !navigator.language.startsWith('es')) {
 }
 
 // ===== LOGO PARTICLE ANIMATION =====
-// Partículas del cabello + órbita circular
+// Partículas que orbitan el logo pill (Opción 1: Partículas + Pulso constante)
 (function initLogoParticles() {
   const lpc = document.getElementById('logoParticleCanvas');
-  const pill = document.getElementById('logoPill');
-  if (!lpc || !pill) return;
+  if (!lpc) return;
   const lctx = lpc.getContext('2d');
+  const W = 220, H = 120;
+  lpc.width = W; lpc.height = H;
 
-  const PAD = 80; // espacio alrededor del pill para las partículas
-  let cx = 0, cy = 0, logoR = 0;
+  // Centro del logo pill (ajustado a posición fixed top:14px left:20px, pill ~150px wide 80px tall)
+  const cx = 90, cy = 50;
 
-  function setupCanvas() {
-    const rect = pill.getBoundingClientRect();
-    // radio del logo circular (imagen cuadrada 94px en desktop, 50px en mobile)
-    logoR = (rect.height - 8) / 2;
-    const W = Math.round(rect.width + PAD * 2);
-    const H = Math.round(rect.height + PAD * 2);
-    lpc.style.left   = (rect.left - PAD) + 'px';
-    lpc.style.top    = (rect.top  - PAD) + 'px';
-    lpc.style.width  = W + 'px';
-    lpc.style.height = H + 'px';
-    lpc.width  = W;
-    lpc.height = H;
-    // centro del círculo logo dentro del canvas
-    cx = PAD + 4 + logoR;
-    cy = PAD + 4 + logoR;
-  }
-  setupCanvas();
-  window.addEventListener('resize', setupCanvas);
+  const COLORS = ['79,110,247', '0,229,191', '167,139,250'];
 
-  const COLORS = ['79,110,247', '0,229,191', '167,139,250', '56,189,248'];
-
-  // ORBIT PARTICLES — anillo alrededor del logo circular
-  class OrbitParticle {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      this.angle = init ? Math.random() * Math.PI * 2 : this.angle;
-      this.speed = (0.004 + Math.random() * 0.009) * (Math.random() < 0.5 ? 1 : -1);
-      this.orbitR = logoR + 5 + Math.random() * 18;
-      this.size = 0.5 + Math.random() * 1.1;
+  class LogoParticle {
+    constructor() { this.reset(); }
+    reset() {
+      this.angle = Math.random() * Math.PI * 2;
+      this.speed = (0.008 + Math.random() * 0.016) * (Math.random() < 0.5 ? 1 : -1);
+      this.rx = 55 + Math.random() * 35;
+      this.ry = 22 + Math.random() * 18;
+      this.tiltOffset = (Math.random() - 0.5) * 0.4;
+      this.size = 0.8 + Math.random() * 1.8;
       this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      this.alpha = 0.35 + Math.random() * 0.45;
-      this.phase = Math.random() * Math.PI * 2;
-      this.phaseSpeed = 0.03 + Math.random() * 0.03;
-    }
-    update() { this.angle += this.speed; this.phase += this.phaseSpeed; }
-    draw(ctx) {
-      const x = cx + Math.cos(this.angle) * this.orbitR;
-      const y = cy + Math.sin(this.angle) * this.orbitR;
-      const pulse = 1 + Math.sin(this.phase) * 0.28;
-      ctx.beginPath();
-      ctx.arc(x, y, this.size * pulse, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color},${this.alpha * pulse})`;
-      ctx.fill();
-    }
-  }
-
-  // HAIR PARTICLES — emergen del cabello (zona superior-derecha del logo)
-  // El cabello fluye desde la cara (izquierda) hacia arriba-derecha
-  // En el logo: cara ~30% izquierdo, cabello ~70% superior-derecho
-  class HairParticle {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      // Zona del cabello: arco superior entre -130° y +10° (arriba-derecha)
-      const hairAngle = (-Math.PI * 0.72) + Math.random() * (Math.PI * 0.75);
-      // Spawn dentro/sobre el contorno del logo (radio variable)
-      const spawnR = logoR * (0.42 + Math.random() * 0.55);
-      this.x = cx + Math.cos(hairAngle) * spawnR;
-      this.y = cy + Math.sin(hairAngle) * spawnR;
-      // Deriva: hacia afuera y arriba, siguiendo la dirección del cabello
-      const driftDir = hairAngle - 0.15 + (Math.random() - 0.5) * 0.7;
-      const spd = 0.18 + Math.random() * 0.42;
-      this.vx = Math.cos(driftDir) * spd * 0.5;
-      this.vy = Math.sin(driftDir) * spd - 0.35;
-      this.size = 0.35 + Math.random() * 0.85;
-      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      this.alpha = 0.55 + Math.random() * 0.4;
-      this.maxLife = 70 + Math.random() * 110;
-      this.life = init ? Math.random() * this.maxLife : 0;
+      this.alpha = 0.3 + Math.random() * 0.5;
+      this.pulsePhase = Math.random() * Math.PI * 2;
+      this.pulseSpeed = 0.04 + Math.random() * 0.04;
     }
     update() {
-      this.life++;
-      this.x += this.vx;
-      this.y += this.vy;
-      this.vy -= 0.004; // leve aceleración hacia arriba
+      this.angle += this.speed;
+      this.pulsePhase += this.pulseSpeed;
     }
-    isDead() { return this.life >= this.maxLife; }
     draw(ctx) {
-      const t = this.life / this.maxLife;
-      const a = this.alpha * (1 - t);
-      if (a <= 0.01) return;
+      const a = this.angle + this.tiltOffset;
+      const x = cx + Math.cos(a) * this.rx;
+      const y = cy + Math.sin(a) * this.ry;
+      const pulse = 1 + Math.sin(this.pulsePhase) * 0.35;
+      const alpha = this.alpha * pulse;
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size * (1 - t * 0.25), 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color},${a})`;
+      ctx.arc(x, y, this.size * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${alpha})`;
       ctx.fill();
     }
   }
 
-  const orbitParticles = Array.from({ length: 16 }, () => new OrbitParticle());
-  const hairParticles  = Array.from({ length: 30 }, () => new HairParticle());
+  const particles = Array.from({ length: 28 }, () => {
+    const p = new LogoParticle();
+    p.angle = Math.random() * Math.PI * 2; // stagger
+    return p;
+  });
 
   let logoTime = 0;
   function animateLogo() {
-    lctx.clearRect(0, 0, lpc.width, lpc.height);
-    logoTime += 0.012;
-
-    // Halo pulsante centrado en el logo
-    const hA = 0.045 + Math.sin(logoTime * 1.4) * 0.03;
-    const grad = lctx.createRadialGradient(cx, cy, 0, cx, cy, logoR + 22);
-    grad.addColorStop(0,   `rgba(0,229,191,${hA * 0.6})`);
-    grad.addColorStop(0.5, `rgba(79,110,247,${hA})`);
-    grad.addColorStop(1,   'rgba(0,0,0,0)');
+    lctx.clearRect(0, 0, W, H);
+    logoTime += 0.01;
+    // Pulso de halo central
+    const haloAlpha = 0.04 + Math.sin(logoTime * 1.5) * 0.03;
+    const grad = lctx.createRadialGradient(cx, cy, 5, cx, cy, 70);
+    grad.addColorStop(0, `rgba(0,229,191,${haloAlpha})`);
+    grad.addColorStop(0.5, `rgba(79,110,247,${haloAlpha * 0.5})`);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
     lctx.fillStyle = grad;
-    lctx.fillRect(0, 0, lpc.width, lpc.height);
-
-    // Ring sutil alrededor del círculo del logo
-    const ringA = 0.12 + Math.sin(logoTime * 1.1) * 0.07;
-    lctx.beginPath();
-    lctx.arc(cx, cy, logoR + 2, 0, Math.PI * 2);
-    lctx.strokeStyle = `rgba(0,229,191,${ringA})`;
-    lctx.lineWidth = 0.8;
-    lctx.stroke();
-
-    // Órbita
-    orbitParticles.forEach(p => { p.update(); p.draw(lctx); });
-
-    // Cabello
-    for (let i = 0; i < hairParticles.length; i++) {
-      hairParticles[i].update();
-      hairParticles[i].draw(lctx);
-      if (hairParticles[i].isDead()) hairParticles[i].reset();
-    }
-
+    lctx.fillRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(lctx); });
     requestAnimationFrame(animateLogo);
   }
   animateLogo();
@@ -2699,84 +2392,6 @@ if (hamburger) {
 }
 </script>
 
-<script defer src="/roma-webchat/roma-webchat.js"></script>
-
-<script>
-(function initFooterLogo() {
-  const canvas = document.getElementById('logoFooterCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = 240, H = 240;
-  canvas.width = W; canvas.height = H;
-  const cx = W / 2, cy = H / 2, logoR = 44;
-  const COLORS = ['79,110,247','0,229,191','167,139,250','56,189,248'];
-
-  class Orbit {
-    constructor() { this.reset(true); }
-    reset(init) {
-      this.angle = init ? Math.random() * Math.PI * 2 : this.angle;
-      this.speed = (0.004 + Math.random() * 0.007) * (Math.random() < 0.5 ? 1 : -1);
-      this.r = logoR + 5 + Math.random() * 16;
-      this.size = 0.5 + Math.random() * 1.1;
-      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      this.alpha = 0.35 + Math.random() * 0.45;
-      this.phase = Math.random() * Math.PI * 2;
-    }
-    update() { this.angle += this.speed; this.phase += 0.03; }
-    draw() {
-      const x = cx + Math.cos(this.angle) * this.r, y = cy + Math.sin(this.angle) * this.r;
-      const p = 1 + Math.sin(this.phase) * 0.28;
-      ctx.beginPath(); ctx.arc(x, y, this.size * p, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color},${this.alpha * p})`; ctx.fill();
-    }
-  }
-
-  class Hair {
-    constructor() { this.reset(true); }
-    reset(init) {
-      const a = (-Math.PI * 0.72) + Math.random() * (Math.PI * 0.75);
-      const sr = logoR * (0.42 + Math.random() * 0.55);
-      this.x = cx + Math.cos(a) * sr; this.y = cy + Math.sin(a) * sr;
-      const dir = a - 0.12 + (Math.random() - 0.5) * 0.65;
-      const spd = 0.2 + Math.random() * 0.45;
-      this.vx = Math.cos(dir) * spd * 0.45; this.vy = Math.sin(dir) * spd - 0.38;
-      this.size = 0.35 + Math.random() * 0.9;
-      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      this.alpha = 0.55 + Math.random() * 0.42;
-      this.maxLife = 65 + Math.random() * 100;
-      this.life = init ? Math.random() * this.maxLife : 0;
-    }
-    update() { this.life++; this.x += this.vx; this.y += this.vy; this.vy -= 0.004; }
-    isDead() { return this.life >= this.maxLife; }
-    draw() {
-      const t = this.life / this.maxLife, a = this.alpha * (1 - t);
-      if (a < 0.01) return;
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.size * (1 - t * 0.25), 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color},${a})`; ctx.fill();
-    }
-  }
-
-  const orbits = Array.from({ length: 16 }, () => new Orbit());
-  const hairs  = Array.from({ length: 30 }, () => new Hair());
-  let t = 0;
-
-  function animate() {
-    ctx.clearRect(0, 0, W, H); t += 0.012;
-    const ha = 0.045 + Math.sin(t * 1.4) * 0.03;
-    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, logoR + 20);
-    g.addColorStop(0, `rgba(0,229,191,${ha * 0.55})`);
-    g.addColorStop(0.55, `rgba(79,110,247,${ha})`);
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    const ra = 0.13 + Math.sin(t * 1.1) * 0.07;
-    ctx.beginPath(); ctx.arc(cx, cy, logoR + 2, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(0,229,191,${ra})`; ctx.lineWidth = 0.9; ctx.stroke();
-    orbits.forEach(p => { p.update(); p.draw(); });
-    hairs.forEach(p => { p.update(); p.draw(); if (p.isDead()) p.reset(); });
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
-</script>
+<script defer src="/roma-webchat/webchat.js"></script>
 
 </body></html>
