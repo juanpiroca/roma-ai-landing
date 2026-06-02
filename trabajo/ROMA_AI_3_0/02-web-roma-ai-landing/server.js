@@ -8,8 +8,12 @@ const { syncLead } = require('/home/juanpi/Roma/src/shared/wp-sync');
 
 const DEFAULT_RUNTIME_ROOT = '/home/juanpi/Roma/trabajo/ROMA_AI_3_0/runtime';
 const WEBCHAT_COMPONENT_DIR = '/home/juanpi/JuanPi-Agent/Roma-AI/webchat';
-const PROMPT_PATH = '/home/juanpi/Roma-AI-perfil/20-system-prompt-final.md';
-const ROMA_KB_BUNDLE = process.env.ROMA_KB_BUNDLE || '/home/juanpi/roma/integraciones/roma_kb_bundle.json';
+const PROMPT_PATH = path.join(
+  __dirname,
+  '..',
+  '04-prompts-roma',
+  'ROMA_WEB_CHAT_PROMPT.md',
+);
 const webChatSessions = new Map();
 
 function requireEnv(name) {
@@ -62,18 +66,6 @@ function mentionsPrice(message) {
   return /precio|costo|cu[aá]nto|cuanto|how much|pricing|cost/i.test(String(message || ''));
 }
 
-function normalizeText(value) {
-  return String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
-}
-
-function isValidAnswer(value) {
-  return normalizeText(value).length >= 3;
-}
-
-function isSameAnswer(a, b) {
-  return normalizeText(a) && normalizeText(a) === normalizeText(b);
-}
-
 function getSessionMemory(sessionId) {
   if (!webChatSessions.has(sessionId)) {
     webChatSessions.set(sessionId, {
@@ -93,25 +85,23 @@ function buildWaLink() {
 }
 
 function buildReply({ sessionCount, webAnswer1, webAnswer2, message, showCTA, waLink }) {
-  const negocio = String(webAnswer1 || '').trim();
-
   if (showCTA) {
     if (mentionsPrice(message)) {
-      return `Te paso precio exacto por WhatsApp según tu caso (${negocio || 'tu negocio'}): ${waLink}`;
+      return `Eso lo vemos mejor por WhatsApp, asi puedo darte algo ajustado a tu caso: ${waLink}`;
     }
 
-    return `Perfecto, ya tengo contexto de ${negocio || 'tu negocio'}. Seguimos por WhatsApp y te dejo una propuesta concreta: ${waLink}`;
+    return `Perfecto. Para darte algo mas personalizado, sigamos por WhatsApp: ${waLink}`;
   }
 
-  if (!isValidAnswer(webAnswer1)) {
-    return '¡Genial! Contame primero qué tipo de negocio tenés (ej: barbería, clínica, inmobiliaria).';
+  if (!webAnswer1) {
+    return 'Hola, bienvenido a Roma. Que tipo de negocio tienes?';
   }
 
-  if (!isValidAnswer(webAnswer2) && sessionCount <= 3) {
-    return `Excelente, ${negocio}. ¿Qué querés mejorar primero: más citas/ventas, respuesta más rápida o seguimiento automático?`;
+  if (!webAnswer2 && sessionCount <= 2) {
+    return 'Perfecto. Que quieres mejorar primero: ventas, atencion, contenido, anuncios o automatizacion?';
   }
 
-  return `Perfecto ${negocio ? `para ${negocio}` : ''}. Si querés, te comparto una propuesta por WhatsApp: ${waLink}`;
+  return `Sigamos por WhatsApp para darte algo mas concreto: ${waLink}`;
 }
 
 function forwardMarketingChat(payload) {
@@ -148,22 +138,10 @@ function forwardMarketingChat(payload) {
   });
 }
 
-function getKbBusinessContext() {
-  try {
-    const raw = require('node:fs').readFileSync(ROMA_KB_BUNDLE, 'utf8');
-    const bundle = JSON.parse(raw);
-    const faqCount = Array.isArray(bundle?.faq?.faq) ? bundle.faq.faq.length : 0;
-    const intentsCount = Array.isArray(bundle?.intents?.intents) ? bundle.intents.intents.length : 0;
-    return `\n\n[ROMA_KB]\nversion=${bundle.version || '1.0'}\nfaq_count=${faqCount}\nintents_count=${intentsCount}\nregla_precio=No cerrar por debajo de margen 35%; si faltan datos, pedirlos antes de cotización final.\n[/ROMA_KB]`;
-  } catch {
-    return '\n\n[ROMA_KB]\nversion=unavailable\n[/ROMA_KB]';
-  }
-}
-
 async function loadSystemPrompt(waLink) {
   try {
     const content = await fs.readFile(PROMPT_PATH, 'utf8');
-    return content.replace(/\{\{WHATSAPP_LINK\}\}/g, waLink) + getKbBusinessContext();
+    return content.replace(/\{\{WHATSAPP_LINK\}\}/g, waLink);
   } catch {
     return [
       'Sos ROMA AI, una asesora mujer: profesional, cercana y resolutiva.',
@@ -173,8 +151,7 @@ async function loadSystemPrompt(waLink) {
       'No uses relleno ni frases vacías.',
       `Si corresponde derivar a WhatsApp, compartí exactamente este link: ${waLink}`,
       'Si ya hiciste preguntas de contexto, no reinicies la conversación.',
-      'Nunca cierres precio final sin datos mínimos de alcance y margen >= 35%.',
-    ].join(' ') + getKbBusinessContext();
+    ].join(' ');
   }
 }
 
@@ -201,11 +178,11 @@ async function saveWebLead(lead) {
 }
 
 function syncSessionAnswers(session, incomingAnswer1, incomingAnswer2) {
-  if (isValidAnswer(incomingAnswer1)) {
+  if (incomingAnswer1) {
     session.webAnswer1 = incomingAnswer1;
   }
 
-  if (isValidAnswer(incomingAnswer2) && !isSameAnswer(incomingAnswer1 || session.webAnswer1, incomingAnswer2)) {
+  if (incomingAnswer2) {
     session.webAnswer2 = incomingAnswer2;
   }
 }
@@ -216,12 +193,12 @@ function captureImplicitAnswer(session, message) {
     return;
   }
 
-  if (!session.webAnswer1 && session.messageCount >= 1) {
+  if (!session.webAnswer1 && session.messageCount >= 2) {
     session.webAnswer1 = trimmed;
     return;
   }
 
-  if (!session.webAnswer2 && session.webAnswer1 && session.messageCount >= 2 && !mentionsPrice(trimmed)) {
+  if (!session.webAnswer2 && session.webAnswer1 && session.messageCount >= 3 && !mentionsPrice(trimmed)) {
     session.webAnswer2 = trimmed;
   }
 }
@@ -265,22 +242,6 @@ function createApp(options = {}) {
     res.sendFile(path.join(__dirname, 'voice.html'));
   });
 
-  app.get(['/webchat', '/webchat.html'], (_req, res) => {
-    res.sendFile(path.join(__dirname, 'webchat-improved.html'));
-  });
-
-  app.get(['/login', '/login.html'], (_req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
-  });
-
-  app.get(['/terms', '/terms.html'], (_req, res) => {
-    res.sendFile(path.join(__dirname, 'terms.html'));
-  });
-
-  app.get(['/privacy', '/privacy.html'], (_req, res) => {
-    res.sendFile(path.join(__dirname, 'privacy.html'));
-  });
-
   app.post('/marketing/chat', async (req, res) => {
     try {
       const payload = {
@@ -311,16 +272,12 @@ function createApp(options = {}) {
       syncSessionAnswers(session, incomingAnswer1, incomingAnswer2);
       captureImplicitAnswer(session, message);
 
-      if (isSameAnswer(session.webAnswer1, session.webAnswer2)) {
-        session.webAnswer2 = '';
-      }
-
       const waLink = buildWaLink();
       const webAnswer1 = session.webAnswer1;
       const webAnswer2 = session.webAnswer2;
       const sessionCount = session.messageCount;
-      const readyForCTA = isValidAnswer(webAnswer1) && isValidAnswer(webAnswer2) && !isSameAnswer(webAnswer1, webAnswer2);
-      const showCTA = readyForCTA || mentionsPrice(message) || sessionCount >= 5;
+      const showCTA =
+        Boolean(webAnswer1 && webAnswer2) || mentionsPrice(message) || sessionCount >= 3;
       const deterministicReply = buildReply({
         sessionCount,
         webAnswer1,
