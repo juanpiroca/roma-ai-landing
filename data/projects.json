@@ -1,0 +1,93 @@
+[
+  {
+    "name": "JuanPi-Agent",
+    "path": "/home/juanpi/JuanPi-Agent",
+    "type": "git",
+    "description": "# JuanPi-Agent — Índice General  Directorio central de organización de todos los proyectos de JuanPi.",
+    "lastScan": "2026-05-30T19:16:59.913Z"
+  },
+  {
+    "name": "Obsidian_Vault",
+    "path": "/home/juanpi/Obsidian_Vault",
+    "type": "git",
+    "description": "# Segundo Cerebro - Claude + Hermes  Bóveda compartida para unificar contexto entre Claude y Hermes.",
+    "lastScan": "2026-05-30T19:16:59.913Z"
+  },
+  {
+    "name": "Roma",
+    "path": "/home/juanpi/Roma",
+    "type": "node",
+    "description": "Roma — Sistema central de IA personal",
+    "lastScan": "2026-05-30T19:16:59.913Z"
+  },
+  {
+    "name": "Roma-AI-perfil",
+    "path": "/home/juanpi/Roma-AI-perfil",
+    "type": "git",
+    "description": "# Roma-AI-perfil  Estructura tecnica para desplegar el perfil conversacional de `Roma AI` en dos canales productivos:",
+    "lastScan": "2026-05-30T19:16:59.913Z"
+  },
+  {
+    "name": "agente-pagokit",
+    "path": "/home/juanpi/agente-pagokit",
+    "type": "node",
+    "description": "Dev tooling for the PagoKit Claude Code plugin (schema validation, validator tests).",
+    "lastScan": "2026-05-30T19:16:59.913Z"
+  },
+  {
+    "name": "cambista-trader",
+    "path": "/home/juanpi/cambista-trader",
+    "type": "node",
+    "description": "Bot de trading inteligente con análisis de velas, indicadores técnicos, noticias con IA, señales y dashboard",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "cows-tracks",
+    "path": "/home/juanpi/cows-tracks",
+    "type": "git",
+    "description": "# COMBONIX CattleTrack MVP  ## Run",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "dashboard-files",
+    "path": "/home/juanpi/dashboard-files",
+    "type": "git",
+    "description": "dashboard-files",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "gstack",
+    "path": "/home/juanpi/gstack",
+    "type": "node",
+    "description": "Garry's Stack — Claude Code skills + fast headless browser. One repo, one install, entire AI engineering workflow.",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "herdr",
+    "path": "/home/juanpi/herdr",
+    "type": "git",
+    "description": "# herdr  ",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "hermes-dashboard-orchestrator-package",
+    "path": "/home/juanpi/hermes-dashboard-orchestrator-package",
+    "type": "git",
+    "description": "# Hermes Dashboard Orchestrator Skill Pack  Este repo ya no es informativo: contiene **skills reales** de Hermes para co",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "luka-alexa",
+    "path": "/home/juanpi/luka-alexa",
+    "type": "node",
+    "description": "luka-alexa",
+    "lastScan": "2026-05-30T19:16:59.914Z"
+  },
+  {
+    "name": "Token-Saver",
+    "path": "/home/juanpi/projects/Token-Saver",
+    "type": "python",
+    "description": "# Token Saver 🪙  **Shared memory and multi-agent orchestration to save tokens between Claude, Codex, DeepSeek, and Herm",
+    "lastScan": "2026-05-30T19:16:59.915Z"
+  }
+]

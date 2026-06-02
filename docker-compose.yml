@@ -1,0 +1,62 @@
+services:
+  telegram-bot:
+    build: .
+    container_name: roma-bot
+    restart: unless-stopped
+    network_mode: host
+    env_file:
+      - ./config/.env.local
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./tmp:/app/tmp
+    command: node src/telegram-bot/bot.js
+
+  voice-bridge:
+    build: .
+    container_name: roma-voice
+    restart: unless-stopped
+    env_file:
+      - ./config/.env.local
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./tmp:/app/tmp
+    command: node src/voice-bridge/siri-alexa-server.js
+
+  dashboard:
+    build: .
+    container_name: roma-dashboard
+    restart: unless-stopped
+    env_file:
+      - ./config/.env.local
+    ports:
+      - "3010:3010"
+    volumes:
+      - ./dashboard:/app/dashboard
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./trabajo:/app/trabajo
+      - ./logs:/app/logs
+      - ./tmp:/app/tmp
+    environment:
+      ROMA_DASHBOARD_HOST: 0.0.0.0
+    command: node src/control-center/server.js
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:

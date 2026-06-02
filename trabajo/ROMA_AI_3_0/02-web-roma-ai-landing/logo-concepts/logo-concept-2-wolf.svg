@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0d1640"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="wolfGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="wolfClip">
+      <path d="M200 70 L240 85 L265 75 L270 100 L285 110 L275 130 L280 155 L260 160 L255 180 L240 175 L225 195 L200 200 L175 195 L160 175 L145 180 L140 160 L120 155 L125 130 L115 110 L130 100 L135 75 L160 85 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg2)"/>
+
+  <!-- Concept 2: LUPA CAPITOLINA — Geometric wolf with circuit texture -->
+
+  <!-- Outer hex ring -->
+  <polygon points="200,55 252,85 252,145 200,175 148,145 148,85" fill="none" stroke="#4f6ef7" stroke-width="1" opacity="0.5"/>
+  <polygon points="200,62 246,90 246,138 200,166 154,138 154,90" fill="none" stroke="#00e5bf" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Wolf head - geometric/low poly style -->
+  <!-- Main head shape -->
+  <polygon points="200,75 232,88 248,108 244,135 230,155 200,165 170,155 156,135 152,108 168,88" fill="#0a1228" stroke="url(#wolfGrad)" stroke-width="1.5"/>
+
+  <!-- Wolf ears -->
+  <polygon points="168,88 158,65 180,78" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.5"/>
+  <polygon points="232,88 242,65 220,78" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.5"/>
+  <!-- Inner ears -->
+  <polygon points="168,88 162,72 177,82" fill="#4f6ef7" opacity="0.3"/>
+  <polygon points="232,88 238,72 223,82" fill="#4f6ef7" opacity="0.3"/>
+
+  <!-- Wolf face geometric detail -->
+  <!-- Snout -->
+  <polygon points="200,130 213,122 220,135 213,148 200,152 187,148 180,135 187,122" fill="#111836" stroke="#4f6ef7" stroke-width="0.8" opacity="0.8"/>
+
+  <!-- Eyes - glowing -->
+  <g filter="url(#glow2)">
+    <ellipse cx="181" cy="112" rx="9" ry="7" fill="#050816" stroke="#00e5bf" stroke-width="1.5"/>
+    <ellipse cx="219" cy="112" rx="9" ry="7" fill="#050816" stroke="#00e5bf" stroke-width="1.5"/>
+    <!-- Pupils -->
+    <ellipse cx="181" cy="112" rx="4" ry="5" fill="#00e5bf" opacity="0.8"/>
+    <ellipse cx="219" cy="112" rx="4" ry="5" fill="#00e5bf" opacity="0.8"/>
+    <!-- Eye shine -->
+    <circle cx="183" cy="110" r="1.5" fill="white" opacity="0.9"/>
+    <circle cx="221" cy="110" r="1.5" fill="white" opacity="0.9"/>
+  </g>
+
+  <!-- Circuit lines on wolf face -->
+  <g stroke="#4f6ef7" stroke-width="0.6" opacity="0.5" fill="none">
+    <line x1="181" y1="119" x2="200" y2="122"/>
+    <line x1="219" y1="119" x2="200" y2="122"/>
+    <line x1="200" y1="122" x2="200" y2="130"/>
+    <line x1="168" y1="108" x2="172" y2="108"/>
+    <line x1="232" y1="108" x2="228" y2="108"/>
+    <line x1="200" y1="95" x2="200" y2="100"/>
+    <!-- Brow lines -->
+    <line x1="173" y1="103" x2="189" y2="106"/>
+    <line x1="227" y1="103" x2="211" y2="106"/>
+  </g>
+
+  <!-- Circuit nodes on wolf -->
+  <g fill="#00e5bf" opacity="0.7">
+    <circle cx="200" cy="95" r="1.5"/>
+    <circle cx="168" cy="108" r="1.5"/>
+    <circle cx="232" cy="108" r="1.5"/>
+    <circle cx="200" cy="122" r="1.5"/>
+  </g>
+
+  <!-- ROMA text -->
+  <text x="200" y="255" font-family="'Arial', sans-serif" font-size="40" font-weight="800" fill="white" text-anchor="middle" letter-spacing="6">ROMA</text>
+
+  <!-- AI with gradient -->
+  <text x="200" y="283" font-family="'Arial', sans-serif" font-size="16" font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="14" filter="url(#glow2)">AI</text>
+
+  <!-- Horizontal decorative lines -->
+  <line x1="70" y1="263" x2="155" y2="263" stroke="#4f6ef7" stroke-width="0.5" opacity="0.5"/>
+  <line x1="245" y1="263" x2="330" y2="263" stroke="#4f6ef7" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- Tagline -->
+  <text x="200" y="315" font-family="'Arial', sans-serif" font-size="8.5" fill="#4f6ef7" text-anchor="middle" letter-spacing="3" opacity="0.8">INTELLIGENT · AUTOMATION</text>
+</svg>

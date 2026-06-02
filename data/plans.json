@@ -1,0 +1,52 @@
+{
+  "plans": [
+    {
+      "id": "basic",
+      "name": "Plan Básico",
+      "price": "$300/mes",
+      "services": [
+        "Landing page simple",
+        "Soporte por WhatsApp",
+        "1 revisión por semana"
+      ]
+    },
+    {
+      "id": "professional",
+      "name": "Plan Profesional",
+      "price": "$800/mes",
+      "services": [
+        "Web corporativa",
+        "SEO básico",
+        "Community Manager IA",
+        "Soporte 24/7",
+        "Dashboard de métricas"
+      ]
+    },
+    {
+      "id": "enterprise",
+      "name": "Plan Enterprise",
+      "price": "$2,500/mes",
+      "services": [
+        "E-commerce completo",
+        "Call Center IA multicanal",
+        "Meta Ads automatizado",
+        "SEO avanzado",
+        "Video marketing IA",
+        "Dashboard en tiempo real",
+        "Soporte prioritario",
+        "Consultoría mensual"
+      ]
+    },
+    {
+      "id": "custom",
+      "name": "Plan Personalizado",
+      "price": "Variable",
+      "services": [
+        "Solución a medida",
+        "Integraciones API",
+        "Agentes IA custom",
+        "Lo que el negocio necesite"
+      ]
+    }
+  ]
+}

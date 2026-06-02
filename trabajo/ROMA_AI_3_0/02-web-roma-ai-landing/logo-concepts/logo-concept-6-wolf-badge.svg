@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg6" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0c1535"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="tg6" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2a6c"/>
+      <stop offset="100%" stop-color="#0a1228"/>
+    </linearGradient>
+    <filter id="g6">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="g6soft">
+      <feGaussianBlur stdDeviation="1.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg6)"/>
+
+  <!-- Shield shape -->
+  <path d="M200,62 L272,88 L272,165 Q272,210 200,235 Q128,210 128,165 L128,88 Z"
+    fill="url(#shieldGrad)" stroke="url(#tg6)" stroke-width="1.8" filter="url(#g6soft)"/>
+
+  <!-- Inner shield line -->
+  <path d="M200,72 L260,94 L260,163 Q260,202 200,222 Q140,202 140,163 L140,94 Z"
+    fill="none" stroke="#4f6ef7" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- Shield corner circuit nodes -->
+  <g fill="#00e5bf" filter="url(#g6)">
+    <circle cx="200" cy="62" r="3.5" opacity="0.9"/>
+    <circle cx="272" cy="88" r="3" opacity="0.8"/>
+    <circle cx="272" cy="165" r="3" opacity="0.8"/>
+    <circle cx="128" cy="88" r="3" opacity="0.8"/>
+    <circle cx="128" cy="165" r="3" opacity="0.8"/>
+  </g>
+
+  <!-- Wolf face inside shield -->
+  <!-- Ears -->
+  <polygon points="172,95 158,72 185,90" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.5"/>
+  <polygon points="228,95 242,72 215,90" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.5"/>
+  <polygon points="172,95 163,78 181,91" fill="#4f6ef7" opacity="0.25"/>
+  <polygon points="228,95 237,78 219,91" fill="#4f6ef7" opacity="0.25"/>
+
+  <!-- Head outline -->
+  <path d="M172,95 Q155,110 152,132 Q150,158 165,175 Q180,192 200,195 Q220,192 235,175 Q250,158 248,132 Q245,110 228,95 Q214,86 200,86 Q186,86 172,95Z"
+    fill="#0d1640" stroke="url(#tg6)" stroke-width="1.6"/>
+
+  <!-- Geometric face lines -->
+  <g stroke="#4f6ef7" stroke-width="0.7" opacity="0.5" fill="none">
+    <!-- Bridge of nose -->
+    <line x1="200" y1="118" x2="200" y2="148"/>
+    <!-- Brow lines -->
+    <line x1="167" y1="118" x2="186" y2="122"/>
+    <line x1="233" y1="118" x2="214" y2="122"/>
+    <!-- Cheekbones -->
+    <line x1="155" y1="138" x2="172" y2="138"/>
+    <line x1="245" y1="138" x2="228" y2="138"/>
+  </g>
+
+  <!-- Eyes - intense glow -->
+  <g filter="url(#g6)">
+    <ellipse cx="179" cy="130" rx="11" ry="8" fill="#050d20" stroke="#00e5bf" stroke-width="1.8"/>
+    <ellipse cx="221" cy="130" rx="11" ry="8" fill="#050d20" stroke="#00e5bf" stroke-width="1.8"/>
+    <!-- Pupils - vertical slit -->
+    <ellipse cx="179" cy="130" rx="4" ry="6" fill="#00e5bf" opacity="0.7"/>
+    <ellipse cx="221" cy="130" rx="4" ry="6" fill="#00e5bf" opacity="0.7"/>
+    <!-- Glow center -->
+    <ellipse cx="179" cy="130" rx="2" ry="3" fill="white" opacity="0.6"/>
+    <ellipse cx="221" cy="130" rx="2" ry="3" fill="white" opacity="0.6"/>
+  </g>
+
+  <!-- Snout -->
+  <path d="M185,148 Q200,145 215,148 L212,165 Q200,172 188,165 Z"
+    fill="#111a3e" stroke="#4f6ef7" stroke-width="0.8"/>
+  <!-- Nose tip -->
+  <ellipse cx="200" cy="158" rx="6" ry="4" fill="#00e5bf" opacity="0.5" filter="url(#g6soft)"/>
+
+  <!-- ROMA — gradient text, heavy condensed -->
+  <text x="200" y="278" font-family="'Arial Black', 'Arial', sans-serif" font-size="44"
+    font-weight="900" fill="url(#tg6)" text-anchor="middle" letter-spacing="5">ROMA</text>
+
+  <!-- Thin separator lines flanking AI -->
+  <line x1="88" y1="293" x2="163" y2="293" stroke="url(#tg6)" stroke-width="0.6" opacity="0.5"/>
+  <line x1="237" y1="293" x2="312" y2="293" stroke="url(#tg6)" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- AI — smaller, contrasting -->
+  <text x="200" y="296" font-family="'Arial', sans-serif" font-size="13"
+    font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="12" filter="url(#g6soft)">AI</text>
+
+  <!-- Tagline -->
+  <text x="200" y="325" font-family="'Arial', sans-serif" font-size="8"
+    fill="#4f6ef7" text-anchor="middle" letter-spacing="4" opacity="0.65">INTELLIGENT AUTOMATION</text>
+</svg>

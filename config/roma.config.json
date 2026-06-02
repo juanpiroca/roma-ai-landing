@@ -1,0 +1,41 @@
+{
+  "project": "Roma",
+  "version": "1.0.0",
+  "description": "Sistema central de IA personal — voz, mensajería, ejecución y control de archivos",
+  "primary_ai": "codex",
+  "secondary_ai": "claude-code",
+  "channels": {
+    "voice": ["siri", "alexa"],
+    "messaging": ["telegram"],
+    "notifications": ["email", "telegram"],
+    "authorization": ["telegram"]
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 3000,
+    "webhook_port": 3001
+  },
+  "telegram": {
+    "bot_name": "RomaBot",
+    "features": ["text", "audio", "voice_calls", "file_transfer", "authorization"],
+    "human_mode": true,
+    "max_response_length": 150
+  },
+  "email": {
+    "notify_on": ["agent_action", "permission_request", "execution_plan", "error"],
+    "provider": "gmail_smtp"
+  },
+  "file_access": {
+    "providers": ["local", "google_drive"],
+    "allowed_ops": ["read", "write", "list", "search"]
+  },
+  "agents": {
+    "languages": ["rust", "go", "clojure", "typescript", "carbon", "zig", "odin", "nova", "vlang"],
+    "auto_activate": true
+  },
+  "auth": {
+    "require_approval_for": ["file_write", "execution", "external_api", "git_push"],
+    "approval_channel": "telegram",
+    "timeout_minutes": 30
+  }
+}

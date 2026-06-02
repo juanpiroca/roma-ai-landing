@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <linearGradient id="tgv" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00e5bf"/>
+      <stop offset="100%" stop-color="#4f6ef7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="400" fill="#050816"/>
+
+  <!-- CENTURION HELMET — ultra clean silhouette -->
+  <!-- Plume/crest top -->
+  <path d="M160,82 Q200,62 240,82" fill="none" stroke="url(#tg)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="200" y1="62" x2="200" y2="92" stroke="url(#tg)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Helmet dome -->
+  <path d="M145,145 Q145,92 200,88 Q255,92 255,145" fill="none" stroke="url(#tg)" stroke-width="3"/>
+
+  <!-- Visor slit — horizontal bar, glowing -->
+  <rect x="155" y="138" width="90" height="14" rx="7" fill="#050816" stroke="url(#tg)" stroke-width="2"/>
+  <!-- Slit inner glow -->
+  <rect x="162" y="142" width="76" height="6" rx="3" fill="#00e5bf" opacity="0.6" filter="url(#glow)"/>
+
+  <!-- Cheek guards -->
+  <path d="M145,145 L138,185 Q138,192 145,192 L165,192" fill="none" stroke="url(#tg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M255,145 L262,185 Q262,192 255,192 L235,192" fill="none" stroke="url(#tg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Neck guard bottom -->
+  <path d="M165,192 Q200,198 235,192" fill="none" stroke="url(#tg)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Single circuit node — chin area -->
+  <circle cx="200" cy="195" r="4" fill="#00e5bf" filter="url(#glow)"/>
+
+  <!-- ROMA gradient text -->
+  <text x="200" y="262" font-family="'Arial Black','Arial',sans-serif" font-size="48"
+    font-weight="900" fill="url(#tg)" text-anchor="middle" letter-spacing="4">ROMA</text>
+
+  <!-- thin rule -->
+  <line x1="118" y1="275" x2="282" y2="275" stroke="url(#tg)" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- AI -->
+  <text x="200" y="300" font-family="'Arial',sans-serif" font-size="13"
+    font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="16">AI</text>
+
+  <text x="200" y="330" font-family="'Arial',sans-serif" font-size="8"
+    fill="#4f6ef7" text-anchor="middle" letter-spacing="4" opacity="0.55">INTELLIGENT AUTOMATION</text>
+</svg>

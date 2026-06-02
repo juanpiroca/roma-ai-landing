@@ -1,0 +1,33 @@
+{
+  "name": "roma-ai",
+  "version": "1.0.0",
+  "description": "Roma — Sistema central de IA personal",
+  "main": "src/telegram-bot/bot.js",
+  "scripts": {
+    "start": "node scripts/run-single.js bot src/telegram-bot/bot.js",
+    "voice": "node scripts/run-single.js voice src/voice-bridge/siri-alexa-server.js",
+    "dashboard": "node scripts/run-single.js dashboard src/control-center/server.js",
+    "dev": "node scripts/run-roma.js",
+    "roma:stop": "node scripts/stop-roma.js",
+    "install:agents": "node scripts/install-agents.js",
+    "test": "find test -name '*.test.js' -type f | xargs -I {} node --test {}"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@whiskeysockets/baileys": "^7.0.0-rc11",
+    "axios": "^1.6.0",
+    "concurrently": "^8.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.0",
+    "form-data": "^4.0.0",
+    "node-telegram-bot-api": "^0.67.0",
+    "nodemailer": "^6.9.0",
+    "openai": "^6.35.0",
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0",
+    "twilio": "^5.13.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

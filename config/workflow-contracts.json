@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "generated_at": "2026-04-24T20:00:00.000Z",
+  "workflows": [
+    {
+      "id": "dwm",
+      "nombre": "DWM - Daily Work Manager",
+      "comando_roma": "/dwm",
+      "endpoint": "https://n8n.combonix.com/webhook/dwm",
+      "metodo": "POST",
+      "payload_requerido": {
+        "action": { "type": "string", "required": true, "max": 32 },
+        "notes": { "type": "string", "required": false, "max": 2000 }
+      },
+      "respuesta_esperada": { "status": 200, "shape": { "ok": "boolean", "message": "string" } },
+      "riesgo": "low",
+      "requiere_aprobacion": false,
+      "timeout_ms": 10000,
+      "tags": ["productivity", "internal"]
+    },
+    {
+      "id": "prospectos",
+      "nombre": "Prospectos - Ingesta de leads",
+      "comando_roma": "/prospectos",
+      "endpoint": "https://n8n.combonix.com/webhook/prospectos",
+      "metodo": "POST",
+      "payload_requerido": {
+        "source": { "type": "string", "required": true, "max": 64 },
+        "lead": { "type": "object", "required": true }
+      },
+      "respuesta_esperada": { "status": 200, "shape": { "ok": "boolean", "leadId": "string" } },
+      "riesgo": "medium",
+      "requiere_aprobacion": true,
+      "timeout_ms": 15000,
+      "tags": ["sales", "crm"]
+    },
+    {
+      "id": "marketing",
+      "nombre": "Marketing - Campana generica",
+      "comando_roma": "/marketing",
+      "endpoint": "https://n8n.combonix.com/webhook/marketing",
+      "metodo": "POST",
+      "payload_requerido": {
+        "campaign": { "type": "string", "required": true, "max": 128 },
+        "segment": { "type": "string", "required": true, "max": 64 },
+        "message": { "type": "string", "required": true, "max": 2000 },
+        "dry_run": { "type": "boolean", "required": false }
+      },
+      "respuesta_esperada": { "status": 200, "shape": { "ok": "boolean", "queued": "number" } },
+      "riesgo": "high",
+      "requiere_aprobacion": true,
+      "timeout_ms": 20000,
+      "tags": ["marketing"]
+    },
+    {
+      "id": "facebook-ads",
+      "nombre": "Facebook Ads - Push de audiencia",
+      "comando_roma": "/facebook-ads",
+      "endpoint": "https://n8n.combonix.com/webhook/facebook-ads",
+      "metodo": "POST",
+      "payload_requerido": {
+        "ad_account_id": { "type": "string", "required": true, "max": 64 },
+        "audience_id": { "type": "string", "required": true, "max": 64 },
+        "budget_usd": { "type": "number", "required": true }
+      },
+      "respuesta_esperada": { "status": 200, "shape": { "ok": "boolean", "campaignId": "string" } },
+      "riesgo": "high",
+      "requiere_aprobacion": true,
+      "timeout_ms": 20000,
+      "tags": ["ads", "meta"]
+    }
+  ]
+}

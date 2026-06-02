@@ -14,3 +14,4 @@ data/cache/
 Thumbs.db
 trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/*.bak
 trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/logo-roma-dark.png
+.gstack/

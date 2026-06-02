@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg7" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0b1230"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="tg7" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <linearGradient id="wingL" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00e5bf" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4f6ef7" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="wingR" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#00e5bf" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4f6ef7" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="g7">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="g7s">
+      <feGaussianBlur stdDeviation="1.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg7)"/>
+
+  <!-- Wing glow backdrop -->
+  <ellipse cx="200" cy="155" rx="160" ry="70" fill="#4f6ef7" opacity="0.04"/>
+
+  <!-- LEFT WING — low-poly geometric triangles -->
+  <g stroke="#4f6ef7" stroke-width="0.8" stroke-linejoin="round">
+    <!-- Primary feathers -->
+    <polygon points="178,148 135,118 148,155" fill="#0d1640" opacity="0.9"/>
+    <polygon points="178,148 148,155 152,175" fill="#0d1a50" opacity="0.9"/>
+    <polygon points="178,148 135,118 118,140" fill="#0a1228" opacity="0.85"/>
+    <!-- Secondary layer -->
+    <polygon points="135,118 100,108 118,140" fill="#0d1640" opacity="0.8"/>
+    <polygon points="100,108 75,128 118,140" fill="#0a1228" opacity="0.75"/>
+    <polygon points="75,128 60,155 118,140" fill="#0d1640" opacity="0.7"/>
+    <!-- Tip feathers -->
+    <polygon points="60,155 50,175 80,168" fill="#0a1228" opacity="0.65"/>
+    <polygon points="80,168 52,185 78,190" fill="#0d1640" opacity="0.6"/>
+  </g>
+  <!-- Left wing fill accent -->
+  <polygon points="178,148 100,108 60,155 80,168 152,175" fill="none" stroke="url(#wingL)" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- RIGHT WING — mirror -->
+  <g stroke="#4f6ef7" stroke-width="0.8" stroke-linejoin="round">
+    <polygon points="222,148 265,118 252,155" fill="#0d1640" opacity="0.9"/>
+    <polygon points="222,148 252,155 248,175" fill="#0d1a50" opacity="0.9"/>
+    <polygon points="222,148 265,118 282,140" fill="#0a1228" opacity="0.85"/>
+    <polygon points="265,118 300,108 282,140" fill="#0d1640" opacity="0.8"/>
+    <polygon points="300,108 325,128 282,140" fill="#0a1228" opacity="0.75"/>
+    <polygon points="325,128 340,155 282,140" fill="#0d1640" opacity="0.7"/>
+    <polygon points="340,155 350,175 320,168" fill="#0a1228" opacity="0.65"/>
+    <polygon points="320,168 348,185 322,190" fill="#0d1640" opacity="0.6"/>
+  </g>
+  <polygon points="222,148 300,108 340,155 320,168 248,175" fill="none" stroke="url(#wingR)" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- Wing edge glow nodes -->
+  <g fill="#00e5bf" filter="url(#g7)" opacity="0.7">
+    <circle cx="60" cy="155" r="2.5"/>
+    <circle cx="50" cy="175" r="2"/>
+    <circle cx="52" cy="185" r="1.8"/>
+    <circle cx="100" cy="108" r="2.5"/>
+    <circle cx="340" cy="155" r="2.5"/>
+    <circle cx="350" cy="175" r="2"/>
+    <circle cx="348" cy="185" r="1.8"/>
+    <circle cx="300" cy="108" r="2.5"/>
+  </g>
+
+  <!-- Body center -->
+  <polygon points="200,88 220,100 228,148 222,175 200,185 178,175 172,148 180,100"
+    fill="#0d1640" stroke="url(#tg7)" stroke-width="1.8" filter="url(#g7s)"/>
+
+  <!-- Chest detail -->
+  <polygon points="200,105 215,112 218,138 213,155 200,160 187,155 182,138 185,112"
+    fill="#111a3e" stroke="#4f6ef7" stroke-width="0.8" opacity="0.7"/>
+
+  <!-- Eagle head -->
+  <ellipse cx="200" cy="93" rx="18" ry="16" fill="#0d1640" stroke="url(#tg7)" stroke-width="1.6"/>
+
+  <!-- Beak -->
+  <path d="M216,91 L232,96 Q228,101 216,99 Z" fill="#00e5bf" opacity="0.85" filter="url(#g7s)"/>
+
+  <!-- Eye -->
+  <circle cx="210" cy="88" r="6" fill="#050816" stroke="#00e5bf" stroke-width="1.8" filter="url(#g7)"/>
+  <circle cx="210" cy="88" r="3" fill="#00e5bf" opacity="0.9"/>
+  <circle cx="211" cy="87" r="1.2" fill="white" opacity="0.9"/>
+
+  <!-- Crown feathers -->
+  <g fill="none" stroke="url(#tg7)" stroke-width="1.2" filter="url(#g7s)">
+    <path d="M196,78 Q192,64 198,60"/>
+    <path d="M200,77 Q200,63 205,59"/>
+    <path d="M204,78 Q208,64 212,61"/>
+  </g>
+
+  <!-- Body → wing connection nodes -->
+  <g fill="#4f6ef7" filter="url(#g7)" opacity="0.8">
+    <circle cx="178" cy="148" r="4"/>
+    <circle cx="222" cy="148" r="4"/>
+    <circle cx="200" cy="185" r="3.5"/>
+  </g>
+
+  <!-- Talons -->
+  <g stroke="url(#tg7)" stroke-width="1.4" fill="none" stroke-linecap="round">
+    <path d="M188,185 L183,200 L178,207"/>
+    <path d="M192,185 L189,202 L184,210"/>
+    <path d="M208,185 L211,202 L216,210"/>
+    <path d="M212,185 L217,200 L222,207"/>
+  </g>
+
+  <!-- Separator -->
+  <path d="M80,222 Q200,218 320,222" fill="none" stroke="url(#tg7)" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- ROMA — gradient, bold condensed -->
+  <text x="200" y="265" font-family="'Arial Black', 'Arial', sans-serif" font-size="46"
+    font-weight="900" fill="url(#tg7)" text-anchor="middle" letter-spacing="4">ROMA</text>
+
+  <!-- AI -->
+  <line x1="85" y1="280" x2="160" y2="280" stroke="url(#tg7)" stroke-width="0.5" opacity="0.5"/>
+  <line x1="240" y1="280" x2="315" y2="280" stroke="url(#tg7)" stroke-width="0.5" opacity="0.5"/>
+  <text x="200" y="283" font-family="'Arial', sans-serif" font-size="12"
+    font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="14" filter="url(#g7s)">AI</text>
+
+  <!-- Tagline -->
+  <text x="200" y="318" font-family="'Arial', sans-serif" font-size="8"
+    fill="#4f6ef7" text-anchor="middle" letter-spacing="4" opacity="0.65">INTELLIGENT AUTOMATION</text>
+</svg>

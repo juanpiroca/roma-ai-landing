@@ -1,0 +1,88 @@
+const fs = require('fs');
+const path = require('path');
+const { loadEnv } = require('./load-env');
+
+loadEnv();
+
+const logPath = path.join(process.cwd(), 'logs/roma.log');
+
+function appendUsageLog(usage, model) {
+  if (!usage) return;
+  try {
+    fs.mkdirSync(path.dirname(logPath), { recursive: true });
+    const entry = JSON.stringify({
+      ts: new Date().toISOString(),
+      input_tokens: Number(usage.input_tokens || 0),
+      output_tokens: Number(usage.output_tokens || 0),
+      model,
+    });
+    fs.appendFileSync(logPath, `${entry}\n`);
+  } catch (_) {}
+}
+
+async function callClaude(prompt, options = {}) {
+  const safePrompt = String(prompt || '').trim();
+  if (!safePrompt) {
+    return options.emptyMessage || 'No entendi el mensaje, mandame algo de nuevo.';
+  }
+
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new Error('ANTHROPIC_API_KEY no configurada');
+  }
+
+  const { Anthropic } = require('@anthropic-ai/sdk');
+  const client = new Anthropic({ apiKey });
+  const model = options.model || 'claude-sonnet-4-6';
+  const msg = await client.messages.create({
+    model,
+    max_tokens: options.maxTokens || 300,
+    system: options.system || 'Responde en espanol, directo y breve.',
+    messages: [{ role: 'user', content: safePrompt }],
+  });
+
+  appendUsageLog(msg.usage, model);
+  return msg.content?.[0]?.text || '';
+}
+
+// callClaude con memoria persistente multi-turn
+async function callClaudeWithMemory(prompt, channel, options = {}) {
+  const safePrompt = String(prompt || '').trim();
+  if (!safePrompt) {
+    return options.emptyMessage || 'No entendi el mensaje, mandame algo de nuevo.';
+  }
+
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error('ANTHROPIC_API_KEY no configurada');
+
+  const memory = require('./memory');
+  const { Anthropic } = require('@anthropic-ai/sdk');
+  const client = new Anthropic({ apiKey });
+  const model = options.model || 'claude-sonnet-4-6';
+
+  const systemPrompt = options.system || memory.buildSystemPrompt(channel, options.extraContext);
+  const messages = memory.getClaudeMessages(channel, safePrompt, options.historyLimit || 20);
+
+  const msg = await client.messages.create({
+    model,
+    max_tokens: options.maxTokens || 500,
+    system: systemPrompt,
+    messages,
+  });
+
+  const reply = msg.content?.[0]?.text || '';
+  appendUsageLog(msg.usage, model);
+
+  // Guardar en memoria
+  memory.appendMessage({ channel, role: 'user', content: safePrompt, metadata: options.metadata || {} });
+  memory.appendMessage({ channel, role: 'assistant', content: reply, metadata: options.metadata || {} });
+
+  return reply;
+}
+
+module.exports = {
+  callClaude,
+  callClaudeWithMemory,
+  appendUsageLog,
+  logPath,
+};

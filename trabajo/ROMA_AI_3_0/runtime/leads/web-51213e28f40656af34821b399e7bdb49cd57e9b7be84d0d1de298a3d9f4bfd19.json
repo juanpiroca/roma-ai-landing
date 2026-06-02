@@ -1,0 +1,11 @@
+{
+  "lead_id": "test-loop-123",
+  "source": "web_chat",
+  "channel": "web_chat",
+  "business_type": "Tengo una barbería",
+  "interest_area": "general",
+  "status": "web_started",
+  "assigned_to": "juanpi",
+  "created_at": "2026-05-30T15:15:47.325Z",
+  "updated_at": "2026-05-30T15:15:47.325Z"
+}

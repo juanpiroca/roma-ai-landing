@@ -1,0 +1,34 @@
+{
+  "sessionId": "6557281084",
+  "category": null,
+  "exchanges": 0,
+  "email": null,
+  "stage": "q1_ok",
+  "createdAt": "2026-05-27T03:25:22.507Z",
+  "flow": {
+    "state": "q1_ok",
+    "answers": {}
+  },
+  "channel": "telegram",
+  "history": [
+    {
+      "ts": "2026-05-27T03:25:22.508Z",
+      "channel": "telegram",
+      "dir": "in",
+      "text": "Quien sos",
+      "meta": {
+        "username": "rocajuanpablo",
+        "firstName": "JuanPi"
+      }
+    },
+    {
+      "ts": "2026-05-27T03:25:22.508Z",
+      "channel": "telegram",
+      "dir": "out",
+      "text": "Hola, soy Roma. ¿Con quién hablo y en qué rubro está tu negocio?",
+      "meta": {}
+    }
+  ],
+  "fsm_state": "q1_ok",
+  "updatedAt": "2026-05-27T03:25:22.508Z"
+}

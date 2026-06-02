@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <linearGradient id="blade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00e5bf"/>
+      <stop offset="50%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#1a2560"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glows">
+      <feGaussianBlur stdDeviation="1.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="400" fill="#050816"/>
+
+  <!-- GLADIUS — Roman short sword pointing up, data/signal radiating from tip -->
+
+  <!-- Signal rings from blade tip — like broadcast waves going up -->
+  <g fill="none" stroke="#00e5bf" filter="url(#glows)">
+    <path d="M200,72 Q188,80 200,85 Q212,80 200,72" opacity="0.6" stroke-width="1"/>
+    <path d="M200,65 Q180,78 200,88 Q220,78 200,65" opacity="0.4" stroke-width="0.8"/>
+    <path d="M200,58 Q172,76 200,91 Q228,76 200,58" opacity="0.25" stroke-width="0.6"/>
+  </g>
+
+  <!-- Blade tip glow -->
+  <circle cx="200" cy="88" r="4" fill="#00e5bf" opacity="0.9" filter="url(#glow)"/>
+
+  <!-- Gladius blade — slim, pointed, elegant -->
+  <path d="M200,88 L207,170 L200,178 L193,170 Z" fill="url(#blade)" stroke="url(#tg)" stroke-width="1"/>
+
+  <!-- Blade center ridge line -->
+  <line x1="200" y1="92" x2="200" y2="170" stroke="#00e5bf" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- Blood groove (fuller) — decorative lines -->
+  <line x1="198" y1="100" x2="198" y2="165" stroke="#4f6ef7" stroke-width="0.4" opacity="0.4"/>
+  <line x1="202" y1="100" x2="202" y2="165" stroke="#4f6ef7" stroke-width="0.4" opacity="0.4"/>
+
+  <!-- Guard (crossguard) — horizontal bar -->
+  <rect x="174" y="175" width="52" height="10" rx="5" fill="#0d1640" stroke="url(#tg)" stroke-width="1.8"/>
+  <!-- Guard end nodes -->
+  <circle cx="174" cy="180" r="4" fill="#4f6ef7" opacity="0.8" filter="url(#glows)"/>
+  <circle cx="226" cy="180" r="4" fill="#00e5bf" opacity="0.8" filter="url(#glows)"/>
+
+  <!-- Grip handle -->
+  <rect x="192" y="185" width="16" height="28" rx="4" fill="#111836" stroke="#4f6ef7" stroke-width="1.2"/>
+  <!-- Grip wrapping lines -->
+  <line x1="192" y1="191" x2="208" y2="191" stroke="url(#tg)" stroke-width="0.8" opacity="0.5"/>
+  <line x1="192" y1="197" x2="208" y2="197" stroke="url(#tg)" stroke-width="0.8" opacity="0.5"/>
+  <line x1="192" y1="203" x2="208" y2="203" stroke="url(#tg)" stroke-width="0.8" opacity="0.5"/>
+  <line x1="192" y1="209" x2="208" y2="209" stroke="url(#tg)" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Pommel (bottom of handle) — circuit node -->
+  <circle cx="200" cy="217" r="9" fill="#0d1640" stroke="url(#tg)" stroke-width="1.8"/>
+  <circle cx="200" cy="217" r="4" fill="#00e5bf" opacity="0.6" filter="url(#glows)"/>
+
+  <!-- ROMA gradient text -->
+  <text x="200" y="270" font-family="'Arial Black','Arial',sans-serif" font-size="48"
+    font-weight="900" fill="url(#tg)" text-anchor="middle" letter-spacing="4">ROMA</text>
+
+  <line x1="118" y1="282" x2="282" y2="282" stroke="url(#tg)" stroke-width="0.5" opacity="0.35"/>
+
+  <text x="200" y="307" font-family="'Arial',sans-serif" font-size="13"
+    font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="16">AI</text>
+
+  <text x="200" y="336" font-family="'Arial',sans-serif" font-size="8"
+    fill="#4f6ef7" text-anchor="middle" letter-spacing="4" opacity="0.55">INTELLIGENT AUTOMATION</text>
+</svg>

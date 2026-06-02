@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-04-24T00:40:00.000Z",
+  "source": "static-cache",
+  "workflows": [
+    {
+      "id": "wp-master",
+      "name": "WP Master (WordPress Manager)",
+      "webhook_path": "webhook/66051cae-fc13-493f-a38e-a8d28e817882/webhook",
+      "base_url": "https://workflow.dementetv.com",
+      "active": true,
+      "owner": "wordpress",
+      "last_verified": "2026-04-20",
+      "notes": "Usado por integrations/class-waflow-wordpress-master.php y Chat Flux"
+    },
+    {
+      "id": "chat-flux",
+      "name": "Chat Flux (WP)",
+      "webhook_path": "webhook/66051cae-fc13-493f-a38e-a8d28e817882/webhook",
+      "base_url": "https://workflow.dementetv.com",
+      "active": true,
+      "owner": "wordpress",
+      "last_verified": "2026-04-20",
+      "notes": "Comparte webhook con WP Master. Integrations/class-waflow-chat.php"
+    }
+  ]
+}

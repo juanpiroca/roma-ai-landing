@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg10" cx="50%" cy="42%" r="60%">
+      <stop offset="0%" stop-color="#0c1535"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="tg10" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <linearGradient id="wolfL" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d1a50"/>
+      <stop offset="100%" stop-color="#162060"/>
+    </linearGradient>
+    <linearGradient id="wolfR" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0d1a50"/>
+      <stop offset="100%" stop-color="#162060"/>
+    </linearGradient>
+    <filter id="g10">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="g10s">
+      <feGaussianBlur stdDeviation="1.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="g10x">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg10)"/>
+
+  <!-- Center glow between noses -->
+  <ellipse cx="200" cy="155" rx="30" ry="25" fill="#00e5bf" opacity="0.07" filter="url(#g10x)"/>
+  <circle cx="200" cy="155" r="8" fill="#00e5bf" opacity="0.15" filter="url(#g10)"/>
+
+  <!-- LEFT WOLF — facing right -->
+  <!-- Body -->
+  <path d="M82,195 Q78,178 82,162 Q86,146 95,136 Q100,130 108,128 L125,195Z"
+    fill="url(#wolfL)" stroke="#4f6ef7" stroke-width="0.8" opacity="0.9"/>
+  <!-- Head left wolf -->
+  <path d="M108,128 Q115,105 132,95 Q148,86 162,92 Q175,98 180,115 Q185,130 178,148 Q170,162 158,165 Q144,168 132,160 Q118,150 112,138 Q108,132 108,128Z"
+    fill="url(#wolfL)" stroke="#4f6ef7" stroke-width="1.2"/>
+  <!-- Left wolf ear -->
+  <polygon points="132,95 122,72 143,88" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.2"/>
+  <polygon points="148,86 140,65 158,82" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.2"/>
+  <!-- Left wolf inner ear -->
+  <polygon points="132,95 126,78 140,90" fill="#4f6ef7" opacity="0.2"/>
+  <polygon points="148,86 143,70 155,84" fill="#4f6ef7" opacity="0.15"/>
+
+  <!-- Left wolf eye -->
+  <g filter="url(#g10)">
+    <ellipse cx="148" cy="128" rx="10" ry="8" fill="#050816" stroke="#00e5bf" stroke-width="1.8"/>
+    <ellipse cx="148" cy="128" rx="4" ry="6" fill="#00e5bf" opacity="0.85"/>
+    <circle cx="150" cy="125" r="1.8" fill="white" opacity="0.9"/>
+  </g>
+
+  <!-- Left wolf snout -->
+  <path d="M175,145 Q178,155 176,162 Q200,158 200,158 L200,145 Q186,142 175,145Z"
+    fill="#111a3e" stroke="#4f6ef7" stroke-width="0.8"/>
+
+  <!-- Geometric detail lines - left -->
+  <g stroke="#4f6ef7" stroke-width="0.6" opacity="0.4" fill="none">
+    <line x1="125" y1="115" x2="140" y2="118"/>
+    <line x1="162" y1="110" x2="155" y2="118"/>
+    <line x1="135" y1="140" x2="148" y2="138"/>
+  </g>
+
+  <!-- RIGHT WOLF — mirror, facing left -->
+  <path d="M318,195 Q322,178 318,162 Q314,146 305,136 Q300,130 292,128 L275,195Z"
+    fill="url(#wolfR)" stroke="#4f6ef7" stroke-width="0.8" opacity="0.9"/>
+  <!-- Head right wolf -->
+  <path d="M292,128 Q285,105 268,95 Q252,86 238,92 Q225,98 220,115 Q215,130 222,148 Q230,162 242,165 Q256,168 268,160 Q282,150 288,138 Q292,132 292,128Z"
+    fill="url(#wolfR)" stroke="#4f6ef7" stroke-width="1.2"/>
+  <!-- Right wolf ears -->
+  <polygon points="268,95 278,72 257,88" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.2"/>
+  <polygon points="252,86 260,65 242,82" fill="#0a1228" stroke="#4f6ef7" stroke-width="1.2"/>
+  <!-- Right wolf inner ear -->
+  <polygon points="268,95 274,78 260,90" fill="#4f6ef7" opacity="0.2"/>
+  <polygon points="252,86 257,70 245,84" fill="#4f6ef7" opacity="0.15"/>
+
+  <!-- Right wolf eye -->
+  <g filter="url(#g10)">
+    <ellipse cx="252" cy="128" rx="10" ry="8" fill="#050816" stroke="#00e5bf" stroke-width="1.8"/>
+    <ellipse cx="252" cy="128" rx="4" ry="6" fill="#00e5bf" opacity="0.85"/>
+    <circle cx="254" cy="125" r="1.8" fill="white" opacity="0.9"/>
+  </g>
+
+  <!-- Right wolf snout -->
+  <path d="M225,145 Q222,155 224,162 Q200,158 200,158 L200,145 Q214,142 225,145Z"
+    fill="#111a3e" stroke="#4f6ef7" stroke-width="0.8"/>
+
+  <!-- Geometric detail lines - right (mirror) -->
+  <g stroke="#4f6ef7" stroke-width="0.6" opacity="0.4" fill="none">
+    <line x1="275" y1="115" x2="260" y2="118"/>
+    <line x1="238" y1="110" x2="245" y2="118"/>
+    <line x1="265" y1="140" x2="252" y2="138"/>
+  </g>
+
+  <!-- CENTER MEETING POINT — glowing node where noses touch -->
+  <circle cx="200" cy="155" r="5" fill="#00e5bf" opacity="0.9" filter="url(#g10)"/>
+  <circle cx="200" cy="155" r="9" fill="none" stroke="#00e5bf" stroke-width="1" opacity="0.4" filter="url(#g10s)"/>
+
+  <!-- Circuit lines from center outward — data flowing -->
+  <g stroke="#00e5bf" stroke-width="0.8" opacity="0.5" fill="none" filter="url(#g10s)">
+    <line x1="200" y1="155" x2="200" y2="195"/>
+    <line x1="200" y1="195" x2="182" y2="212"/>
+    <line x1="200" y1="195" x2="218" y2="212"/>
+  </g>
+  <g fill="#00e5bf" opacity="0.6">
+    <circle cx="200" cy="195" r="2.5"/>
+    <circle cx="182" cy="212" r="2"/>
+    <circle cx="218" cy="212" r="2"/>
+  </g>
+
+  <!-- Separator dot line -->
+  <line x1="80" y1="235" x2="320" y2="235" stroke="url(#tg10)" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- ROMA — gradient, heavy, widest version -->
+  <text x="200" y="276" font-family="'Arial Black', 'Arial', sans-serif" font-size="44"
+    font-weight="900" fill="url(#tg10)" text-anchor="middle" letter-spacing="6">ROMA</text>
+
+  <!-- AI flanked by rules -->
+  <line x1="88" y1="291" x2="162" y2="291" stroke="url(#tg10)" stroke-width="0.5" opacity="0.4"/>
+  <line x1="238" y1="291" x2="312" y2="291" stroke="url(#tg10)" stroke-width="0.5" opacity="0.4"/>
+  <text x="200" y="294" font-family="'Arial', sans-serif" font-size="13"
+    font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="13" filter="url(#g10s)">AI</text>
+
+  <!-- Tagline -->
+  <text x="200" y="322" font-family="'Arial', sans-serif" font-size="8"
+    fill="#4f6ef7" text-anchor="middle" letter-spacing="4" opacity="0.65">INTELLIGENT AUTOMATION</text>
+</svg>

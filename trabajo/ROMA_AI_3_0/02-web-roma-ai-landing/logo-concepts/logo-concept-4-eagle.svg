@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg4" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0a1230"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="eagleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00e5bf"/>
+      <stop offset="100%" stop-color="#4f6ef7"/>
+    </linearGradient>
+    <filter id="glow4">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg4)"/>
+
+  <!-- Concept 4: ROMAN EAGLE — Geometric eagle with digital/circuit wings -->
+
+  <!-- Wing circuit lines - LEFT wing -->
+  <g stroke="#4f6ef7" stroke-width="0.7" opacity="0.5" fill="none">
+    <path d="M190 145 L155 120 L120 125 L95 110"/>
+    <path d="M190 145 L150 135 L115 145 L85 138"/>
+    <path d="M190 145 L148 155 L112 165 L80 160"/>
+    <path d="M190 145 L152 170 L120 185 L90 183"/>
+    <!-- Wing feather connectors -->
+    <line x1="155" y1="120" x2="150" y2="135"/>
+    <line x1="120" y1="125" x2="115" y2="145"/>
+    <line x1="148" y1="155" x2="152" y2="170"/>
+    <line x1="112" y1="165" x2="120" y2="185"/>
+  </g>
+
+  <!-- Wing circuit lines - RIGHT wing -->
+  <g stroke="#4f6ef7" stroke-width="0.7" opacity="0.5" fill="none">
+    <path d="M210 145 L245 120 L280 125 L305 110"/>
+    <path d="M210 145 L250 135 L285 145 L315 138"/>
+    <path d="M210 145 L252 155 L288 165 L320 160"/>
+    <path d="M210 145 L248 170 L280 185 L310 183"/>
+    <!-- Wing feather connectors -->
+    <line x1="245" y1="120" x2="250" y2="135"/>
+    <line x1="280" y1="125" x2="285" y2="145"/>
+    <line x1="252" y1="155" x2="248" y2="170"/>
+    <line x1="288" y1="165" x2="280" y2="185"/>
+  </g>
+
+  <!-- Wing circuit nodes - LEFT -->
+  <g fill="#00e5bf" filter="url(#glow4)">
+    <circle cx="155" cy="120" r="2.5" opacity="0.8"/>
+    <circle cx="120" cy="125" r="2" opacity="0.7"/>
+    <circle cx="95" cy="110" r="2" opacity="0.6"/>
+    <circle cx="115" cy="145" r="2" opacity="0.7"/>
+    <circle cx="85" cy="138" r="1.5" opacity="0.5"/>
+    <circle cx="148" cy="155" r="2" opacity="0.7"/>
+    <circle cx="112" cy="165" r="2" opacity="0.6"/>
+    <circle cx="80" cy="160" r="1.5" opacity="0.5"/>
+    <circle cx="152" cy="170" r="2" opacity="0.6"/>
+    <circle cx="120" cy="185" r="1.5" opacity="0.5"/>
+  </g>
+
+  <!-- Wing circuit nodes - RIGHT -->
+  <g fill="#00e5bf" filter="url(#glow4)">
+    <circle cx="245" cy="120" r="2.5" opacity="0.8"/>
+    <circle cx="280" cy="125" r="2" opacity="0.7"/>
+    <circle cx="305" cy="110" r="2" opacity="0.6"/>
+    <circle cx="285" cy="145" r="2" opacity="0.7"/>
+    <circle cx="315" cy="138" r="1.5" opacity="0.5"/>
+    <circle cx="252" cy="155" r="2" opacity="0.7"/>
+    <circle cx="288" cy="165" r="2" opacity="0.6"/>
+    <circle cx="320" cy="160" r="1.5" opacity="0.5"/>
+    <circle cx="248" cy="170" r="2" opacity="0.6"/>
+    <circle cx="280" cy="185" r="1.5" opacity="0.5"/>
+  </g>
+
+  <!-- Eagle body - geometric -->
+  <polygon points="200,95 218,108 225,128 218,160 200,170 182,160 175,128 182,108" fill="#0c1535" stroke="url(#eagleGrad)" stroke-width="1.8" filter="url(#glow4)"/>
+
+  <!-- Eagle chest detail -->
+  <polygon points="200,115 212,122 215,138 208,150 200,155 192,150 185,138 188,122" fill="#111a3e" stroke="#4f6ef7" stroke-width="0.8" opacity="0.7"/>
+
+  <!-- Eagle head -->
+  <ellipse cx="200" cy="98" rx="16" ry="14" fill="#0c1535" stroke="url(#eagleGrad)" stroke-width="1.5"/>
+
+  <!-- Beak -->
+  <polygon points="215,97 226,101 216,105" fill="#00e5bf" opacity="0.8"/>
+
+  <!-- Eye -->
+  <circle cx="207" cy="95" r="5" fill="#050816" stroke="#00e5bf" stroke-width="1.5" filter="url(#glow4)"/>
+  <circle cx="207" cy="95" r="2.5" fill="#00e5bf" opacity="0.9"/>
+  <circle cx="208" cy="94" r="1" fill="white" opacity="0.8"/>
+
+  <!-- Crown/crest - digital laurel -->
+  <g fill="none" stroke="#4f6ef7" stroke-width="1" filter="url(#glow4)">
+    <path d="M190,85 Q185,72 192,68 Q199,64 200,75"/>
+    <path d="M195,83 Q188,68 196,63 Q203,58 203,72"/>
+    <path d="M200,82 Q200,67 207,64 Q214,61 212,75"/>
+    <path d="M205,83 Q212,68 218,65 Q224,62 220,76"/>
+  </g>
+
+  <!-- Connecting lines from body to wings -->
+  <line x1="175" y1="128" x2="190" y2="145" stroke="url(#eagleGrad)" stroke-width="1.5"/>
+  <line x1="225" y1="128" x2="210" y2="145" stroke="url(#eagleGrad)" stroke-width="1.5"/>
+
+  <!-- Talons -->
+  <g stroke="#4f6ef7" stroke-width="1.2" fill="none" filter="url(#glow4)">
+    <path d="M193,170 L188,185 L183,190"/>
+    <path d="M197,170 L194,187 L190,193"/>
+    <path d="M203,170 L206,187 L210,193"/>
+    <path d="M207,170 L212,185 L217,190"/>
+  </g>
+
+  <!-- Text separator -->
+  <line x1="80" y1="215" x2="320" y2="215" stroke="url(#eagleGrad)" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- ROMA text -->
+  <text x="200" y="256" font-family="'Arial', sans-serif" font-size="40" font-weight="800" fill="white" text-anchor="middle" letter-spacing="7">ROMA</text>
+
+  <!-- AI -->
+  <text x="200" y="283" font-family="'Arial', sans-serif" font-size="16" font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="14" filter="url(#glow4)">AI</text>
+
+  <!-- Small dashes -->
+  <line x1="80" y1="270" x2="148" y2="270" stroke="#4f6ef7" stroke-width="0.5" opacity="0.4"/>
+  <line x1="252" y1="270" x2="320" y2="270" stroke="#4f6ef7" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Tagline -->
+  <text x="200" y="316" font-family="'Arial', sans-serif" font-size="8.5" fill="#4f6ef7" text-anchor="middle" letter-spacing="3" opacity="0.7">INTELLIGENT · AUTOMATION</text>
+</svg>

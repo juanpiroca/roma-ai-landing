@@ -242,6 +242,10 @@ function createApp(options = {}) {
     res.sendFile(path.join(__dirname, 'voice.html'));
   });
 
+  app.get(['/webchat', '/webchat.html'], (_req, res) => {
+    res.sendFile(path.join(__dirname, 'webchat-improved.html'));
+  });
+
   app.post('/marketing/chat', async (req, res) => {
     try {
       const payload = {

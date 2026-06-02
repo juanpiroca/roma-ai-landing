@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Roma AI - Asistente de Voz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #050816;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .pulse-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 2rem auto;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #4f6ef7, #00e5bf) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .pulse-ring.active {
+            animation: pulse-active 1.5s ease-in-out infinite;
+        }
+
+        .pulse-ring.speaking {
+            animation: pulse-speaking 1s ease-in-out infinite;
+        }
+
+        .pulse-ring.error {
+            border-color: #ff4444;
+            background: #ff4444;
+            animation: none;
+        }
+
+        .pulse-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f6ef7, #00e5bf);
+            box-shadow: 0 0 20px rgba(79, 110, 247, 0.5);
+        }
+
+        .pulse-dot.error {
+            background: #ff4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+
+        @keyframes pulse-active {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.2; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+        }
+
+        @keyframes pulse-speaking {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+        }
+
+        .status-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 1rem 0;
+            min-height: 1.5em;
+            transition: opacity 0.3s ease;
+        }
+
+        .transcript-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            min-height: 60px;
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+            word-wrap: break-word;
+            display: none;
+        }
+
+        .transcript-box.visible {
+            display: block;
+        }
+
+        .transcript-box::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .transcript-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .transcript-box::-webkit-scrollbar-thumb {
+            background: rgba(79, 110, 247, 0.5);
+            border-radius: 2px;
+        }
+
+        .error-message {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #ff6b6b;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .error-message a {
+            color: #4f6ef7;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4f6ef7, #00e5bf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 1rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .pulse-container {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="close-btn" id="closeBtn" aria-label="Cerrar asistente">✕</button>
+        
+        <div class="pulse-container">
+            <div class="pulse-ring" id="pulseRing"></div>
+            <div class="pulse-dot" id="pulseDot"></div>
+        </div>
+
+        <div class="status-text" id="statusText">Iniciando...</div>
+        
+        <div class="transcript-box" id="transcriptBox"></div>
+        
+        <div class="error-message" id="errorMessage">
+            <strong>Permiso de micrófono denegado</strong><br>
+            Para usar el asistente de voz, necesitas permitir el acceso al micrófono.<br><br>
+            <a id="retryPermissionBtn">Intentar de nuevo</a>
+        </div>
+    </div>
+
+    <div class="footer">Roma AI - Asistente de Voz</div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // Configuración
+            const API_URL = 'https://roma.dementetv.com/api/webchat';
+            const SESSION_ID = 'voice-session';
+            const SILENCE_TIMEOUT = 1200; // ms
+            const URL_REGEX = /(https?:\/\/|wa\.me\/|t\.me\/)[^\s]+/g;
+
+            // Elementos DOM
+            const pulseRing = document.getElementById('pulseRing');
+            const pulseDot = document.getElementById('pulseDot');
+            const statusText = document.getElementById('statusText');
+            const transcriptBox = document.getElementById('transcriptBox');
+            const errorMessage = document.getElementById('errorMessage');
+            const closeBtn = document.getElementById('closeBtn');
+            const retryPermissionBtn = document.getElementById('retryPermissionBtn');
+
+            // Estado
+            let isListening = false;
+            let isProcessing = false;
+            let isSpeaking = false;
+            let silenceTimer = null;
+            let recognition = null;
+            let synth = window.speechSynthesis;
+            let currentUtterance = null;
+            let transcriptBuffer = '';
+            let lastTranscriptTime = 0;
+            let isInitialized = false;
+
+            // Funciones de UI
+            function setStatus(text, type = 'info') {
+                statusText.textContent = text;
+                statusText.style.color = type === 'error' ? '#ff6b6b' : 'rgba(255, 255, 255, 0.8)';
+            }
+
+            function setPulseState(state) {
+                pulseRing.className = 'pulse-ring';
+                pulseDot.className = 'pulse-dot';
+                
+                if (state === 'listening') {
+                    pulseRing.classList.add('active');
+                } else if (state === 'speaking') {
+                    pulseRing.classList.add('speaking');
+                } else if (state === 'error') {
+                    pulseRing.classList.add('error');
+                    pulseDot.classList.add('error');
+                }
+            }
+
+            function showTranscript(text) {
+                if (text) {
+                    transcriptBox.textContent = text;
+                    transcriptBox.classList.add('visible');
+                } else {
+                    transcriptBox.classList.remove('visible');
+                    transcriptBox.textContent = '';
+                }
+            }
+
+            function showError(show) {
+                if (show) {
+                    errorMessage.classList.add('visible');
+                } else {
+                    errorMessage.classList.remove('visible');
+                }
+            }
+
+            // Filtro de URLs para TTS
+            function filterUrlsForTTS(text) {
+                return text.replace(URL_REGEX, 'el link');
+            }
+
+            // Agregar pausas naturales
+            function addNaturalPauses(text) {
+                return text.replace(/\. /g, '... ');
+            }
+
+            // Buscar voz en español
+            function findSpanishVoice() {
+                const voices = synth.getVoices();
+                
+                // Prioridad FEMENINA: Monica, Luciana, Paulina (macOS), Sabina (Windows)
+                const femaleNames = ['Monica','Luciana','Paulina','Mónica','Sabina','Helena','Laura','Esperanza'];
+                for (const name of femaleNames) {
+                    const v = voices.find(v => v.name.includes(name));
+                    if (v) return v;
+                }
+                
+                // Google español femenino
+                const googleEs = voices.find(v => v.name.includes('Google') && v.lang.startsWith('es') && !v.name.toLowerCase().includes('male'));
+                if (googleEs) return googleEs;
+
+                // Buscar por idioma español
+                const spanishVoices = voices.filter(v => 
+                    v.lang && (v.lang.startsWith('es') || v.lang.startsWith('ES'))
+                );
+                
+                if (spanishVoices.length > 0) {
+                    // Preferir voces femeninas primero
+                    const femaleVoice = spanishVoices.find(v => 
+                        v.name.toLowerCase().includes('sabina') || 
+                        v.name.toLowerCase().includes('helena') || 
+                        v.name.toLowerCase().includes('laura')
+                    );
+                    return femaleVoice || spanishVoices[0];
+                }
+
+                // Fallback: cualquier voz
+                return voices[0] || null;
+            }
+
+            // Inicializar voces
+            
+            function selectFemaleVoice(voices) {
+                const femaleNames = ['Monica','Luciana','Paulina','Mónica','Sabina','Helena','Esperanza'];
+                for (const name of femaleNames) {
+                    const v = voices.find(v => v.name.includes(name));
+                    if (v) return v;
+                }
+                const g = voices.find(v => v.name.includes('Google') && v.lang.startsWith('es') && !v.name.includes('Male'));
+                if (g) return g;
+                const f = voices.find(v => v.lang.startsWith('es') && /female/i.test(v.name));
+                if (f) return f;
+                return voices.find(v => v.lang.startsWith('es')) || voices[0];
+            }
+
+            function initializeVoices() {
+                return new Promise((resolve) => {
+                    if (synth.getVoices().length > 0) {
+                        resolve();
+                    } else {
+                        synth.onvoiceschanged = () => resolve();
+                        setTimeout(resolve, 3000); // Timeout de seguridad
+                    }
+                });
+            }
+
+            // Función para hablar
+            function speak(text) {
+                return new Promise((resolve) => {
+                    if (!synth || isSpeaking) {
+                        resolve();
+                        return;
+                    }
+
+                    // Filtrar URLs y agregar pausas
+                    let cleanText = filterUrlsForTTS(text);
+                    cleanText = addNaturalPauses(cleanText);
+
+                    const utterance = new SpeechSynthesisUtterance(cleanText);
+                    
+                    // Configurar voz
+                    const voice = findSpanishVoice();
+                    if (voice) {
+                        utterance.voice = voice;
+                    }
+                    
+                    utterance.lang = 'es-ES';
+                    utterance.rate = 0.92;
+                    utterance.pitch = 1.2;
+                    utterance.volume = 1;
+
+                    isSpeaking = true;
+                    setPulseState('speaking');
+                    setStatus('Hablando...');
+
+                    utterance.onend = () => {
+                        isSpeaking = false;
+                        currentUtterance = null;
+                        setPulseState('listening');
+                        setStatus('Escuchando...');
+                        resolve();
+                    };
+
+                    utterance.onerror = (event) => {
+                        console.error('Error en TTS:', event.error);
+                        isSpeaking = false;
+                        currentUtterance = null;
+                        setPulseState('listening');
+                        setStatus('Escuchando...');
+                        resolve();
+                    };
+
+                    currentUtterance = utterance;
+                    synth.speak(utterance);
+                });
+            }
+
+            // Enviar mensaje al backend
+            async function sendMessage(text) {
+                if (!text || isProcessing) return;
+
+                isProcessing = true;
+                setStatus('Roma está pensando...');
+                setPulseState('listening');
+                showTranscript('');
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: text,
+                            sessionId: SESSION_ID
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const reply = data.reply || data.message || data.text || 'Lo siento, no entendí eso.';
+
+                    // Mostrar respuesta
+                    showTranscript(reply);
+                    
+                    // Hablar respuesta
+                    await speak(reply);
+                    
+                    // Volver a escuchar
+                    isProcessing = false;
+                    startListening();
+
+                } catch (error) {
+                    console.error('Error al enviar mensaje:', error);
+                    setStatus('Error de conexión. Reintentando...', 'error');
+                    setPulseState('error');
+                    
+                    // Reintentar después de 3 segundos
+                    setTimeout(() => {
+                        isProcessing = false;
+                        setPulseState('listening');
+                        setStatus('Escuchando...');
+                        startListening();
+                    }, 3000);
+                }
+            }
+
+            // Iniciar reconocimiento de voz
+            function startListening() {
+                if (isProcessing || isSpeaking || !recognition) return;
+
+                try {
+                    recognition.start();
+                    isListening = true;
+                    setPulseState('listening');
+                    setStatus('Escuchando...');
+                    showTranscript('');
+                } catch (error) {
+                    console.error('Error al iniciar reconocimiento:', error);
+                    // Si ya está iniciado, ignorar
+                    if (error.name !== 'InvalidStateError') {
+                        setStatus('Error al escuchar. Reintentando...', 'error');
+                        setTimeout(startListening, 1000);
+                    }
+                }
+            }
+
+            // Detener reconocimiento
+            function stopListening() {
+                if (recognition && isListening) {
+                    try {
+                        recognition.stop();
+                    } catch (e) {
+                        // Ignorar errores al detener
+                    }
+                    isListening = false;
+                }
+            }
+
+            // Inicializar reconocimiento de voz
+            function initSpeechRecognition() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                
+                if (!SpeechRecognition) {
+                    setStatus('Tu navegador no soporta reconocimiento de voz', 'error');
+                    showError(true);
+                    errorMessage.innerHTML = `
+                        <strong>Navegador no compatible</strong><br>
+                        Por favor, usa Google Chrome o Microsoft Edge para usar el asistente de voz.
+                    `;
+                    return false;
+                }
+
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES';
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.maxAlternatives = 1;
+
+                recognition.onresult = (event) => {
+                    let interimTranscript = '';
+                    let finalTranscript = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const result = event.results[i];
+                        if (result.isFinal) {
+                            finalTranscript += result[0].transcript;
+                        } else {
+                            interimTranscript += result[0].transcript;
+                        }
+                    }
+
+                    // Mostrar transcripción en tiempo real
+                    const displayText = finalTranscript || interimTranscript;
+                    if (displayText) {
+                        showTranscript(displayText);
+                        transcriptBuffer = finalTranscript || interimTranscript;
+                        lastTranscriptTime = Date.now();
+                    }
+
+                    // Reiniciar timer de silencio
+                    if (silenceTimer) {
+                        clearTimeout(silenceTimer);
+                    }
+
+                    // Si hay texto final, esperar silencio para enviar
+                    if (finalTranscript) {
+                        silenceTimer = setTimeout(() => {
+                            if (finalTranscript.trim()) {
+                                stopListening();
+                                sendMessage(finalTranscript.trim());
+                            }
+                        }, SILENCE_TIMEOUT);
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('Error de reconocimiento:', event.error);
+                    
+                    if (event.error === 'not-allowed') {
+                        setStatus('Permiso de micrófono denegado', 'error');
+                        setPulseState('error');
+                        showError(true);
+                        isListening = false;
+                    } else if (event.error === 'no-speech') {
+                        // Silencio, reintentar
+                        if (!isProcessing && !isSpeaking) {
+                            startListening();
+                        }
+                    } else if (event.error === 'aborted') {
+                        // Ignorar, puede ser normal
+                    } else {
+                        setStatus('Error de micrófono. Reintentando...', 'error');
+                        setTimeout(() => {
+                            if (!isProcessing && !isSpeaking) {
+                                startListening();
+                            }
+                        }, 1000);
+                    }
+                };
+
+                recognition.onend = () => {
+                    isListening = false;
+                    
+                    // Si no está procesando ni hablando, reiniciar
+                    if (!isProcessing && !isSpeaking) {
+                        // Pequeño delay para evitar bucles
+                        setTimeout(() => {
+                            if (!isProcessing && !isSpeaking && !isListening) {
+                                startListening();
+                            }
+                        }, 500);
+                    }
+                };
+
+                return true;
+            }
+
+            // Solicitar permiso de micrófono
+            async function requestMicrophonePermission() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    // Detener el stream inmediatamente (solo para permiso)
+                    stream.getTracks().forEach(track => track.stop());
+                    return true;
+                } catch (error) {
+                    console.error('Error al solicitar permiso:', error);
+                    return false;
+                }
+            }
+
+            // Inicializar todo
+            async function initialize() {
+                if (isInitialized) return;
+                isInitialized = true;
+
+                setStatus('Pidiendo permiso...');
+                setPulseState('listening');
+
+                // Esperar a que las voces estén disponibles
+                await initializeVoices();
+
+                // Solicitar permiso de micrófono
+                const hasPermission = await requestMicrophonePermission();
+                
+                if (!hasPermission) {
+                    setStatus('Permiso de micrófono denegado', 'error');
+                    setPulseState('error');
+                    showError(true);
+                    return;
+                }
+
+                showError(false);
+
+                // Inicializar reconocimiento de voz
+                const supported = initSpeechRecognition();
+                if (!supported) return;
+
+                // Iniciar escucha
+                setStatus('Escuchando...');
+                setPulseState('listening');
+                startListening();
+            }
+
+            // Event listeners
+            closeBtn.addEventListener('click', () => {
+                // Limpiar recursos
+                if (silenceTimer) clearTimeout(silenceTimer);
+                if (currentUtterance) {
+                    synth.cancel();
+                }
+                stopListening();
+                
+                // Llamar función padre
+                if (window.parent && typeof window.parent.romaCloseVoice === 'function') {
+                    window.parent.romaCloseVoice();
+                }
+            });
+
+            retryPermissionBtn.addEventListener('click', async () => {
+                showError(false);
+                setStatus('Pidiendo permiso...');
+                setPulseState('listening');
+                
+                const hasPermission = await requestMicrophonePermission();
+                
+                if (hasPermission) {
+                    showError(false);
+                    setStatus('Escuchando...');
+                    setPulseState('listening');
+                    startListening();
+                } else {
+                    setStatus('Permiso de micrófono denegado', 'error');
+                    setPulseState('error');
+                    showError(true);
+                }
+            });
+
+            // Iniciar cuando el DOM esté listo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initialize);
+            } else {
+                initialize();
+            }
+
+            // Manejar visibilidad de página
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // Pausar cuando no es visible
+                    if (currentUtterance) {
+                        synth.cancel();
+                    }
+                    stopListening();
+                } else {
+                    // Reanudar cuando es visible
+                    if (!isProcessing && !isSpeaking && isInitialized) {
+                        startListening();
+                    }
+                }
+            });
+
+        })();
+    </script>
+    <script src="/roma-webchat/roma-webchat.js" defer></script>
+</body>
+</html>

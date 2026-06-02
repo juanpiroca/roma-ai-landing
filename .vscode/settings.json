@@ -1,0 +1,8 @@
+{
+    "window.autoDetectColorScheme": true,
+    "editor.formatOnSave": false,
+    "telemetry.editStats.details.enabled": false,
+    "telemetry.editStats.enabled": true,
+    "telemetry.editStats.showDecorations": false,
+    "telemetry.editStats.showStatusBar": true
+}

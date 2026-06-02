@@ -1,0 +1,283 @@
+'use strict';
+
+const TelegramBot = require('node-telegram-bot-api');
+const { execSync } = require('child_process');
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const { loadEnv } = require('../shared/load-env');
+const { inspectCommand, validateRequiredEnv, getAudioEnvStatus } = require('../shared/security');
+const { createMailTransport } = require('../shared/mailer');
+const { callClaudeWithMemory } = require('../shared/claude');
+const memory = require('../shared/memory');
+const { logAction } = require('../shared/action-log');
+const { getChatState, updateChatState } = require('../shared/telegram-state');
+const { exportConversation } = require('../shared/doc-export');
+const { extractTextFromDocument, analyzeImageWithClaude, isImageMime } = require('../shared/file-analysis');
+const {
+  isAuthorizedChat,
+  canProcessAttachments,
+  isAllowedDocumentFile,
+} = require('../shared/telegram-policy');
+
+loadEnv();
+
+// Modo texto es siempre el default — audio no persiste entre reinicios
+const { resetAllModesToText } = require('../shared/telegram-state');
+resetAllModesToText();
+
+const config = require('../../config/roma.config.json');
+const {
+  OPENAI_API_KEY,
+  GMAIL_USER,
+  GMAIL_PASS,
+  ALLOWED_CHAT_ID,
+  TELEGRAM_CHAT_ID,
+} = process.env;
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
+
+const envStatus = validateRequiredEnv('bot');
+if (!envStatus.ok) {
+  const problems = [
+    envStatus.missing.length ? 'faltan variables: ' + envStatus.missing.join(', ') : null,
+    envStatus.invalid.length ? 'variables inválidas: ' + envStatus.invalid.join(', ') : null,
+  ].filter(Boolean);
+  console.error('Roma Bot no puede iniciar. ' + problems.join(' | '));
+  process.exit(1);
+}
+
+// ── Webhook ───────────────────────────────────────────────────
+const WEBHOOK_URL = (process.env.PUBLIC_BASE_URL || '') + '/telegram/webhook';
+const usePolling = !process.env.PUBLIC_BASE_URL;
+const bot = new TelegramBot(TELEGRAM_TOKEN, usePolling ? { polling: true } : { webHook: false });
+bot.setMyCommands([
+  { command: 'leads', description: 'Ver leads activos' },
+  { command: 'health', description: 'Estado del servidor' },
+  { command: 'logs', description: 'Últimos errores' },
+  { command: 'doc', description: 'Exportar chat en MD y PDF' },
+  { command: 'reiniciar', description: 'Reiniciar Roma' },
+  { command: 'audio', description: 'Activar respuestas de voz' },
+  { command: 'texto', description: 'Volver a respuestas de texto' },
+]).catch(() => { });
+bot.on('polling_error', (error) => {
+  const errCode = (error && error.code) || 'N/A';
+  const errMsg = (error && error.message) || String(error);
+  const errStack = (error && error.stack) ? error.stack.split('\n')[0] : 'N/A';
+  console.error('[Telegram] polling_error:', 'code=' + errCode, 'msg=' + errMsg.slice(0,200), 'stack=' + errStack);
+  // EFATAL: restart polling automatically
+  // EFATAL = FatalError (network/transport errors)
+  // ETELEGRAM = TelegramError (API-level errors)
+  if (errCode === 'EFATAL' || errMsg.includes('EFATAL')) {
+    console.log('[Telegram] EFATAL detectado, reiniciando polling en 3s...');
+    setTimeout(() => {
+      try {
+        bot.stopPolling().catch(() => {});
+        setTimeout(() => {
+          bot.startPolling().catch(e => console.error('[Telegram] restart fail:', e.message));
+        }, 1000);
+      } catch (e) {
+        console.error('[Telegram] error restart:', e.message);
+      }
+    }, 3000);
+  }
+});
+
+async function registerWebhook() {
+  try {
+    const info = await bot.getWebHookInfo();
+    if (info.url === WEBHOOK_URL) {
+      console.log('[bot] Webhook ya registrado: ' + WEBHOOK_URL);
+      return;
+    }
+    await bot.setWebHook(WEBHOOK_URL, { drop_pending_updates: true });
+    console.log('[bot] Webhook registrado: ' + WEBHOOK_URL);
+  } catch (e) {
+    console.error('[bot] Error registrando webhook:', e.message);
+    setTimeout(registerWebhook, 15000);
+  }
+}
+if (!usePolling) {
+  registerWebhook();
+}
+console.log('Roma Bot activo (' + (usePolling ? 'polling' : 'webhook') + ')...');
+
+// ── Pendientes de autorización ────────────────────────────────
+const pendingAuths = new Map();
+
+// ── Carpeta segura de descargas ───────────────────────────────
+const SAFE_TMP = path.resolve('/home/juanpi/Roma/tmp');
+if (!fs.existsSync(SAFE_TMP)) fs.mkdirSync(SAFE_TMP, { recursive: true });
+
+// Límites de tamaño en bytes
+const LIMITS = {
+  document: 20 * 1024 * 1024,  // 20 MB
+  image: 10 * 1024 * 1024,  // 10 MB
+  audio: 25 * 1024 * 1024,  // 25 MB
+  voice: 25 * 1024 * 1024,  // 25 MB
+  video: 50 * 1024 * 1024,  // 50 MB
+};
+
+const TTS_VOICE = process.env.ROMA_TTS_VOICE || 'nova';
+
+// ── Claude ────────────────────────────────────────────────────
+async function callClaude(prompt) {
+  return callClaudeWithMemory(prompt, 'telegram', {
+    emptyMessage: 'No entendí el mensaje, mandame algo de nuevo.',
+    maxTokens: 400,
+  });
+}
+
+// ── TTS ───────────────────────────────────────────────────────
+async function replyWithAudio(chatId, text) {
+  const tmpPath = path.join(SAFE_TMP, 'tts_' + Date.now() + '.mp3');
+  const audioEnv = getAudioEnvStatus();
+  if (!audioEnv.ok) {
+    logAction('telegram_tts_send', 'telegram-admin', 'fallback_text', audioEnv.reason, { chatId, voice: TTS_VOICE });
+    return bot.sendMessage(chatId, text);
+  }
+  try {
+    logAction('telegram_tts_start', 'telegram-admin', 'started', null, { chatId });
+    const res = await axios.post(
+      'https://api.openai.com/v1/audio/speech',
+      { model: 'tts-1', voice: TTS_VOICE, input: text, response_format: 'mp3' },
+      { headers: { Authorization: 'Bearer ' + OPENAI_API_KEY, 'Content-Type': 'application/json' }, responseType: 'arraybuffer' }
+    );
+    fs.writeFileSync(tmpPath, Buffer.from(res.data));
+    await bot.sendVoice(chatId, tmpPath);
+    logAction('telegram_tts_send', 'telegram-admin', 'ok', null, { chatId, voice: TTS_VOICE });
+  } catch (err) {
+    console.error('TTS error:', (err.response && err.response.data) || err.message);
+    logAction('telegram_tts_send', 'telegram-admin', 'fallback_text', err.message, { chatId, voice: TTS_VOICE });
+    await bot.sendMessage(chatId, text);
+  } finally {
+    try { fs.unlinkSync(tmpPath); } catch (_) { }
+  }
+}
+
+// ── Respuesta al usuario (respeta modo por chat) ──────────────
+async function replyToUser(chatId, text, isSystem) {
+  if (isSystem === undefined) isSystem = false;
+  const state = getChatState(chatId);
+  if (!isSystem) updateChatState(chatId, { lastAssistantText: text });
+  if (isSystem || state.responseMode === 'text') {
+    return bot.sendMessage(chatId, text);
+  }
+  return replyWithAudio(chatId, text);
+}
+
+// ── Whisper ───────────────────────────────────────────────────
+async function transcribeAudio(filePath) {
+  const audioEnv = getAudioEnvStatus();
+  if (!audioEnv.ok) {
+    throw new Error(audioEnv.reason);
+  }
+  const FormData = require('form-data');
+  const form = new FormData();
+  form.append('file', fs.createReadStream(filePath));
+  form.append('model', 'whisper-1');
+  form.append('language', 'es');
+  const res = await axios.post('https://api.openai.com/v1/audio/transcriptions', form, {
+    headers: Object.assign(form.getHeaders(), { Authorization: 'Bearer ' + OPENAI_API_KEY })
+  });
+  return res.data.text;
+}
+
+// ── Email ─────────────────────────────────────────────────────
+async function sendEmail(subject, body) {
+  const transporter = createMailTransport({ GMAIL_USER, GMAIL_PASS });
+  if (!transporter) return;
+  await transporter.sendMail({
+    from: 'Roma <' + GMAIL_USER + '>',
+    to: GMAIL_USER,
+    subject: '[Roma] ' + subject,
+    text: body
+  });
+}
+
+// ── Auth ──────────────────────────────────────────────────────
+function isAuthorized(chatId) {
+  return isAuthorizedChat(chatId);
+}
+
+// ── Descarga segura de archivos de Telegram ──────────────────
+function sanitizeFilename(name) {
+  return name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 120);
+}
+
+async function downloadTelegramFile(fileId, prefix, maxBytes) {
+  const file = await bot.getFile(fileId);
+  const fileSize = file.file_size || 0;
+  if (fileSize > maxBytes) {
+    throw new Error('Archivo demasiado grande: ' + (fileSize / 1024 / 1024).toFixed(1) + ' MB (máx ' + maxBytes / 1024 / 1024 + ' MB)');
+  }
+  const remotePath = file.file_path;
+  if (/\.\./.test(remotePath)) throw new Error('Path inválido');
+  const ext = path.extname(remotePath) || '';
+  const localPath = path.join(SAFE_TMP, prefix + '_' + Date.now() + sanitizeFilename(ext));
+  if (!localPath.startsWith(SAFE_TMP)) throw new Error('Destino fuera del área permitida');
+  const url = 'https://api.telegram.org/file/bot' + TELEGRAM_TOKEN + '/' + remotePath;
+  const response = await axios({ url, responseType: 'stream', timeout: 30000 });
+  const writer = fs.createWriteStream(localPath);
+  await new Promise((resolve, reject) => {
+    response.data.pipe(writer);
+    writer.on('finish', resolve);
+    writer.on('error', reject);
+  });
+  return localPath;
+}
+
+function getExportEntries(chatId) {
+  return memory.getAllHistory(500)
+    .filter(function(entry) { return entry.channel === 'telegram-admin' && String(entry.chatId || '') === String(chatId); })
+    .slice(-80)
+    .map(function(entry) { return { role: entry.role, content: entry.content, ts: entry.ts }; });
+}
+
+// ── Dispatch Claude reply (texto, exec, plan) ─────────────────
+async function handleClaudeReply(chatId, reply) {
+  var parsed = null;
+  try {
+    var match = reply.match(/\{[\s\S]*\}/);
+    if (match) parsed = JSON.parse(match[0]);
+  } catch (_) { }
+
+  if (parsed && parsed.action === 'exec' && parsed.cmd) {
+    const inspection = inspectCommand(parsed.cmd);
+    if (!inspection.ok) {
+      logAction('telegram_exec_blocked', 'telegram-admin', 'blocked', inspection.reason, { chatId, cmd: parsed.cmd });
+      return replyToUser(chatId, 'Bloqueado por seguridad: ' + inspection.reason, true);
+    }
+    try {
+      const { exec } = require('child_process');
+      logAction('telegram_exec', 'telegram-admin', 'started', null, { chatId, cmd: parsed.cmd });
+      const output = await new Promise(function(resolve) {
+        exec(parsed.cmd, { cwd: '/home/juanpi/Roma', timeout: 30000 }, function(err, stdout, stderr) {
+          var result = (stdout || '') + (stderr ? '\nSTDERR: ' + stderr : '');
+          resolve(err ? 'Error: ' + err.message + '\n' + result : result || '(sin output)');
+        });
+      });
+
+      var preview = output.slice(0, 800);
+      logAction('telegram_exec', 'telegram-admin', 'ok', null, { chatId, cmd: parsed.cmd });
+      await bot.sendMessage(chatId, '✅ Ejecutado.', { parse_mode: 'Markdown' });
+      return replyToUser(chatId, 'Listo, ejecuté el comando. ' + output.slice(0, 100));
+    } catch (err) {
+      console.error('exec error:', err.message);
+      logAction('telegram_exec', 'telegram-admin', 'error', err.message, { chatId, cmd: parsed.cmd });
+      return replyToUser(chatId, 'Hubo un error ejecutando: ' + err.message.slice(0, 100), true);
+    }
+  }
+
+  if (parsed && parsed.action === 'plan' && parsed.content) {
+    var planFile = path.join('/home/juanpi/Roma/trabajo', 'PLAN_' + Date.now() + '.md');
+    try {
+      fs.writeFileSync(planFile, parsed.content, 'utf8');
+      return replyToUser(chatId, 'Plan guardado en trabajo/. Título: ' + (parsed.title || 'sin título'));
+    } catch (err) {
+      console.error('plan write error:', err.message);
+      return replyToUser(chatId, 'No pude guardar el plan: ' + err.message, true);
+    }
+  }
+
+  return replyToUser(chatId, reply);
+}

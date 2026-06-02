@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg9" cx="55%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0c1535"/>
+      <stop offset="100%" stop-color="#050816"/>
+    </radialGradient>
+    <linearGradient id="tg9" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#00e5bf"/>
+    </linearGradient>
+    <linearGradient id="facetTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a2e7c" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0a1640" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="facetMid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1e5e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#08112e" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="g9">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="g9s">
+      <feGaussianBlur stdDeviation="1.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg9)"/>
+
+  <!-- Eagle head profile (facing right) — low poly geometric -->
+  <!-- Back of head -->
+  <polygon points="148,82 175,70 200,72 180,105 155,118" fill="url(#facetTop)" stroke="#4f6ef7" stroke-width="0.9"/>
+  <!-- Top of head -->
+  <polygon points="175,70 215,68 230,82 200,72" fill="#1e3580" stroke="#4f6ef7" stroke-width="0.9"/>
+  <!-- Forehead -->
+  <polygon points="215,68 245,80 235,100 200,72 230,82" fill="url(#facetTop)" stroke="#4f6ef7" stroke-width="0.9"/>
+  <!-- Crown crest -->
+  <polygon points="175,70 200,72 195,55 183,52" fill="#00e5bf" opacity="0.2" stroke="#00e5bf" stroke-width="0.8" filter="url(#g9s)"/>
+  <polygon points="200,72 215,68 210,50 200,52" fill="#4f6ef7" opacity="0.2" stroke="#4f6ef7" stroke-width="0.8" filter="url(#g9s)"/>
+
+  <!-- Face front -->
+  <polygon points="245,80 255,102 248,125 235,100" fill="url(#facetMid)" stroke="#4f6ef7" stroke-width="0.9"/>
+  <!-- Eye area -->
+  <polygon points="235,100 248,125 238,140 215,120 220,100" fill="url(#facetTop)" stroke="#4f6ef7" stroke-width="0.9"/>
+  <!-- Below eye -->
+  <polygon points="248,125 252,148 238,160 238,140" fill="url(#facetMid)" stroke="#4f6ef7" stroke-width="0.9"/>
+
+  <!-- Beak — bright accent -->
+  <polygon points="252,148 275,160 265,178 248,162 252,148" fill="#00e5bf" opacity="0.7" stroke="url(#tg9)" stroke-width="1.2" filter="url(#g9s)"/>
+  <polygon points="252,148 260,145 275,160" fill="#4f6ef7" opacity="0.5" stroke="url(#tg9)" stroke-width="0.8"/>
+
+  <!-- Throat / neck -->
+  <polygon points="238,160 252,162 248,185 225,192 210,178 215,155 238,140" fill="url(#facetMid)" stroke="#4f6ef7" stroke-width="0.9"/>
+  <!-- Neck back -->
+  <polygon points="155,118 180,105 200,72 210,178 180,190 155,175 148,145 148,118" fill="#0a1228" stroke="#4f6ef7" stroke-width="0.9"/>
+
+  <!-- Chest -->
+  <polygon points="155,175 180,190 210,178 225,192 200,210 165,200" fill="url(#facetTop)" stroke="#4f6ef7" stroke-width="0.9"/>
+
+  <!-- EYE — the hero element -->
+  <g filter="url(#g9)">
+    <!-- Eye socket -->
+    <polygon points="220,100 238,100 240,118 225,122 215,112" fill="#050816" stroke="#00e5bf" stroke-width="1.5"/>
+    <!-- Iris -->
+    <ellipse cx="228" cy="111" rx="9" ry="8" fill="#050816" stroke="#00e5bf" stroke-width="1.8"/>
+    <!-- Pupil -->
+    <ellipse cx="228" cy="111" rx="4" ry="5.5" fill="#00e5bf" opacity="0.85"/>
+    <!-- Shine -->
+    <circle cx="231" cy="108" r="2" fill="white" opacity="0.9"/>
+    <!-- Eye ring -->
+    <ellipse cx="228" cy="111" rx="6.5" ry="6" fill="none" stroke="#00e5bf" stroke-width="0.8" opacity="0.5"/>
+  </g>
+
+  <!-- Geometric detail lines -->
+  <g stroke="url(#tg9)" stroke-width="0.6" opacity="0.4" fill="none">
+    <line x1="180" y1="105" x2="215" y2="120"/>
+    <line x1="200" y1="72" x2="215" y2="120"/>
+    <line x1="215" y1="155" x2="248" y2="162"/>
+  </g>
+
+  <!-- Circuit nodes at facet vertices -->
+  <g fill="#00e5bf" filter="url(#g9)" opacity="0.8">
+    <circle cx="245" cy="80" r="2.5"/>
+    <circle cx="255" cy="102" r="2"/>
+    <circle cx="248" cy="125" r="2.5"/>
+    <circle cx="275" cy="160" r="2.5"/>
+    <circle cx="215" cy="68" r="2.5"/>
+    <circle cx="175" cy="70" r="2.5"/>
+    <circle cx="148" cy="82" r="2"/>
+  </g>
+
+  <!-- Separator -->
+  <line x1="80" y1="228" x2="320" y2="228" stroke="url(#tg9)" stroke-width="0.5" opacity="0.3"/>
+  <circle cx="200" cy="228" r="3" fill="url(#tg9)" opacity="0.5"/>
+
+  <!-- ROMA — gradient, heavy -->
+  <text x="200" y="272" font-family="'Arial Black', 'Arial', sans-serif" font-size="44"
+    font-weight="900" fill="url(#tg9)" text-anchor="middle" letter-spacing="5">ROMA</text>
+
+  <!-- Rule lines flanking AI -->
+  <line x1="88" y1="287" x2="162" y2="287" stroke="url(#tg9)" stroke-width="0.5" opacity="0.45"/>
+  <line x1="238" y1="287" x2="312" y2="287" stroke="url(#tg9)" stroke-width="0.5" opacity="0.45"/>
+
+  <!-- AI -->
+  <text x="200" y="290" font-family="'Arial', sans-serif" font-size="13"
+    font-weight="300" fill="#00e5bf" text-anchor="middle" letter-spacing="13" filter="url(#g9s)">AI</text>
+
+  <!-- Tagline -->
+  <text x="200" y="318" font-family="'Arial', sans-serif" font-size="8"
+    fill="#4f6ef7" text-anchor="middle" letter-spacing="4" opacity="0.65">INTELLIGENT AUTOMATION</text>
+</svg>

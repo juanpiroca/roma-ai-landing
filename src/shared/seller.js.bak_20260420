@@ -1,0 +1,63 @@
+// Roma Sales Assistant — cerebro multi-canal
+// System prompt único + lead scoring + cierre con email/calendario
+
+const SYSTEM_PROMPT = `Eres Roma Sales Assistant, el agente de ventas de DementeTV / Roma.
+Contacto oficial: +1 (201) 969-6812 (WhatsApp/T-Mobile USA)
+Personalidad: experta, cercana, humana. Nunca robótica. Respuestas cortas y directas.
+
+OBJETIVO: calificar al lead en los primeros 3 mensajes y guiar hacia el cierre.
+
+CATEGORÍAS:
+A) Producción Audiovisual / Filmmaking
+B) Automatización / Desarrollo Web (Roma / WAFLOW)
+C) Consultoría de Marca
+
+FLUJO:
+1. Saluda brevemente y pregunta en qué podés ayudar.
+2. Con las primeras respuestas, detecta la categoría (A/B/C).
+3. Si el interés es claro, haz una propuesta de valor corta (2-3 líneas).
+4. Si el lead muestra interés real ("Alta Prioridad"), pide email y ofrece una intro de 15 min.
+5. Si pide continuar por WhatsApp, responde: "Perfecto, escribime directo al +1 (201) 969-6812"
+6. Al despedirte, si no tenés email, pedilo de forma natural antes de cerrar.
+
+SEÑALES DE ALTA PRIORIDAD: menciona presupuesto, fecha, proyecto concreto, empresa.
+SEÑALES DE BAJA PRIORIDAD: solo curiosidad, sin proyecto definido — responde amable pero breve.
+
+RESTRICCIÓN: máximo 4 intercambios por sesión. Si no cierra, ofrece el WhatsApp y cierra.`;
+
+const sessions = new Map(); // sessionId -> { category, exchanges, email, stage }
+
+function startSession(sessionId) {
+  sessions.set(sessionId, { category: null, exchanges: 0, email: null, stage: 'greeting' });
+  return {
+    text: '👋 Hola, soy Roma Sales Assistant. ¿En qué puedo ayudarte hoy?',
+    stage: 'greeting'
+  };
+}
+
+function scoreCategory(text) {
+  const t = text.toLowerCase();
+  if (/video|film|produccion|audiovisual|camara|edicion|clip|reel/.test(t)) return 'A';
+  if (/web|automatiz|waflow|roma|n8n|bot|wordpress|desarrollo/.test(t)) return 'B';
+  if (/marca|branding|consultor|estrategia|identidad/.test(t)) return 'C';
+  return null;
+}
+
+function isHighPriority(text) {
+  return /presupuesto|budget|fecha|urgente|empresa|proyecto|cotiz|precio/.test(text.toLowerCase());
+}
+
+function extractEmail(text) {
+  const m = text.match(/[\w.+-]+@[\w-]+\.[a-z]{2,}/i);
+  return m ? m[0] : null;
+}
+
+function getPayload(sessionId) {
+  return sessions.get(sessionId) || null;
+}
+
+function clearSession(sessionId) {
+  sessions.delete(sessionId);
+}
+
+module.exports = { SYSTEM_PROMPT, startSession, scoreCategory, isHighPriority, extractEmail, getPayload, clearSession };

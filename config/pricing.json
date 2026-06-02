@@ -1,0 +1,16 @@
+{
+  "categories": {
+    "landing": { "base": 500, "min": 300, "max": 1200 },
+    "web_corp": { "base": 1500, "min": 800, "max": 3500 },
+    "ecommerce": { "base": 3000, "min": 1500, "max": 8000 },
+    "app_mobile": { "base": 5000, "min": 3000, "max": 15000 },
+    "automatizacion": { "base": 800, "min": 400, "max": 2500 },
+    "consultoria": { "base": 200, "min": 100, "max": 400, "unit": "hr" },
+    "otros": { "base": 1000, "min": 500, "max": 3000 }
+  },
+  "multipliers": {
+    "timeline_urgencia": { "<1sem": 1.5, "2-4sem": 1.0, ">1mes": 0.9 },
+    "complejidad": { "simple": 0.8, "media": 1.0, "compleja": 1.4 },
+    "formato": { "one-shot": 1.0, "mensual": 0.7, "retainer": 0.85 }
+  }
+}

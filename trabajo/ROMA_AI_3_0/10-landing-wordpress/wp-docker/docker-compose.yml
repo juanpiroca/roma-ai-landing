@@ -1,0 +1,43 @@
+services:
+  roma-wordpress-db:
+    image: mysql:8.0
+    container_name: roma-wordpress-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: roma2024root
+      MYSQL_DATABASE: roma_wordpress
+      MYSQL_USER: roma_wp
+      MYSQL_PASSWORD: roma2024wp
+    volumes:
+      - wp-docker_db_data:/var/lib/mysql
+    networks:
+      - roma-wp-net
+
+  roma-wordpress:
+    image: wordpress:6.5-php8.2-apache
+    container_name: roma-wordpress
+    restart: unless-stopped
+    depends_on:
+      - roma-wordpress-db
+    environment:
+      WORDPRESS_DB_HOST: roma-wordpress-db:3306
+      WORDPRESS_DB_NAME: roma_wordpress
+      WORDPRESS_DB_USER: roma_wp
+      WORDPRESS_DB_PASSWORD: roma2024wp
+      WORDPRESS_TABLE_PREFIX: rma_
+    ports:
+      - "8090:80"
+    volumes:
+      - wp-docker_wp_data:/var/www/html
+    networks:
+      - roma-wp-net
+
+networks:
+  roma-wp-net:
+    driver: bridge
+
+volumes:
+  wp-docker_db_data:
+    external: true
+  wp-docker_wp_data:
+    external: true
