@@ -91,6 +91,10 @@ body {
   to   { transform: translateX(-50%); }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
 /* ==============================
    TITLES GRADIENT
    ============================== */
@@ -401,6 +405,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   font-weight: 900; line-height: 1.04; letter-spacing: -0.03em;
   margin-bottom: 24px;
   color: #fff;
+  text-wrap: balance;
 }
 .hero-title-flow {
   display: inline-block;
@@ -507,10 +512,14 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: inline-flex; align-items: center; gap: 10px;
   padding: 16px 36px; border-radius: var(--radius-pill);
   font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none;
-  transition: all 0.3s var(--easing); border: none;
+  transition: transform 0.3s var(--easing), box-shadow 0.3s var(--easing), border-color 0.3s var(--easing); border: none;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 .btn-primary {
-  background: var(--primary); color: #fff;
+  background: #3d5ce0; color: #fff;
 }
 .btn-primary:hover {
   transform: translateY(-3px); box-shadow: 0 20px 50px var(--primary-glow);
@@ -535,7 +544,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: inline-flex; align-items: center; gap: 10px;
   padding: 16px 36px; border-radius: var(--radius-pill);
   font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none;
-  transition: all 0.3s var(--easing);
+  transition: transform 0.3s var(--easing), box-shadow 0.3s var(--easing), border-color 0.3s var(--easing);
 }
 .btn-outline:hover {
   border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.04);
@@ -937,11 +946,20 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   background: rgba(255,255,255,0.05);
   border-radius: 999px; padding: 11px 18px;
   font: inherit; font-size: 0.9rem;
-  color: var(--text); outline: none;
+  color: var(--text);
   transition: border-color 0.2s, background 0.2s;
 }
 .chat-input::placeholder { color: var(--text-dim); }
-.chat-input:focus { border-color: rgba(79,110,247,0.45); background: rgba(79,110,247,0.06); }
+.chat-input:focus {
+  outline: 2px solid rgba(79,110,247,0.6);
+  outline-offset: 1px;
+  border-color: rgba(79,110,247,0.45);
+  background: rgba(79,110,247,0.06);
+}
+.chat-input:focus-visible {
+  outline: 2px solid rgba(79,110,247,0.6);
+  outline-offset: 1px;
+}
 .chat-send {
   width: 42px; height: 42px; border-radius: 50%; border: 0; flex-shrink: 0;
   background: linear-gradient(135deg, var(--primary), #3d5ce0);
@@ -1385,7 +1403,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   <!-- ============================= -->
   <div class="logo-pill" id="logoPill">
     <a href="#">
-      <img src="assets/logo-roma-official.png" alt="ROMA AI" class="logo-pill-img">
+      <img src="assets/logo-roma-official.png" alt="ROMA AI" class="logo-pill-img" width="60" height="60">
     </a>
   </div>
 
@@ -1651,7 +1669,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
       <span class="eyebrow" data-i18n="dash.eyebrow">Dashboard</span>
       <h2 class="gradient-title" data-i18n="dash.h2">Control total en tiempo real</h2>
       <div class="dashboard-wrap">
-        <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image">
+        <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image" width="800" height="480">
       </div>
     </div>
   </section>
@@ -1665,7 +1683,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
       <h2 class="gradient-title" data-i18n="cases.title">Negocios latinos que automatizan sus ventas</h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <img src="assets/icono-ia.png" alt="" class="testimonial-icon">
+          <img src="assets/icono-ia.png" alt="" class="testimonial-icon" aria-hidden="true" width="52" height="52">
           <p class="testimonial-quote" data-i18n="cases.c1.quote">"Mi clínica recibe consultas a las 3am. Roma responde, agenda y yo llego con clientes confirmados."</p>
           <div class="testimonial-author-wrap">
             <img src="assets/avatar-ana.png" alt="Ana" class="testimonial-avatar">
@@ -1676,7 +1694,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           </div>
         </div>
         <div class="testimonial-card">
-          <img src="assets/icono-multichannel.png" alt="" class="testimonial-icon">
+          <img src="assets/icono-multichannel.png" alt="" class="testimonial-icon" aria-hidden="true" width="52" height="52">
           <p class="testimonial-quote" data-i18n="cases.c2.quote">"Los pedidos por WhatsApp se perdían. Ahora Roma los captura todos y los rutea al equipo correcto."</p>
           <div class="testimonial-author-wrap">
             <img src="assets/avatar-carlos.png" alt="Carlos" class="testimonial-avatar">
@@ -1687,7 +1705,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
           </div>
         </div>
         <div class="testimonial-card">
-          <img src="assets/icono-routing.png" alt="" class="testimonial-icon">
+          <img src="assets/icono-routing.png" alt="" class="testimonial-icon" aria-hidden="true" width="52" height="52">
           <p class="testimonial-quote" data-i18n="cases.c3.quote">"Real estate moves fast. ROMA qualifies leads in minutes and routes them to the right agent."</p>
           <div class="testimonial-author-wrap">
             <img src="assets/avatar-laura.png" alt="Laura" class="testimonial-avatar">
@@ -1815,7 +1833,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
     <div class="footer-container">
       <div class="footer-brand">
         <a href="/" class="nav-logo footer-brand-link">
-          <img src="assets/logo-roma-official.png" alt="ROMA AI" class="footer-logo">
+          <img src="assets/logo-roma-official.png" alt="ROMA AI" class="footer-logo" width="48" height="48">
         </a>
         <p data-i18n="footer.desc">ROMA AI automatiza tus ventas con inteligencia artificial. Respondé 24/7, capturá más leads y cerrá más ventas.</p>
       </div>
