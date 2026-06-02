@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat con Roma AI</title>
   <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -127,9 +139,15 @@
     }
 
     input:focus {
-      outline: none;
+      outline: 2px solid #00d4ff;
+      outline-offset: 1px;
       border-color: #00d4ff;
       background: rgba(0, 212, 255, 0.05);
+    }
+
+    input:focus-visible {
+      outline: 2px solid #00d4ff;
+      outline-offset: 1px;
     }
 
     button {
@@ -141,7 +159,7 @@
       font-weight: 600;
       cursor: pointer;
       font-size: 14px;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     button:hover {
@@ -151,6 +169,11 @@
 
     button:active {
       transform: translateY(0);
+    }
+
+    button:focus-visible {
+      outline: 2px solid #00d4ff;
+      outline-offset: 2px;
     }
 
     .typing-indicator {
@@ -221,6 +244,12 @@
       margin-top: 8px;
       opacity: 0.9;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      .message { animation: none !important; }
+      .typing-dot { animation: none !important; }
+      button { transition: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -240,12 +269,13 @@
 
     <div class="chat-input-area">
       <div class="input-group">
-        <input type="text" id="message-input" placeholder="Escribe tu mensaje..." autocomplete="off">
-        <button onclick="sendMessage()">Enviar</button>
+        <label for="message-input" class="sr-only">Escribe tu mensaje</label>
+        <input type="text" id="message-input" placeholder="Escribe tu mensaje…" autocomplete="off" aria-label="Escribe tu mensaje">
+        <button onclick="sendMessage()" aria-label="Enviar mensaje">Enviar</button>
       </div>
       <div class="whatsapp-cta" id="whatsapp-cta">
         <button onclick="openWhatsApp()">📱 Continuar en WhatsApp</button>
-        <div class="whatsapp-hint">Ya tenemos tu número. Continúa aquí para privacidad y detalles.</div>
+        <div class="whatsapp-hint">Continúa en WhatsApp para asesoramiento personalizado.</div>
       </div>
     </div>
   </div>
