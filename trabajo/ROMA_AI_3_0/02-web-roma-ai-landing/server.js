@@ -51,14 +51,20 @@ function getSafeLeadPath(sessionId) {
   return path.join(getLeadsDir(), `web-${safeName}.json`);
 }
 
+const CATEGORY_PATTERNS = {
+  'ventas': /venta/,
+  'atencion': /atencion|atención|cliente/,
+  'contenido': /contenido|redes|social/,
+  'anuncios': /anuncio|ads|publicidad/,
+  'automatizacion': /automat/,
+  'web': /\bweb\b|sitio|pagina|página|landing/,
+};
+
 function mapToEnum(raw) {
   const text = String(raw ?? '').toLowerCase();
-  if (/venta/.test(text)) return 'ventas';
-  if (/atencion|atención|cliente/.test(text)) return 'atencion';
-  if (/contenido|redes|social/.test(text)) return 'contenido';
-  if (/anuncio|ads|publicidad/.test(text)) return 'anuncios';
-  if (/automat/.test(text)) return 'automatizacion';
-  if (/\bweb\b|sitio|pagina|página|landing/.test(text)) return 'web';
+  for (const [category, pattern] of Object.entries(CATEGORY_PATTERNS)) {
+    if (pattern.test(text)) return category;
+  }
   return 'general';
 }
 
@@ -79,9 +85,15 @@ function getSessionMemory(sessionId) {
   return webChatSessions.get(sessionId);
 }
 
+const CONFIG = {
+  WHATSAPP_NUMBER: process.env.WHATSAPP_US_NUMBER || '12019696812',
+  SESSION_FIRST_ANSWER_THRESHOLD: 2,
+  SESSION_SECOND_ANSWER_THRESHOLD: 3,
+  SESSION_SHOW_CTA_THRESHOLD: 3,
+};
+
 function buildWaLink() {
-  const whatsappNumber = process.env.WHATSAPP_US_NUMBER || '12019696812';
-  return `https://wa.me/${whatsappNumber}`;
+  return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}`;
 }
 
 function buildReply({ sessionCount, webAnswer1, webAnswer2, message, showCTA, waLink }) {
@@ -193,12 +205,12 @@ function captureImplicitAnswer(session, message) {
     return;
   }
 
-  if (!session.webAnswer1 && session.messageCount >= 2) {
+  if (!session.webAnswer1 && session.messageCount >= CONFIG.SESSION_FIRST_ANSWER_THRESHOLD) {
     session.webAnswer1 = trimmed;
     return;
   }
 
-  if (!session.webAnswer2 && session.webAnswer1 && session.messageCount >= 3 && !mentionsPrice(trimmed)) {
+  if (!session.webAnswer2 && session.webAnswer1 && session.messageCount >= CONFIG.SESSION_SECOND_ANSWER_THRESHOLD && !mentionsPrice(trimmed)) {
     session.webAnswer2 = trimmed;
   }
 }
@@ -219,13 +231,8 @@ function createApp(options = {}) {
   app.use('/logo-concepts', express.static(path.join(__dirname, 'logo-concepts')));
   app.use('/roma-webchat', express.static(WEBCHAT_COMPONENT_DIR));
   app.use('/admin', express.static(adminPanelDir));
-  app.use('/admin/', express.static(adminPanelDir));
 
-  app.get(['/admin', '/admin/', '/admin/login', '/admin/dashboard'], (_req, res) => {
-    res.sendFile(adminIndexPath);
-  });
-
-  app.get(/^\/admin\/.*/, (_req, res) => {
+  app.get(/^\/admin(?:\/)?(?:$|\/.*|login|dashboard)/, (_req, res) => {
     res.sendFile(adminIndexPath);
   });
 
@@ -281,7 +288,7 @@ function createApp(options = {}) {
       const webAnswer2 = session.webAnswer2;
       const sessionCount = session.messageCount;
       const showCTA =
-        Boolean(webAnswer1 && webAnswer2) || mentionsPrice(message) || sessionCount >= 3;
+        Boolean(webAnswer1 && webAnswer2) || mentionsPrice(message) || sessionCount >= CONFIG.SESSION_SHOW_CTA_THRESHOLD;
       const deterministicReply = buildReply({
         sessionCount,
         webAnswer1,
