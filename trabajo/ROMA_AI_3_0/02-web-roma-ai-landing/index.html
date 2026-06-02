@@ -325,8 +325,8 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   display: flex; flex-direction: column; align-items: flex-start; margin: 0;
 }
 .hero-right {
-  flex: 0 0 640px; max-width: 640px; height: 680px; position: absolute;
-  right: -80px; top: -60px; overflow: visible;
+  flex: 0 0 640px; max-width: 640px; height: 680px; position: relative;
+  right: auto; top: auto; overflow: visible;
 }
 .hero-right spline-viewer {
   width: 100%; height: 100%; display: block; transform: none;
@@ -1169,7 +1169,7 @@ nav.scrolled { padding: 10px 40px; background: rgba(5,8,22,0.92); }
   #hero { padding: 144px 28px 56px; }
   .hero-split { gap: 28px; align-items: center; }
   .hero-left { flex-basis: 54%; max-width: 54%; }
-  .hero-right { flex-basis: 42%; max-width: 42%; height: 360px; top: 0; }
+  .hero-right { flex-basis: 42%; max-width: 42%; height: 360px; }
   .hero-buttons { gap: 12px; }
   .hero-stats { gap: 24px; }
   .scroll-indicator { bottom: 22px; }
