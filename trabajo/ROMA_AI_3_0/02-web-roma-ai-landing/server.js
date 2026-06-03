@@ -253,6 +253,10 @@ function createApp(options = {}) {
     res.sendFile(path.join(__dirname, 'webchat-improved.html'));
   });
 
+  app.get(['/login', '/login.html'], (_req, res) => {
+    res.redirect('/admin-panel');
+  });
+
   app.post('/marketing/chat', async (req, res) => {
     try {
       const payload = {
