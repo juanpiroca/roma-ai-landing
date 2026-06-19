@@ -1,17 +1,44 @@
+# Dependencies
 node_modules/
-.env.local
-.env.local.*
+package-lock.json
+yarn.lock
+
+# Environment
 .env
-*.env
-config/.env*
-logs/
-tmp/
-backups/
-data/sessions/
-data/cache/
-*.log
+.env.local
+.env.*.local
+
+# Data & Credentials
+data/
+wa-auth/
+conversations.jsonl
+*.json
+
+# Test
+test/
+
+# Build & Runtime
+dist/
+build/
+.next/
+.nuxt/
+out/
+
+# Backups & Archives
+*.tar.gz
+*.zip
+_backups/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# OS
 .DS_Store
 Thumbs.db
-trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/*.bak
-trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/logo-roma-dark.png
-.gstack/
+
+# Trabajo directory (local work)
+trabajo/
