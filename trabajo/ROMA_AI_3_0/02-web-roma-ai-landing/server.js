@@ -226,6 +226,16 @@ function createApp(options = {}) {
   const adminIndexPath = path.join(adminPanelDir, 'index.html');
   const dashboardProPath = '/home/juanpi/LAB/Roma 4.0/roma-ai-sales/dashboard-roma-pro.html';
 
+  // Security Headers Middleware
+  app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; media-src 'self'; frame-src 'self' https://prod.spline.design;");
+    res.setHeader("X-Frame-Options", "DENY");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    res.setHeader("Referrer-Policy", "no-referrer");
+    next();
+  });
+
   app.use(express.json());
   app.use('/assets', express.static(path.join(__dirname, 'assets')));
   app.use('/logo-concepts', express.static(path.join(__dirname, 'logo-concepts')));
