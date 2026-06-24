@@ -1,7 +1,8 @@
 # ROMA AI — Auditoría Técnica Web
+
 **Fecha:** 2026-05-28  
 **Auditor:** Sistema interno — Claude Code  
-**URL auditada:** https://roma.dementetv.com/  
+**URL auditada:** <https://roma.dementetv.com/>
 **Archivo principal:** `/home/juanpi/Roma/trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/index.html`  
 **Stack:** HTML/CSS/JS vanilla · Node.js v20.20.2 · Express v5.2.1 · nginx reverse proxy
 
@@ -33,6 +34,7 @@
 La landing de ROMA AI está construida como un único archivo HTML de 1.903 líneas y ~78 KB de markup + CSS + JS inline. El diseño visual es de calidad y la arquitectura es intencionalmente simple (sin framework, sin build system). Sin embargo, hay problemas técnicos que impactan directamente en métricas de Core Web Vitals, experiencia mobile, seguridad y SEO.
 
 **Problemas críticos (bloquean conversión o indexación):**
+
 - El viewer 3D de Spline se carga como `<script type="module">` sin `defer`, bloqueando el render-thread.
 - La escena 3D (`scene.splinecode`) es un asset externo de tamaño desconocido pero estimado en varios MB — el LCP del hero puede superar los 4 segundos.
 - El `<section id="hero">` nunca se cierra antes de las siguientes secciones, lo que hace que el DOM completo del body sea hijo del hero. Esto es un bug estructural que puede romper estilos y la semántica de la página.
@@ -42,6 +44,7 @@ La landing de ROMA AI está construida como un único archivo HTML de 1.903 lín
 - `Cache-Control: public, max-age=0` en todos los assets significa que no hay caché real; cada request re-valida.
 
 **Problemas moderados (afectan performance o UX):**
+
 - `dashboard-mockup.png` pesa 964 KB sin lazy loading ni formato WebP.
 - Los 6 íconos de features son PNG (~18-69 KB c/u) en lugar de SVG.
 - El CSS del webchat se carga al final del `<body>` como `<link rel="stylesheet">` — el browser lo descarga pero puede causar FOUC (flash de contenido sin estilos).
@@ -54,7 +57,7 @@ La landing de ROMA AI está construida como un único archivo HTML de 1.903 lín
 ### Archivo principal
 
 | Métrica | Valor |
-|---------|-------|
+| --------- | ------- |
 | Líneas totales | 1.903 |
 | Tamaño en disco | ~80 KB |
 | Tamaño en red (Content-Length) | 78.802 bytes (~77 KB) |
@@ -65,7 +68,7 @@ La landing de ROMA AI está construida como un único archivo HTML de 1.903 lín
 ### Assets en `/assets/`
 
 | Archivo | Tamaño | Formato |
-|---------|--------|---------|
+| --------- | -------- | --------- |
 | dashboard-mockup.png | 964 KB | PNG |
 | avatar-roma-real.jpg | 349 KB | JPG |
 | logo-roma.png | 171 KB | PNG |
@@ -107,7 +110,7 @@ ETag: W/"133d2-19e6c8c6a15"
 ### Dependencias externas
 
 | Recurso | Tipo | Estrategia actual |
-|---------|------|-------------------|
+| --------- | ------ | ------------------- |
 | Google Fonts (Inter) | CSS externo | `preconnect` + `<link rel="stylesheet">` bloqueante |
 | Spline Viewer JS | `<script type="module">` | **Sin defer** — bloquea render |
 | Spline Scene | Asset 3D (~MBs) | Cargado por el viewer en background |
@@ -122,6 +125,7 @@ ETag: W/"133d2-19e6c8c6a15"
 Sin acceso a herramientas de medición activas (Lighthouse, PageSpeed API), las estimaciones se basan en el análisis estático del código y los tamaños reales de los assets.
 
 ### LCP (Largest Contentful Paint)
+
 **Estimación: 3.5 – 6 segundos en conexiones 4G típicas. MALO.**
 
 El LCP candidate probable es la `<spline-viewer>` en el hero, o alternativamente el `<h1>` con texto en gradiente. El problema principal es la cadena de bloqueos:
@@ -135,22 +139,27 @@ Una página limpia sin el viewer y sin Fonts cargados en blocking mode podría t
 **La `dashboard-mockup.png` (964 KB)** en la sección Dashboard tampoco tiene `loading="lazy"`, lo que significa que el browser intenta descargarla en cuanto termina de parsear el HTML, aunque el usuario no la vea todavía.
 
 ### FID / INP (First Input Delay / Interaction to Next Paint)
+
 **Estimación: 50 – 150ms. NECESITA MONITOREO.**
 
 El JS inline se ejecuta de forma síncrona al cargar el documento. El bloque principal de JS (~250 líneas) incluye `querySelectorAll`, `IntersectionObserver.observe()` y el inicio del `requestAnimationFrame` loop, todo en el hilo principal sin chunking. En dispositivos de gama baja puede superar los 100ms de INP.
 
 ### CLS (Cumulative Layout Shift)
+
 **Estimación: 0.05 – 0.25. RIESGO MODERADO.**
 
 Factores de riesgo:
+
 - `<spline-viewer>` con height fija en CSS (580px desktop, 330px tablet) pero la carga es asíncrona — puede haber shift si el elemento cambia de tamaño al renderizar.
 - Las imágenes `problem-tiempo.jpg`, `problem-perdidos.jpg`, `problem-horas.jpg` no tienen atributos `width` y `height` explícitos en el `<img>`, aunque están dentro de un contenedor con `aspect-ratio: 4/3` — esto mitiga el CLS para estas imágenes.
 - El CSS del webchat cargado al final del body puede causar un shift si sus reglas afectan elementos ya pintados.
 
 ### TTFB (Time to First Byte)
+
 **Medido: < 200ms.** Express sirve el archivo directamente desde disco sin procesamiento pesado. El TTFB es bueno.
 
 ### FCP (First Contentful Paint)
+
 **Estimación: 0.8 – 1.5s.** El nav y el eyebrow del hero están en el HTML directamente. Una vez que Inter esté disponible, el FCP ocurre. El `preconnect` a fonts.googleapis.com ayuda parcialmente.
 
 ---
@@ -174,7 +183,7 @@ Esta cadena puede durar 3–6 segundos en 4G. En 3G o conexiones lentas, puede s
 ### Peso total de la página (estimación primera carga)
 
 | Recurso | Tamaño estimado |
-|---------|-----------------|
+| --------- | ----------------- |
 | index.html | 78 KB |
 | Google Fonts CSS + woff2 Inter (6 pesos) | ~200 KB |
 | Spline viewer JS (unpkg) | ~500–800 KB (estimado) |
@@ -205,6 +214,7 @@ El header de producción no incluye `Content-Encoding`. Esto significa que el HT
 **El problema:** `type="module"` tiene semántica `defer` por defecto solo para módulos externos — pero al estar en el `<head>` sin `defer` explícito, algunos browsers lo tratan como bloqueante en ciertos contextos. Más importante: el script se carga desde `unpkg.com` sin `preload`, sin `preconnect`, sin versión fija cacheada localmente.
 
 **Solución directa:**
+
 ```html
 <link rel="preconnect" href="https://unpkg.com">
 <script type="module" defer src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
@@ -231,6 +241,7 @@ El bloque de JS al final del body (~246 líneas) es compacto y bien estructurado
 5. **FAQ toggle listener** — el código en línea 1840 busca `.faq-item details` pero los `<details>` ya tienen la clase `faq-item` directamente. La query funciona como un bug afortunado (`details.faq-item` no tiene hijos `details`, por lo que el selector `.faq-item details` dentro de `.faq-item` no matchea nada). El comportamiento de acordeón (cierre de otros items) **no funciona**. El toggle nativo de `<details>` sí funciona, pero el cierre de otros items abiertos no.
 
 6. **Scroll listener en `window`** — el listener del nav scroll no usa throttle ni passive. Debería ser:
+
    ```js
    window.addEventListener('scroll', handler, { passive: true });
    ```
@@ -240,6 +251,7 @@ El bloque de JS al final del body (~246 líneas) es compacto y bien estructurado
 ### Webchat — doble archivo CSS
 
 El webchat tiene dos archivos CSS servidos:
+
 - `/roma-webchat/webchat.css` — cargado al final del body como `<link>` bloqueante
 - Los estilos del chat widget también están inline en el HTML principal (líneas ~750–888)
 
@@ -252,7 +264,7 @@ Hay duplicación de estilos entre ambas fuentes. Además, `webchat.css` como `<l
 ### Inventario de animaciones activas
 
 | Animación | Tipo | Frecuencia | ¿Pausa fuera de viewport? |
-|-----------|------|------------|--------------------------|
+| ----------- | ------ | ------------ | -------------------------- |
 | Canvas rings (30 objetos + partículas orbitales) | `requestAnimationFrame` | 60 fps | **NO** |
 | Custom cursor ring | `requestAnimationFrame` | 60 fps | **NO** (en mobile: CSS display:none pero JS sigue) |
 | Mouse drift canvas rings | `setInterval` | 10/s | **NO** |
@@ -270,11 +282,13 @@ Hay duplicación de estilos entre ambas fuentes. Además, `webchat.css` como `<l
 ### Impacto real en CPU
 
 En un desktop moderno, las dos `requestAnimationFrame` loops corriendo simultáneamente (canvas + cursor) consumen entre el 5–15% de un core. En un Snapdragon 665 (Android gama media) o un iPhone SE, esto puede causar:
+
 - FPS de animaciones CSS cayendo de 60 a 30–40 fps
 - Latencia de input aumentada (INP > 200ms)
 - Batería drenándose más rápido
 
 **Fix recomendado para el canvas:**
+
 ```js
 let canvasRafId = null;
 
@@ -293,6 +307,7 @@ heroObserver.observe(document.getElementById('hero'));
 ```
 
 **Fix recomendado para el cursor:**
+
 ```js
 function animateRing() {
   // ... lógica de cursor
@@ -325,7 +340,7 @@ if (!prefersReduced) {
 ### Auditoría completa
 
 | Imagen | Tamaño actual | Uso | Lazy loading | `width`/`height` explícitos | WebP disponible |
-|--------|--------------|-----|--------------|----------------------------|-----------------|
+| -------- | -------------- | ----- | -------------- | ---------------------------- | ----------------- |
 | dashboard-mockup.png | 964 KB | Dashboard preview | **NO** | **NO** | **NO** |
 | avatar-roma-real.jpg | 349 KB | Avatar chat (¿?) | — | — | **NO** |
 | problem-perdidos.jpg | 335 KB | Problem card | `onerror` only | **NO** | **NO** |
@@ -348,6 +363,7 @@ if (!prefersReduced) {
 **`dashboard-mockup.png` — 964 KB sin lazy loading**
 
 Esta imagen se descarga en el parse inicial del HTML, aunque está ~3 secciones después del hero. Sin `loading="lazy"`:
+
 ```html
 <!-- Actual -->
 <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image">
@@ -357,6 +373,7 @@ Esta imagen se descarga en el parse inicial del HTML, aunque está ~3 secciones 
 ```
 
 Convertida a WebP, la misma imagen debería pesar ~150–200 KB (reducción del 80%). Convertida a AVIF: ~80–120 KB. Con `srcset` para formatos modernos:
+
 ```html
 <picture>
   <source srcset="assets/dashboard-mockup.avif" type="image/avif">
@@ -405,19 +422,24 @@ convert assets/avatar-ana.png -resize 96x96 -quality 85 assets/avatar-ana.webp
 ```
 
 **Lo que está bien:**
+
 - `display=swap` evita texto invisible durante la carga (FOIT).
 - Los dos `preconnect` son correctos para la arquitectura de Google Fonts.
 
 **Lo que se puede mejorar:**
+
 1. Se piden 6 pesos de Inter (400, 500, 600, 700, 800, 900). Revisando el CSS, los pesos realmente usados son: 400 (body), 500 (nav links, muted), 600 (botones, nav-cta), 700 (headings medium), 800 (section h2), 900 (h1, stat-numbers). Los 6 pesos tienen uso legítimo, pero si se quisiera reducir, se podría prescindir del 500 y usar 400 + 600 como alternativa.
 
 2. La mejor estrategia para eliminar este punto de falla es auto-hostear Inter via `@fontsource/inter`:
+
    ```bash
    npm install @fontsource/inter
    ```
+
    Y luego servir los woff2 directamente desde el servidor, con `Cache-Control: max-age=31536000` para fonts.
 
 3. Alternativamente, usar `<link rel="preload">` para los woff2 más críticos (peso 700 y 800):
+
    ```html
    <link rel="preload" as="font" type="font/woff2" crossorigin
          href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2">
@@ -492,6 +514,7 @@ location /roma-webchat/ {
 ```
 
 El comportamiento del browser es correcto en la mayoría de los casos porque el parser HTML5 tiene reglas de auto-corrección para elementos de sección anidados. Sin embargo:
+
 - Los estilos de `#hero` pueden "filtrarse" a las secciones hijas si hay selectores descendientes.
 - El árbol DOM real no refleja la intención del diseño.
 - Herramientas de accesibilidad y SEO pueden reportar una estructura de landmarks incorrecta.
@@ -515,6 +538,7 @@ document.querySelectorAll('.faq-item details').forEach(detail => {
 ```
 
 Pero en el HTML, el elemento `<details>` **es** el que tiene la clase `faq-item`:
+
 ```html
 <details class="faq-item">
 ```
@@ -522,6 +546,7 @@ Pero en el HTML, el elemento `<details>` **es** el que tiene la clase `faq-item`
 El selector `.faq-item details` busca un `<details>` que sea hijo de un elemento con clase `faq-item`. Como el propio `<details>` tiene esa clase, no hay ningún match. El comportamiento de acordeón (cerrar otras preguntas al abrir una) no funciona.
 
 **Fix:** Cambiar el selector a:
+
 ```js
 document.querySelectorAll('details.faq-item').forEach(detail => {
 ```
@@ -541,6 +566,7 @@ La sección de Pricing usa `<span class="section-label">PLANES</span>` mientras 
 ### Custom cursor
 
 El cursor custom (`.cursor-dot` + `.cursor-ring`) reemplaza el cursor nativo del sistema operativo. Esto es problemático para:
+
 - Usuarios con baja visión que han configurado cursores grandes en el sistema.
 - Usuarios con dificultades motoras que dependen del cursor del sistema.
 - Usuarios de software de accesibilidad que rastrean la posición del cursor.
@@ -550,6 +576,7 @@ El CSS ya oculta el cursor custom en mobile (`@media (max-width: 960px)`), lo cu
 ### Texto con gradiente (`-webkit-text-fill-color: transparent`)
 
 Los títulos y estadísticas principales usan:
+
 ```css
 -webkit-text-fill-color: transparent;
 background-clip: text;
@@ -558,6 +585,7 @@ background-clip: text;
 En modo de alto contraste de Windows, o con ciertos temas de accesibilidad, este efecto puede hacer que el texto sea literalmente invisible (fondo transparente, sin color de relleno). La directiva `@supports` está correctamente implementada para el `.hero-title-flow`, pero no en todas las instancias de texto con gradiente.
 
 Añadir siempre una propiedad `color` como fallback:
+
 ```css
 .gradient-title {
   color: var(--text); /* fallback */
@@ -577,6 +605,7 @@ Añadir siempre una propiedad `color` como fallback:
 ```
 
 Los lectores de pantalla leerán "cohete, Comenzar gratis flecha derecha". El emoji de cohete probablemente no agrega valor semántico. Solución:
+
 ```html
 <span aria-hidden="true">🚀</span> Comenzar gratis
 ```
@@ -664,6 +693,7 @@ No hay `<link rel="canonical">` en el `<head>`. Si la misma página es accesible
 No hay JSON-LD. Para una landing de SaaS, los schemas más relevantes son:
 
 **SoftwareApplication:**
+
 ```html
 <script type="application/ld+json">
 {
@@ -689,6 +719,7 @@ No hay JSON-LD. Para una landing de SaaS, los schemas más relevantes son:
 ```
 
 **FAQPage** (para la sección FAQ — puede generar rich results en Google):
+
 ```html
 <script type="application/ld+json">
 {
@@ -727,6 +758,7 @@ El link de "Términos de servicio" lleva al home. Esto puede ser un problema leg
 ### Favicon sin fallback PNG
 
 Solo hay `favicon.svg`. Algunos contextos (bookmarks en Windows, thumbnails de pestañas en Safari antiguo) no soportan SVG como favicon. Agregar:
+
 ```html
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -753,6 +785,7 @@ Solo hay `favicon.svg`. Algunos contextos (bookmarks en Windows, thumbnails de p
 1. **Tamaño excesivo:** `dashboard-mockup.png` pesa 984 KB como imagen OG. Facebook recomienda < 8 MB (cumple), pero idealmente < 300 KB para tiempos de carga aceptables en previsualización. Crear una imagen OG dedicada de 1200x630px optimizada.
 
 2. **Faltan dimensiones de la imagen OG:**
+
    ```html
    <meta property="og:image:width" content="1200">
    <meta property="og:image:height" content="630">
@@ -760,16 +793,19 @@ Solo hay `favicon.svg`. Algunos contextos (bookmarks en Windows, thumbnails de p
    ```
 
 3. **Falta `og:locale`:**
+
    ```html
    <meta property="og:locale" content="es_AR">
    ```
 
 4. **Falta `og:site_name`:**
+
    ```html
    <meta property="og:site_name" content="ROMA AI">
    ```
 
 5. **Twitter/X — faltan tags:**
+
    ```html
    <meta name="twitter:title" content="ROMA AI — Tu agente de ventas en WhatsApp">
    <meta name="twitter:description" content="Respondé 24/7 en WhatsApp, calificá leads y convertí más sin sumar equipo.">
@@ -785,7 +821,7 @@ Solo hay `favicon.svg`. Algunos contextos (bookmarks en Windows, thumbnails de p
 ### Breakpoints implementados
 
 | Breakpoint | Cambios clave |
-|------------|--------------|
+| ------------ | -------------- |
 | ≤ 1024px | Hero split se comprime, hero-right se achicha |
 | ≤ 960px | Nav links ocultos, hero en columna, grids a 1 columna, cursor custom desaparece |
 | ≤ 600px | Buttons full width, stats en 1 columna, hero-right (`spline-viewer`) se oculta con `display:none` |
@@ -795,6 +831,7 @@ Solo hay `favicon.svg`. Algunos contextos (bookmarks en Windows, thumbnails de p
 En `@media (max-width: 600px)`, el `.hero-right` tiene `display: none`. Esto es correcto para la UI, pero el Spline viewer script **sigue cargándose** y el módulo JS **sigue siendo descargado**, aunque la escena 3D no se muestre. Esto es un desperdicio de bandwidth en mobile.
 
 La solución correcta es cargar el viewer condicionalmente:
+
 ```js
 if (window.innerWidth > 600) {
   const viewer = document.createElement('spline-viewer');
@@ -824,7 +861,7 @@ Los botones tienen padding generoso (16px vertical). Los links del footer en mob
 ### Headers ausentes (verificado en producción)
 
 | Header | Estado | Impacto |
-|--------|--------|---------|
+| -------- | -------- | --------- |
 | `Strict-Transport-Security` | **AUSENTE** | Sin HSTS, el browser puede hacer requests HTTP en visitas futuras |
 | `X-Frame-Options` | **AUSENTE** | La página puede ser embebida en iframes externos (clickjacking) |
 | `X-Content-Type-Options` | **AUSENTE** | Sin `nosniff`, browsers pueden interpretar scripts como otro MIME |
@@ -835,6 +872,7 @@ Los botones tienen padding generoso (16px vertical). Los links del footer en mob
 ### `X-Powered-By: Express` expuesto
 
 El header `X-Powered-By: Express` está presente. Esto expone la tecnología del servidor. Deshabilitar en Express:
+
 ```js
 app.disable('x-powered-by');
 ```
@@ -866,6 +904,7 @@ add_header Content-Security-Policy "
 ### Sesiones del webchat — sin persistencia segura
 
 En `server.js`, las sesiones de webchat se almacenan en un `Map` en memoria:
+
 ```js
 const webChatSessions = new Map();
 ```
@@ -879,7 +918,7 @@ Esto significa que si el proceso Node.js se reinicia, se pierden todas las sesio
 ### 🔴 HIGH — Impacto crítico en performance o SEO
 
 | # | Recomendación | Impacto estimado | Esfuerzo |
-|---|--------------|-----------------|---------|
+| --- | -------------- | ----------------- | --------- |
 | H1 | Agregar `defer` al script de Spline Viewer | LCP mejora ~1–2s | 5 min |
 | H2 | Cerrar `<section id="hero">` en la línea 1255 | Fix bug DOM estructural | 5 min |
 | H3 | Agregar `loading="lazy"` a `dashboard-mockup.png` y dimensiones explícitas | LCP mejora, CLS mejora | 10 min |
@@ -894,7 +933,7 @@ Esto significa que si el proceso Node.js se reinicia, se pierden todas las sesio
 ### 🟡 MEDIUM — Impacto en calidad y UX
 
 | # | Recomendación | Impacto estimado | Esfuerzo |
-|---|--------------|-----------------|---------|
+| --- | -------------- | ----------------- | --------- |
 | M1 | Convertir `dashboard-mockup.png` a WebP (+ `<picture>` tag) | Ahorro ~750 KB | 1h |
 | M2 | Convertir íconos PNG a SVG | Ahorro ~280 KB, escalado perfecto | 2h |
 | M3 | Convertir avatares PNG a WebP a 96x96 | Ahorro ~160 KB | 30 min |
@@ -918,7 +957,7 @@ Esto significa que si el proceso Node.js se reinicia, se pierden todas las sesio
 ### 🟢 LOW — Mejoras de calidad técnica a largo plazo
 
 | # | Recomendación | Impacto estimado | Esfuerzo |
-|---|--------------|-----------------|---------|
+| --- | -------------- | ----------------- | --------- |
 | L1 | Auto-hostear Inter en lugar de Google Fonts | Elimina dependencia CDN externo, mejora privacy | 2h |
 | L2 | Hostear Spline viewer localmente | Control de versión, cache agresivo | 3h |
 | L3 | Implementar menú hamburguesa para mobile | UX mobile completa | 3h |

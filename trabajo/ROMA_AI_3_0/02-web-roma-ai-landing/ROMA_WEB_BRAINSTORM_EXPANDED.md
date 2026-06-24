@@ -1,9 +1,10 @@
 # ROMA AI — Web Landing Brainstorm Expandido
+
 ## Documento de Diagnóstico, Estrategia y Propuestas para la Nueva Landing
 
 **Versión:** 1.0  
 **Fecha:** 2026-05-28  
-**URL Producción:** https://roma.dementetv.com/  
+**URL Producción:** <https://roma.dementetv.com/>
 **Archivo base:** `index.html` (1903 líneas, HTML/CSS/JS vanilla)  
 **Objetivo:** Diagnóstico brutal + dirección estratégica para ROMA AI 3.0 Web
 
@@ -45,6 +46,7 @@
 ```
 
 El `</section>` del hero NUNCA aparece antes de que comience la problem section. Esto significa que las secciones 3 a 11 —Problem, Features, How It Works, Dashboard, Testimonials, Pricing, FAQ, CTA Final— están **anidadas dentro del `<section id="hero">`**. Esto es un error de validación HTML que afecta:
+
 - Accesibilidad (lectores de pantalla leen todo como parte del hero)
 - SEO (el crawler interpreta la jerarquía incorrectamente)
 - CSS (cualquier regla `#hero .algo` puede tener efectos no deseados sobre el resto)
@@ -319,6 +321,7 @@ Las referencias de calidad (Linear, Vercel) usan separadores sutiles: una línea
 ### Logo
 
 El logo se carga de múltiples archivos SVG:
+
 - `assets/footer-logo-negative.svg` — usado en nav y footer
 - `assets/favicon.svg` — diferente al logo de nav
 - `assets/navbar-logo.svg` — existe en assets pero no se usa en el HTML actual
@@ -352,6 +355,7 @@ El `line-height: 1.6` global es correcto, pero los headings usan `line-height: 1
 ### Iconografía
 
 Los iconos de features son PNG de 56x56px cargados como `<img>`. Problemas:
+
 1. Sin posibilidad de cambiar color con CSS (tema, hover states, dark/light toggle)
 2. En retina (2x, 3x), 56px CSS = 112px o 168px de resolución necesaria. Si el PNG es 56px, se verá borroso.
 3. Sin `srcset` ni `loading="lazy"`
@@ -942,6 +946,7 @@ El CTA actual manda a un número de WhatsApp (`wa.me/12019696812`). Esto tiene d
 2. **No hay registro de la intención del usuario** — si alguien hace click y no envía el mensaje de WhatsApp, el lead se pierde sin rastro.
 
 **Alternativas de menor fricción:**
+
 - Formulario inline en la landing: nombre + email + WhatsApp → dispara un mensaje automático de ROMA
 - "Ver demo de 2 minutos" → video embedded → CTA de WhatsApp después del video
 - Registro con email (si hay un SaaS backend) → onboarding automatizado
@@ -949,6 +954,7 @@ El CTA actual manda a un número de WhatsApp (`wa.me/12019696812`). Esto tiene d
 ### Pricing: Transparencia y Anclaje
 
 **El pricing actual tiene problemas:**
+
 - $299/$599/$1,499 son precios en USD sin aclaración de moneda en el markup de la página (solo en texto)
 - No hay períodos de facturación visibles (¿mensual? ¿anual?)
 - No hay comparación de lo que incluye cada plan — solo listas independientes
@@ -956,6 +962,7 @@ El CTA actual manda a un número de WhatsApp (`wa.me/12019696812`). Esto tiene d
 - "1 pipeline WhatsApp" vs "3 pipelines multicanal" — ¿qué es un pipeline? No está definido en ningún otro lugar de la landing
 
 **Propuesta de mejora:**
+
 - Toggle anual/mensual con descuento visible (ej: "ahorrá 20% con pago anual")
 - Tabla comparativa en lugar de 3 cards separadas — más fácil de entender las diferencias
 - Highlight del plan recomendado con borde de color accent
@@ -973,6 +980,7 @@ Los testimoniales actuales no convierten porque no son creíbles. Los elementos 
 5. **Fecha o período del testimonio** — "Octubre 2025" da contexto
 
 Si ROMA AI no tiene suficientes clientes para mostrar testimoniales reales, las alternativas son:
+
 - Caso de estudio detallado de UN cliente real, en lugar de tres ficticios
 - Resultados propios con metodología explicada ("en nuestras cuentas gestionadas")
 - Video testimonial corto (15-30 segundos) — imposible falsificar
@@ -1068,12 +1076,15 @@ Hay al menos 6 reglas CSS duplicadas (`.hero-left p`, `.hero-marquee`, `.marquee
 Un archivo HTML de 1903 líneas con CSS y JS inline es imposible de mantener a largo plazo. No hay modularización, no hay lint, no hay type-checking, no hay tests automatizados. El siguiente desarrollador que toque el archivo tiene que leer 1903 líneas para entender el sistema. Sin build system, no hay tree-shaking, minificación, ni code splitting.
 
 **Riesgo 4: Recursos bloqueantes de render.**
+
 ```html
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
 ```
+
 Este script está en el `<head>` como `type="module"`. Los módulos JS son diferidos por defecto, pero cargar un script de CDN externa en el head puede bloquear el parse si hay problemas de red. Sin `rel="preload"` ni manejo de error, si unpkg.com está lento, el hero no renderiza correctamente.
 
 **Riesgo 5: Webchat duplicado.**
+
 ```html
 <!-- Línea 1651 -->
 <script src="/roma-webchat/roma-webchat.js" defer></script>
@@ -1081,12 +1092,15 @@ Este script está en el `<head>` como `type="module"`. Los módulos JS son difer
 <link rel="stylesheet" href="/roma-webchat/webchat.css">
 <script defer src="/roma-webchat/webchat.js"></script>
 ```
+
 Hay DOS scripts de webchat cargados: `roma-webchat.js` y `webchat.js`. El CSS del webchat se carga al final del body. Si ambos scripts inicializan un widget de chat, puede haber conflictos de DOM, doble widget, o errores JS en producción.
 
 **Riesgo 6: FAQ accordion bug.**
+
 ```javascript
 document.querySelectorAll('.faq-item details').forEach(detail => {
 ```
+
 El selector busca `details` DENTRO de `.faq-item`, pero `.faq-item` ES el `details`. El selector correcto es `document.querySelectorAll('details.faq-item')`. El accordion de "cerrar otros al abrir uno" nunca funciona.
 
 ---
@@ -1116,19 +1130,23 @@ No hay dirección de empresa, CUIT, ni datos legales visibles. Para un SaaS de $
 LCP (Largest Contentful Paint) probablemente es el robot 3D de Spline, que requiere: DNS lookup → TLS → HTTP → download del viewer.js → parse → download de la escena splinecode → WebGL init → render. En conexiones lentas, el LCP puede ser > 5 segundos, lo que Google penaliza en SEO.
 
 **Riesgo 2: CLS por imágenes sin dimensiones.**
+
 ```html
 <img src="assets/dashboard-mockup.png" alt="Dashboard ROMA AI" class="dashboard-image">
 <img src="assets/problem-tiempo.jpg" alt="Tiempo de respuesta" onerror="this.style.opacity=0">
 <img src="assets/avatar-laura.png" alt="Laura Méndez" class="testimonial-avatar">
 ```
+
 Ninguna imagen tiene `width` y `height` explícitos. Esto causa CLS (Cumulative Layout Shift) mientras las imágenes cargan, moviendo el contenido y generando penalización en Core Web Vitals.
 
 **Riesgo 3: Google Fonts bloqueante.**
+
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 ```
+
 Se cargan 6 weights de Inter desde Google Fonts. Aunque hay `preconnect`, cargar desde CDN externo añade latencia. El `display=swap` es correcto para evitar FOIT, pero FOUT puede afectar el CLS. Alternativa: cargar Inter como variable font (1 sola request, todos los weights) o autohosting.
 
 **Riesgo 4: requestAnimationFrame sin cleanup.**

@@ -1,5 +1,7 @@
 # ROMA AI — IMPLEMENTATION MASTER PLAN
+
 ## Plan de Implementación Maestro
+
 **Fecha:** 2026-05-28
 **Estado:** PENDIENTE APROBACIÓN DE JUANPI
 **Versión:** 1.0 — Fase de Planificación
@@ -28,7 +30,7 @@ Los quick wins son de bajo riesgo y alto impacto. Las fases posteriores requiere
 ## FASE 0 — PRERREQUISITOS (ANTES DE TOCAR CÓDIGO)
 
 | Prerrequisito | Estado | Responsable |
-|---------------|--------|-------------|
+| --------------- | -------- | ------------- |
 | Subir ZIP "Archivos Para Crear Web Con Claude.zip" | ❌ FALTANTE | JuanPi |
 | Confirmar si testimoniales son reales o ficticios | ❓ Pendiente | JuanPi |
 | Confirmar si stats son reales o ficticios | ❓ Pendiente | JuanPi |
@@ -44,6 +46,7 @@ Los quick wins son de bajo riesgo y alto impacto. Las fases posteriores requiere
 Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 
 ### QW-1: Cerrar correctamente el hero section
+
 **Impacto:** CRÍTICO — HTML inválido puede causar comportamientos raros en algunos browsers
 **Archivo:** `index.html` línea ~1255
 **Cambio:** Agregar `</section>` antes de la section del problema
@@ -51,9 +54,11 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 **Riesgo:** Ninguno
 
 ### QW-2: Agregar `defer` al Spline Viewer
+
 **Impacto:** ALTO — mejora LCP y tiempo de carga inicial
 **Archivo:** `index.html` línea ~20
 **Cambio:**
+
 ```html
 <!-- Antes -->
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
@@ -61,16 +66,19 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 <!-- Después -->
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js" defer></script>
 ```
+
 **Tiempo:** 2 minutos
 **Riesgo:** Bajo (el Spline puede aparecer con delay visual, verificar en staging)
 
 ### QW-3: Eliminar CSS duplicados y conflictivos
+
 **Impacto:** MEDIO — elimina conflictos de texto-align y animación marquee
 **Archivo:** `index.html` líneas 263-267 y 357-360 (`.hero-left p`)
 **Tiempo:** 15 minutos
 **Riesgo:** Bajo
 
 ### QW-4: Lazy loading en imágenes no-críticas
+
 **Impacto:** ALTO — reduce tiempo de carga percibido
 **Archivo:** `index.html` — todas las `<img>` excepto las del hero
 **Cambio:** Agregar `loading="lazy"` a imágenes de problem cards, features, dashboard, testimonials
@@ -78,6 +86,7 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 **Riesgo:** Ninguno
 
 ### QW-5: Mover webchat CSS al `<head>`
+
 **Impacto:** BAJO — evita posible FOUC del widget
 **Archivo:** `index.html` línea 1900
 **Cambio:** Mover `<link rel="stylesheet" href="/roma-webchat/webchat.css">` al head
@@ -85,6 +94,7 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 **Riesgo:** Ninguno
 
 ### QW-6: Deshabilitar custom cursor en mobile
+
 **Impacto:** MEDIO — elimina código JS innecesario en mobile
 **Archivo:** `index.html` — JS del cursor
 **Cambio:** Wrappear en `if (window.matchMedia('(pointer: fine)').matches) { /* cursor code */ }`
@@ -92,6 +102,7 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 **Riesgo:** Ninguno
 
 ### QW-7: Pausar canvas cuando hero no está visible
+
 **Impacto:** MEDIO — reduce CPU en usuarios que scrollearon
 **Archivo:** `index.html` — función `animateCanvas()`
 **Cambio:** Usar IntersectionObserver para pausar/reanudar el requestAnimationFrame del canvas
@@ -99,6 +110,7 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 **Riesgo:** Bajo
 
 ### QW-8: Agregar `<link rel="preload">` para imágenes críticas
+
 **Impacto:** MEDIO — mejora LCP para problem cards y dashboard
 **Archivo:** `index.html` head
 **Tiempo:** 10 minutos
@@ -114,6 +126,7 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 ### 1.1 Sistema de Contenedores — Consistencia
 
 **Problema actual:** Padding y containers inconsistentes entre secciones.
+
 - Hero: `padding: 150px 24px 80px`
 - Secciones: `padding: 110px 24px`
 - Mobile: `padding: 56px 16px`
@@ -121,6 +134,7 @@ Estos cambios son reversibles, no rompen nada, y tienen impacto inmediato.
 
 **Propuesta:**
 Unificar a un spacing scale basado en 8px:
+
 ```css
 :root {
   --space-section: 120px;  /* desktop */
@@ -140,17 +154,20 @@ Unificar a un spacing scale basado en 8px:
 **Tres opciones (requiere respuesta de JuanPi):**
 
 **Opción A — Mantener Spline (con optimización)**
+
 - Agregar defer al script
 - Lazy load la escena
 - Añadir fallback estático (imagen del robot)
 - Detectar conexión lenta y cargar fallback
 
 **Opción B — Reemplazar Spline con video loop**
+
 - Video WebM/MP4 del robot o animación
 - ~3-5MB vs posibles 20MB+ de Spline
 - Mejor control de la experiencia
 
 **Opción C — Hero sin 3D (minimalista tipo Linear)**
+
 - Eliminar Spline completamente
 - Canvas rings más sofisticado como único elemento visual
 - Tipografía grande con gradient animation
@@ -159,12 +176,14 @@ Unificar a un spacing scale basado en 8px:
 ### 1.3 Gradients — Unificación
 
 El sistema actual tiene gradients inconsistentes:
+
 - `gradient-title`: 135deg, #fff → #00e5bf → #4f6ef7 → #a78bfa
 - `gradient-subtitle`: 135deg, #00e5bf → #4f6ef7 → #a78bfa
 - `hero-title-flow`: 90deg, 250% size, animated
 - `hero-destello`: radial-gradient circular
 
 **Propuesta:** Definir 3 gradients semánticos en custom properties:
+
 ```css
 :root {
   --grad-brand: linear-gradient(135deg, #00e5bf, #4f6ef7, #a78bfa);
@@ -183,7 +202,8 @@ El sistema actual tiene gradients inconsistentes:
 ### 1.5 Pricing — Rediseño Visual
 
 **Problema:** La section de pricing NO tiene data-reveal (única sin reveal) y visualmente es la más plana.
-**Propuesta:** 
+**Propuesta:**
+
 - Agregar data-reveal
 - Añadir glow en el card Pro
 - Pricing cards con tabla visual de features
@@ -192,12 +212,14 @@ El sistema actual tiene gradients inconsistentes:
 ### 1.6 Footer — Completar Contenido
 
 **Problema:** Footer está casi vacío:
+
 - "Recursos" → solo WhatsApp
 - "Legal" → Términos que linkean a "/"
 - Sin redes sociales
 - Sin badge de seguridad/confianza
 
 **Propuesta:**
+
 - Agregar links a: Blog/casos de éxito, LinkedIn, Instagram
 - Crear páginas de Términos y Privacidad reales
 - Añadir badge de seguridad (SSL, datos protegidos)
@@ -209,12 +231,14 @@ El sistema actual tiene gradients inconsistentes:
 ### 2.1 Logo
 
 **Situación actual:**
+
 - `footer-logo-negative.svg` — usado en nav y footer
 - `navbar-logo.svg` — existe pero no se usa en nav (se usa footer-logo)
 - `hero-logo-lockup.svg` — existe pero no visible en la landing actual
 - `logo-roma.png` — rasterizado, menor calidad
 
 **Propuesta:**
+
 - Auditar cuál es el logo definitivo
 - Usar SVG consistentemente en todos los usos
 - Crear variantes: horizontal, símbolo solo, dark, light
@@ -223,6 +247,7 @@ El sistema actual tiene gradients inconsistentes:
 
 **Situación actual:** `favicon.svg` + `favicon-roma.svg` (dos versiones)
 **Propuesta:**
+
 - Definir el favicon definitivo
 - Agregar `<link rel="apple-touch-icon">` para iOS
 - Agregar favicon PNG 32x32 como fallback
@@ -230,13 +255,14 @@ El sistema actual tiene gradients inconsistentes:
 
 ### 2.3 Iconos de Features
 
-**Problema:** Los 6 iconos de features son PNG (`icono-*.png`). 
+**Problema:** Los 6 iconos de features son PNG (`icono-*.png`).
 **Propuesta:** Reemplazar por SVG (Lucide icons o custom) para mejor calidad y menor peso.
 
 ### 2.4 Imágenes de Problemas
 
 **Situación:** `problem-tiempo.jpg`, `problem-perdidos.jpg`, `problem-horas.jpg` — imágenes genéricas con fallback a placeholder.
-**Propuesta:** 
+**Propuesta:**
+
 - Reemplazar con imágenes más representativas del negocio
 - O eliminar y hacer el card más minimalista (solo data/stat)
 - Convertir a WebP
@@ -250,6 +276,7 @@ El sistema actual tiene gradients inconsistentes:
 **Situación actual:** 3 testimoniales con nombres genéricos (Laura Méndez, Carlos Rivera, Ana Parra) y empresas genéricas (Clínica Premium, GrowthTech, InnovaCorp). Avatares generados.
 
 **Si son ficticios (URGENTE):**
+
 - OPCIÓN A: Reemplazar por casos de uso reales aunque sean anónimos ("Empresa de servicios financieros, CABA")
 - OPCIÓN B: Cambiar testimoniales por logos de clientes reales (más efectivo que testimoniales de texto)
 - OPCIÓN C: Reemplazar sección con métricas verificables en lugar de testimoniales
@@ -259,6 +286,7 @@ El sistema actual tiene gradients inconsistentes:
 ### 3.2 Métricas en Hero
 
 **Situación actual:**
+
 ```
 10K+ leads capturados | 92% tasa de respuesta | 2 min tiempo promedio | 20h ahorro semanal
 ```
@@ -270,7 +298,8 @@ El sistema actual tiene gradients inconsistentes:
 
 **Situación actual:** `+2,847 empresas ya están automatizando sus ventas`
 **Problema:** Número arbitrario que parece inventado.
-**Propuesta:** 
+**Propuesta:**
+
 - Reemplazar por algo verificable ("Ya confiaron en ROMA más de 50 empresas")
 - O eliminar si el número no es real
 - Usar urgency real: "Últimos 3 spots disponibles para onboarding esta semana"
@@ -279,6 +308,7 @@ El sistema actual tiene gradients inconsistentes:
 
 **Situación actual:** Todo va a WhatsApp. Un solo punto de contacto.
 **Propuesta (requiere decisión de JuanPi):**
+
 - Mantener solo WhatsApp (simple, funciona)
 - Agregar un formulario alternativo (Email + teléfono)
 - Agregar Calendly para demo scheduling
@@ -289,6 +319,7 @@ El sistema actual tiene gradients inconsistentes:
 **Situación actual:** "Convertí cada conversación en una venta cerrada"
 **Análisis:** Bueno pero genérico. Podría ser más específico a ROMA AI.
 **Alternativas a evaluar:**
+
 - "Tu equipo de ventas trabaja. ROMA AI cierra mientras dormís."
 - "WhatsApp automático que califica y cierra. 24/7."
 - "ROMA AI: el vendedor que nunca duerme."
@@ -304,50 +335,59 @@ El sistema actual tiene gradients inconsistentes:
 ## FASE 4 — HERRAMIENTAS A EVALUAR (SIN INSTALAR AÚN)
 
 ### shadcn/ui
-- **URL:** https://ui.shadcn.com/
+
+- **URL:** <https://ui.shadcn.com/>
 - **Compatibilidad:** Requiere React — NO compatible con HTML vanilla actual
 - **Veredicto:** ❌ No aplicable sin migrar a React
 - **Si se migra a React:** Muy recomendable para pricing cards, FAQ, y modales
 
 ### Tailwind CSS
-- **URL:** https://tailwindcss.com/
+
+- **URL:** <https://tailwindcss.com/>
 - **Compatibilidad:** Puede usarse con HTML vanilla via CDN o build
 - **Veredicto:** ⚠️ Útil solo si se separa el CSS en archivos. Con el HTML monolítico actual, agregaría complejidad sin beneficio real.
 - **Si se refactoriza el CSS:** Sí recomendable
 
 ### Framer Motion / Motion
-- **URL:** https://www.framer.com/motion/
+
+- **URL:** <https://www.framer.com/motion/>
 - **Compatibilidad:** Requiere React
 - **Veredicto:** ❌ No compatible con HTML vanilla. Para animaciones actuales, el CSS y requestAnimationFrame son suficientes.
 
 ### Lucide Icons
-- **URL:** https://lucide.dev/
+
+- **URL:** <https://lucide.dev/>
 - **Compatibilidad:** Funciona con HTML vanilla (SVG sprites o individuales)
 - **Veredicto:** ✅ Recomendado para reemplazar los PNG de features. Bajo peso, escalable, consistente.
 
 ### React Bits
-- **URL:** https://www.reactbits.dev/
+
+- **URL:** <https://www.reactbits.dev/>
 - **Compatibilidad:** Requiere React
 - **Veredicto:** ❌ No compatible con HTML vanilla
 
 ### Aceternity UI
-- **URL:** https://ui.aceternity.com/
+
+- **URL:** <https://ui.aceternity.com/>
 - **Compatibilidad:** Requiere React + Tailwind
 - **Veredicto:** ❌ No compatible con HTML vanilla. Inspiración visual útil pero no instalable.
 
 ### RECOMENDACIÓN DE ARQUITECTURA
 
 **Mantener HTML vanilla si:**
+
 - El contenido es estático y no cambia frecuentemente
 - No hay interacción compleja más allá de animaciones y formularios
 - Se prioriza velocidad de entrega sobre escalabilidad
 
 **Migrar a Astro (recomendado) si:**
+
 - Se quiere velocidad de HTML vanilla + componentes modulares
 - Se quiere poder usar React/Preact para partes interactivas (pricing calculator, etc.)
 - Se quiere MDX para blog/casos de éxito
 
 **Migrar a Next.js si:**
+
 - Se van a agregar páginas dinámicas (dashboard, blog con CMS)
 - Se necesita SSR para SEO de páginas internas
 - El equipo ya conoce React
@@ -359,7 +399,7 @@ El sistema actual tiene gradients inconsistentes:
 ### Skills Recomendadas
 
 | Skill | Descripción | Prioridad |
-|-------|-------------|-----------|
+| ------- | ------------- | ----------- |
 | `frontend-design` | Genera interfaces premium, evita estética genérica | Alta |
 | `performance-audit` | Mide y optimiza Core Web Vitals | Alta |
 | `cro-copywriter` | Optimiza copy para conversión | Alta |
@@ -372,7 +412,7 @@ El sistema actual tiene gradients inconsistentes:
 ### Agentes Recomendados
 
 | Agente | Rol | Fase |
-|--------|-----|------|
+| -------- | ----- | ------ |
 | `frontend-architect` | Estructura HTML/CSS/JS limpia | Quick Wins + Fase 1 |
 | `ui-ux-director` | Decisiones de diseño visual | Fase 1-2 |
 | `wordpress-engineer` | Gestión del WP (si se mantiene) | Fase 1 |
@@ -388,7 +428,7 @@ El sistema actual tiene gradients inconsistentes:
 ### Optimizaciones de Performance (orden de impacto)
 
 | Optimización | Impacto LCP | Esfuerzo | Prioridad |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | defer en Spline viewer | 🔴 Muy Alto | Mínimo | P0 |
 | WebP para todas las imágenes | Alto | Medio | P1 |
 | Lazy loading en imágenes | Alto | Bajo | P1 |
@@ -422,7 +462,7 @@ cwebp -q 85 assets/dashboard-mockup.png -o assets/dashboard-mockup.webp
 ### Riesgos Visuales
 
 | Riesgo | Descripción | Mitigación |
-|--------|-------------|------------|
+| -------- | ------------- | ------------ |
 | Pérdida de identidad visual | Cambios de design pueden perder la atmósfera actual | Implementar por secciones, comparar antes/después |
 | Sobrediseño | Agregar demasiados efectos encima de los existentes | Regla: si agregas un efecto, quita otro |
 | Inconsistencia entre secciones | La hero es mucho más rica que las demás | Elevar o simplificar todo a un mismo nivel |
@@ -430,7 +470,7 @@ cwebp -q 85 assets/dashboard-mockup.png -o assets/dashboard-mockup.webp
 ### Riesgos Técnicos
 
 | Riesgo | Descripción | Mitigación |
-|--------|-------------|------------|
+| -------- | ------------- | ------------ |
 | Romper el hero al cerrar el section | El bug de HTML anidado podría tener efectos CSS dependientes | Testear en staging antes de producción |
 | Spline sin defer — dependencia | Partes del JS pueden depender del orden de carga | Verificar que el spline-viewer se inicializa correctamente con defer |
 | 159 reinicios de PM2 | Proceso inestable puede caer en producción | Investigar logs antes de tocar nada |
@@ -439,7 +479,7 @@ cwebp -q 85 assets/dashboard-mockup.png -o assets/dashboard-mockup.webp
 ### Riesgos Comerciales
 
 | Riesgo | Descripción | Mitigación |
-|--------|-------------|------------|
+| -------- | ------------- | ------------ |
 | Testimoniales ficticios | Si un prospecto los verifica y son fake = destrucción de confianza | Reemplazar o eliminar ANTES de cualquier campaña |
 | Métricas inventadas | Mismo efecto que testimoniales falsos | Reemplazar con datos reales o eliminar |
 | Funnel solo WhatsApp | Un solo punto de contacto = alta fricción para algunos segmentos | Evaluar agregar formulario alternativo |
@@ -447,7 +487,7 @@ cwebp -q 85 assets/dashboard-mockup.png -o assets/dashboard-mockup.webp
 ### Riesgos de Performance
 
 | Riesgo | Descripción | Mitigación |
-|--------|-------------|------------|
+| -------- | ------------- | ------------ |
 | Spline 3D | Puede ser 20-50MB de assets | Medir tamaño exacto, evaluar alternativa |
 | Canvas siempre activo | CPU continuo = batería / calor en mobile | Pausar cuando fuera del viewport |
 | Google Fonts | Puede causar render blocking | Usar font-display: swap + preconnect |
@@ -455,7 +495,7 @@ cwebp -q 85 assets/dashboard-mockup.png -o assets/dashboard-mockup.webp
 ### Riesgos de Sobreingeniería
 
 | Riesgo | Descripción | Mitigación |
-|--------|-------------|------------|
+| -------- | ------------- | ------------ |
 | Migrar a React sin necesidad | Semanas de trabajo por un HTML que ya funciona | Evaluar si el beneficio justifica el costo |
 | Instalar Tailwind encima del CSS actual | Duplicación de sistema de diseño | Solo si se refactoriza el CSS completamente |
 | Agregar más animaciones | Ya hay demasiadas | Regla: quitar antes de agregar |
@@ -465,6 +505,7 @@ cwebp -q 85 assets/dashboard-mockup.png -o assets/dashboard-mockup.webp
 ## ROLLBACK PLAN
 
 **Antes de cualquier modificación:**
+
 ```bash
 # Backup del archivo actual
 cp index.html index.html.bak_$(date +%Y%m%d)
@@ -474,6 +515,7 @@ git add -A && git commit -m "backup: pre-optimization snapshot $(date)"
 ```
 
 **Para revertir:**
+
 ```bash
 # Restaurar desde backup
 cp index.html.bak_YYYYMMDD index.html
@@ -481,6 +523,7 @@ pm2 restart roma-webchat
 ```
 
 **Backup completo del servidor:**
+
 ```bash
 # Ya existe en /home/juanpi/Roma/backups/
 # Crear nuevo antes de empezar
@@ -493,6 +536,7 @@ tar -czf /home/juanpi/Roma/backups/roma-landing-pre-redesign-$(date +%Y%m%d).tar
 ## ARCHIVOS A MODIFICAR (POR FASE)
 
 ### Quick Wins
+
 ```
 /home/juanpi/Roma/trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/index.html
   - Línea 1255: cerrar </section> del hero
@@ -506,6 +550,7 @@ tar -czf /home/juanpi/Roma/backups/roma-landing-pre-redesign-$(date +%Y%m%d).tar
 ```
 
 ### Fase Visual
+
 ```
 /home/juanpi/Roma/trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/index.html
   - CSS: spacing scale
@@ -516,6 +561,7 @@ tar -czf /home/juanpi/Roma/backups/roma-landing-pre-redesign-$(date +%Y%m%d).tar
 ```
 
 ### Fase Branding
+
 ```
 /home/juanpi/Roma/trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/
   - Reemplazar icono-*.png por SVGs
@@ -528,6 +574,7 @@ tar -czf /home/juanpi/Roma/backups/roma-landing-pre-redesign-$(date +%Y%m%d).tar
 ```
 
 ### Fase CRO
+
 ```
 /home/juanpi/Roma/trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/index.html
   - Sección #testimonials: actualizar contenido
@@ -537,6 +584,7 @@ tar -czf /home/juanpi/Roma/backups/roma-landing-pre-redesign-$(date +%Y%m%d).tar
 ```
 
 ### Fase Performance
+
 ```
 /home/juanpi/Roma/trabajo/ROMA_AI_3_0/02-web-roma-ai-landing/assets/
   - Crear versiones .webp de todas las JPG/PNG
@@ -565,30 +613,30 @@ Las siguientes preguntas deben responderse ANTES de iniciar la implementación:
 
 **🟡 IMPORTANTES (definen la dirección):**
 
-5. **Arquitectura**: ¿Mantener HTML vanilla o migrar a Astro/Next.js?
+1. **Arquitectura**: ¿Mantener HTML vanilla o migrar a Astro/Next.js?
 
-6. **CTA**: ¿Solo WhatsApp o agregar canal alternativo de conversión?
+2. **CTA**: ¿Solo WhatsApp o agregar canal alternativo de conversión?
 
-7. **Precios**: ¿$299/$599/$1,499 son reales? ¿El trial de 14 días es real?
+3. **Precios**: ¿$299/$599/$1,499 son reales? ¿El trial de 14 días es real?
 
-8. **WordPress**: ¿Se usa para algo? ¿O lo apagamos?
+4. **WordPress**: ¿Se usa para algo? ¿O lo apagamos?
 
-9. **Público objetivo**: ¿Cuál es el segmento principal que querés capturar?
+5. **Público objetivo**: ¿Cuál es el segmento principal que querés capturar?
 
 **🟢 OPCIONALES (afectan ejecución pero no el plan base):**
 
-10. **Nivel de efecto visual**: ¿Mantener el nivel actual de animaciones o ir a algo más clean tipo Linear?
+1. **Nivel de efecto visual**: ¿Mantener el nivel actual de animaciones o ir a algo más clean tipo Linear?
 
-11. **Logo definitivo**: ¿Cuál de los múltiples SVGs de logo es el correcto?
+2. **Logo definitivo**: ¿Cuál de los múltiples SVGs de logo es el correcto?
 
-12. **Cursor custom**: ¿Mantenerlo en desktop o eliminarlo?
+3. **Cursor custom**: ¿Mantenerlo en desktop o eliminarlo?
 
 ---
 
 ## CRONOGRAMA ESTIMADO
 
 | Fase | Tiempo estimado | Bloqueador |
-|------|----------------|------------|
+| ------ | ---------------- | ------------ |
 | Prerrequisitos | 1-2 días | JuanPi |
 | Quick Wins | 1 día | Ninguno |
 | Fase Visual | 3-5 días | Decisión visual de JuanPi |

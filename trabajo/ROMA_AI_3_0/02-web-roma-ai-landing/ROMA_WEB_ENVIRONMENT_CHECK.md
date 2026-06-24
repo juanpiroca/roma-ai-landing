@@ -1,5 +1,7 @@
 # ROMA AI — ENVIRONMENT CHECK
+
 ## Auditoría del Entorno Técnico Completo
+
 **Fecha:** 2026-05-28
 **Auditado por:** Claude Sonnet 4.6 (main agent)
 
@@ -8,7 +10,7 @@
 ## ESTADO GENERAL
 
 | Ítem | Estado | Detalle |
-|------|--------|---------|
+| ------ | -------- | --------- |
 | Servicio Landing | ✅ ONLINE | PM2 id:1 `roma-webchat`, puerto 3000, uptime 5h |
 | WordPress | ✅ ONLINE | Docker `roma-wordpress`, puerto 8090, uptime 39h |
 | MySQL | ✅ ONLINE | Docker `roma-wordpress-db`, uptime 39h |
@@ -108,7 +110,7 @@ id:11 juanpi-dash-frontend online 39h
 ## STACK TÉCNICO ACTUAL
 
 | Tecnología | Estado | Versión |
-|------------|--------|---------|
+| ------------ | -------- | --------- |
 | HTML | ✅ vanilla | — (1903 líneas, monolítico) |
 | CSS | ✅ vanilla | — (inline en index.html) |
 | JavaScript | ✅ vanilla | — (inline en index.html) |
@@ -126,7 +128,7 @@ id:11 juanpi-dash-frontend online 39h
 ## DEPENDENCIAS EXTERNAS (cargadas en runtime)
 
 | Recurso | URL | Tipo | Impacto Performance |
-|---------|-----|------|---------------------|
+| --------- | ----- | ------ | --------------------- |
 | Google Fonts | fonts.googleapis.com | CSS + Font files | ⚠️ Render blocking potencial |
 | Spline Viewer | unpkg.com/@splinetool/viewer@1.9.82 | JS module | 🔴 CRÍTICO — sin defer, bloquea render |
 | Spline Scene | prod.spline.design/kZDDjO5HuC9GJUM2/... | 3D asset | 🔴 CRÍTICO — probablemente MBs |
@@ -136,7 +138,7 @@ id:11 juanpi-dash-frontend online 39h
 ## SECCIONES DE LA LANDING (11 secciones + footer)
 
 | # | ID | Nombre | data-reveal | data-bg-color |
-|---|----|----|---|---|
+| --- | ---- | ---- | --- | --- |
 | 1 | #hero | Hero (split + canvas + Spline) | No | No |
 | 2 | .problem-section | El problema (3 cards) | Sí | #080d24 |
 | 3 | #features | Funcionalidades (6 cards) | Sí | #050816 |
@@ -156,6 +158,7 @@ id:11 juanpi-dash-frontend online 39h
 ## BUGS CRÍTICOS (HTML/CSS)
 
 ### 🔴 BUG 1: Hero section nunca se cierra
+
 ```html
 <!-- línea 1199 — ABRE -->
 <section id="hero">
@@ -163,9 +166,11 @@ id:11 juanpi-dash-frontend online 39h
   <!-- Problem section empieza en línea 1260 sin cerrar hero -->
   <section class="section problem-section" ...>
 ```
+
 Las secciones 2-11 están anidadas dentro del `<section id="hero">`. Esto es HTML inválido.
 
 ### 🔴 BUG 2: Regla CSS duplicada conflictiva
+
 ```css
 /* línea 263 */
 #hero .hero-left p { text-align: left; }
@@ -175,6 +180,7 @@ Las secciones 2-11 están anidadas dentro del `<section id="hero">`. Esto es HTM
 ```
 
 ### ⚠️ BUG 3: Marquee definido dos veces
+
 ```css
 /* línea 313 — primera definición, sin animación */
 .marquee-track { animation: none; }
@@ -182,15 +188,19 @@ Las secciones 2-11 están anidadas dentro del `<section id="hero">`. Esto es HTM
 /* línea 381 — segunda definición, también sin animación */
 .marquee-track { animation: none; }
 ```
+
 La segunda definición anula cualquier animación de scroll. El marquee no se mueve.
 
 ### ⚠️ BUG 4: Custom cursor en mobile
+
 El cursor custom corre en todos los dispositivos, incluido mobile donde no hay cursor.
 
 ### ⚠️ BUG 5: Logo size conflict
+
 ```html
 <img style="width:auto;height:32px;">  <!-- inline style -->
 ```
+
 ```css
 .nav-logo-img { width: 36px; height: 36px; } /* CSS rule */
 ```
@@ -202,6 +212,7 @@ El cursor custom corre en todos los dispositivos, incluido mobile donde no hay c
 **Archivo:** `/etc/nginx/sites-available/roma`
 
 Rutas configuradas:
+
 - `/` → Node.js puerto 3000 (landing)
 - `/voice` → `http://127.0.0.1:3000/voice.html`
 - `/api/` → Node.js puerto 3000
@@ -219,9 +230,9 @@ SSL probablemente manejado por Let's Encrypt (Certbot).
 ## WORDPRESS
 
 | Ítem | Detalle |
-|------|---------|
-| URL interna | http://127.0.0.1:8090 |
-| URL pública | https://roma.dementetv.com/wp-admin/ |
+| ------ | --------- |
+| URL interna | <http://127.0.0.1:8090> |
+| URL pública | <https://roma.dementetv.com/wp-admin/> |
 | Versión | 6.5-php8.2-apache |
 | DB | MySQL 8.0, `roma_wordpress`, table prefix `rma_` |
 | Estado | Online, pero uso en producción desconocido |
@@ -289,7 +300,7 @@ SSL probablemente manejado por Let's Encrypt (Certbot).
 ## RIESGOS TÉCNICOS
 
 | Riesgo | Severidad | Detalle |
-|--------|-----------|---------|
+| -------- | ----------- | --------- |
 | Hero section sin cerrar | 🔴 Alto | HTML inválido, comportamiento imprevisible en algunos browsers |
 | Spline sin defer | 🔴 Alto | Bloquea render, aumenta LCP significativamente |
 | 159 reinicios de roma-webchat | 🔴 Alto | Indica crash loops — puede dejar la landing caída |
@@ -302,7 +313,7 @@ SSL probablemente manejado por Let's Encrypt (Certbot).
 ## DEUDA TÉCNICA
 
 | Ítem | Impacto | Esfuerzo |
-|------|---------|---------|
+| ------ | --------- | --------- |
 | CSS/JS separados del HTML | Alto | Bajo |
 | Bug hero section | Alto | Bajo |
 | CSS duplicados | Medio | Bajo |
@@ -318,6 +329,7 @@ SSL probablemente manejado por Let's Encrypt (Certbot).
 ⚠️ **El archivo `Archivos Para Crear Web Con Claude.zip` mencionado en el MASTER GOD PROMPT no se encontró en el servidor.**
 
 Buscado en:
+
 - `/home/juanpi/Descargas/`
 - `/home/juanpi/`
 - Todo el filesystem accesible
