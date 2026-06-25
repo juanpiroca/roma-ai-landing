@@ -4,7 +4,7 @@ Guía para integrar autenticación Clerk en el proyecto Roma AI.
 
 ## Paso 1: Crear cuenta y aplicación en Clerk
 
-1. Ve a https://clerk.com/
+1. Ve a <https://clerk.com/>
 2. Click "Sign up" → crea cuenta gratuita
 3. Crea una nueva "Application"
 4. Elige "Email + Password" como método de autenticación (o agrega Google/GitHub si quieres)
@@ -127,9 +127,10 @@ https://roma.dementetv.com
 ## ¿Necesitas ayuda?
 
 Si tienes problemas:
+
 1. Verifica que las keys están correctas en `.env`
 2. Revisa la consola de Chrome (F12) para errores de Clerk
-3. Abre https://dashboard.clerk.com para ver logs
+3. Abre <https://dashboard.clerk.com> para ver logs
 
 ---
 

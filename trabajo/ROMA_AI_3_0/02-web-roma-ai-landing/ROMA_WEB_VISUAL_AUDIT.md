@@ -1,4 +1,5 @@
 # ROMA AI — Auditoría Visual y de UX
+
 ## Landing Page · Versión 3.0
 
 **Archivo auditado:** `index.html` (1903 líneas)
@@ -40,6 +41,7 @@ ROMA AI tiene una landing con personalidad visual fuerte: dark mode profundo, gr
 Sin embargo, hay un **bug estructural de HTML que rompe el árbol del DOM** y afecta a todo el documento. Además, existen inconsistencias significativas entre secciones (la sección Pricing usa selectores de clase que no existen), el footer está notablemente incompleto, y hay redundancia de código CSS que indica que el archivo creció sin refactoring.
 
 **Fortalezas principales:**
+
 - Design system consistente con variables CSS bien nombradas
 - Jerarquía de color bien ejecutada (primary azul, accent verde, purple como tercero)
 - Animaciones de scroll reveal con IntersectionObserver bien implementadas
@@ -48,6 +50,7 @@ Sin embargo, hay un **bug estructural de HTML que rompe el árbol del DOM** y af
 - Responsive básico funcional con tres breakpoints
 
 **Debilidades principales:**
+
 - Bug crítico: `<section id="hero">` nunca se cierra (línea 1199–1606)
 - Sección Pricing usa `.section-label` en lugar de `.eyebrow` — clase no definida
 - Footer con columnas Recursos (1 link), Empresa (1 link) y Legal (1 link roto)
@@ -112,7 +115,7 @@ Agregar `</section>` antes de la línea 1257 (donde empieza el comentario `<!-- 
 El sistema de colores es coherente y bien pensado:
 
 | Variable | Valor | Rol |
-|---|---|---|
+| --- | --- | --- |
 | `--bg-deep` | `#050816` | Fondo base máximo oscuro |
 | `--bg-surface` | `#0a0f26` | Superficies ligeramente levantadas |
 | `--bg-card` | `#111836` | Cards y contenedores |
@@ -132,6 +135,7 @@ El sistema de colores es coherente y bien pensado:
 ### Radios de borde
 
 La escala de radios es correcta y usada consistentemente:
+
 - `--radius: 20px` — cards principales
 - `--radius-sm: 12px` — elementos secundarios
 - `--radius-pill: 999px` — botones y badges
@@ -190,12 +194,14 @@ El único problema es que `.pricing-badge` usa `border-radius: 6px` hardcodeado 
 **Layout:** `min-height: 100vh`, `display: flex`, `flex-direction: column`, `padding: 150px 24px 80px`. Internamente se divide en dos zonas: `hero-split` (izquierda + derecha) y `hero-center-band` (estadísticas + marquee + botones).
 
 **El split izquierdo/derecho:**
+
 - `.hero-left`: `flex: 0 1 640px`, `max-width: 640px`, `text-align: left`
 - `.hero-right`: `flex: 0 0 560px`, `max-width: 560px`, `height: 580px`, `position: absolute; right: -30px; top: -30px`
 
 El hero-right tiene `position: absolute` pero el hero-split tiene `display: flex`. Esto crea una ambigüedad: el `absolute` saca al hero-right del flujo, pero el hero-split no tiene `position: relative` explícito (aunque hereda de `#hero` que sí lo tiene). El resultado visual parece funcionar, pero la superposición con `right: -30px` hace que el 3D sobresalga del contenedor — intencional, pero frágil.
 
 **Jerarquía tipográfica:**
+
 - Eyebrow: `0.8rem`, `font-weight: 700`, uppercase, letterspacing 0.06em — correcto
 - H1: `clamp(2.6rem, 7vw, 5rem)`, `font-weight: 900`, `line-height: 1.04` — excelente escala fluid
 - Párrafo: `1.18rem`, `color: var(--text-muted)`, `line-height: 1.7` — buena legibilidad
@@ -203,6 +209,7 @@ El hero-right tiene `position: absolute` pero el hero-split tiene `display: flex
 **Problema de texto duplicado:** El archivo define `#hero .hero-left p` dos veces:
 
 Primera definición (línea 263-266):
+
 ```css
 #hero .hero-left p {
   font-size: 1.18rem; color: var(--text-muted);
@@ -211,6 +218,7 @@ Primera definición (línea 263-266):
 ```
 
 Segunda definición (línea 357-360):
+
 ```css
 #hero .hero-left p {
   font-size: 1.18rem; color: var(--text-muted);
@@ -229,6 +237,7 @@ La segunda sobreescribe a la primera. El resultado: `text-align: center` y `marg
 ### Canvas de anillos
 
 El sistema de `Ring` en el canvas es sofisticado:
+
 - 30 rings en desktop, 15 en mobile
 - Cada ring tiene orbital particles (8-16 puntos)
 - Los rings crecen, se reinician aleatoriamente
@@ -242,6 +251,7 @@ La opacidad está limitada a `0.05 + Math.random() * 0.1` (máximo 0.15), lo que
 ### Spline 3D
 
 El viewer de Spline se carga como un módulo ES6 desde CDN externo (`unpkg.com`). Esto significa:
+
 1. **Bloqueo de red:** Si unpkg.com es lento o está caído, el 3D nunca aparece.
 2. **No hay fallback:** Si `spline-viewer` no carga, el espacio derecho del hero queda vacío con solo los efectos de destello pero sin el robot.
 3. **Performance:** El paquete Spline tiene un peso significativo (~500KB+ al cargar la escena).
@@ -282,6 +292,7 @@ El viewer de Spline se carga como un módulo ES6 desde CDN externo (`unpkg.com`)
 **Animaciones de las cards:** Usan `slideInUp 0.7s var(--easing) forwards; opacity: 0` hardcodeado en el CSS, con `animation-delay` por nth-child. Esto significa que las cards se animan al cargar la página, **sin esperar a que el usuario haga scroll**. Si la sección Problem está below the fold (que lo está), las animaciones ya terminaron cuando el usuario llega. El scroll reveal `[data-reveal]` está en el `<section>` pero no en las cards individuales.
 
 **Recomendaciones:**
+
 1. Mover las animaciones de las cards (`slideInUp`) al sistema de IntersectionObserver existente en vez de usar delays CSS fijos.
 2. Revisar el copy del H3 en la tercera card — debe tener sujeto propio o reformularse para fluir bien después del stat.
 3. Elevar la opacidad del grid de fondo de `0.03` a `0.05`.
@@ -301,6 +312,7 @@ El viewer de Spline se carga como un módulo ES6 desde CDN externo (`unpkg.com`)
 **Iconos:** **PNG de 56x56px.** Este es un problema en displays HiDPI (Retina, OLED 4K). Los PNGs se pixelan. En Linear, Vercel y Stripe todos los iconos son SVG. La inconsistencia visual entre el logo vectorial (SVG) y los iconos de features (PNG) es notable.
 
 Assets afectados:
+
 - `assets/icono-captura.png`
 - `assets/icono-automatizacion.png`
 - `assets/icono-reportes.png`
@@ -315,6 +327,7 @@ Assets afectados:
 **Ausencia de CTA interno:** Las feature cards no tienen ningún link o acción. En Linear y Vercel, las cards de features a veces tienen un "Aprender más →" o llevan a una página de feature individual. Para una landing de producto, puede ser apropiado agregar un link a la sección HOW o directamente al CTA.
 
 **Recomendaciones:**
+
 1. Convertir los 6 iconos PNG a SVG (inline o como archivo). Como mínimo, usar `srcset` con versiones 2x.
 2. Conectar las animaciones de cards al IntersectionObserver.
 3. Aumentar el radial hover de `0.08` a `0.12`.
@@ -329,6 +342,7 @@ Assets afectados:
 **Background:** `linear-gradient(180deg, #0a1433 0%, #0c1738 100%)` con dots grid `radial-gradient(rgba(79,110,247,0.04) 1px, transparent 1px)` de 30x30px.
 
 **Gear system:** 3 engranajes SVG en grid de 3 columnas. Cada engranaje tiene:
+
 - SVG externo que gira con `gear-spin` animation (20s linear infinite)
 - Número en el centro con `gear-content`
 - Información debajo con `gear-info`
@@ -337,10 +351,12 @@ Assets afectados:
 **Los SVGs de los engranajes** están inline en el HTML — son complejos (múltiples `<rect>`, `<circle>`, `<path>`). Esto engorda el HTML pero es correcto para el rendimiento (sin HTTP request adicional).
 
 **Bug visual:** Las `connection-line` tienen su `left` calculado con:
+
 ```css
 .connection-line.line-1 { left: calc(16.666% + 58px); width: calc(33.333% - 116px); }
 .connection-line.line-2 { left: calc(50% + 58px); width: calc(33.333% - 116px); }
 ```
+
 Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto. Sin embargo, el `.gear-system` tiene `align-items: start` y `justify-items: center`, lo que puede hacer que el `top: 58px` de las líneas no se alinee exactamente con el centro del engranaje en todas las resoluciones si la altura de los engranajes varía.
 
 **El flowing animation** en `connection-line::after` (`gear-flow 2.2s linear infinite`) es un buen detalle que muestra "flujo de datos" entre etapas. La luz blanca se mueve de izquierda a derecha, lo que refuerza la narrativa de proceso secuencial.
@@ -350,6 +366,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **Sección de Steps (no usada):** El CSS define `.steps`, `.step`, `.step-number` (líneas 600-622) pero en el HTML no existe ningún elemento con clase `.steps` — solo existe el `.gear-system`. El CSS de steps es código muerto.
 
 **Recomendaciones:**
+
 1. Eliminar las reglas CSS de `.steps`, `.step`, `.step-number` (código muerto — 23 líneas).
 2. Revisar la alineación de las `connection-line` en viewports intermedios (1024px-1200px).
 3. Simplificar el heading — elegir un solo estilo de gradiente para el H2, sin conflicto en el `<em>`.
@@ -365,6 +382,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **Dashboard wrap:** `max-width: 1000px`, borde con `var(--border)`, `box-shadow: 0 40px 100px rgba(0,0,0,0.5)`. El efecto de tilt 3D en mousemove está bien implementado (líneas 1851-1862): hasta `±5deg` en X y `±8deg` en Y.
 
 **Problemas:**
+
 1. La imagen `dashboard-mockup.png` no tiene `width` y `height` atributos explícitos — esto causa layout shift (CLS) mientras carga.
 2. No hay `loading="lazy"` en la imagen — se carga junto con todo lo demás aunque está below the fold.
 3. El H2 dice "Control total en tiempo real" — frase muy genérica. Versiones premium como Linear usan copy más específico que nombra la capacidad exacta.
@@ -373,6 +391,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **El `dashboard-wrap` tiene `transform-style: preserve-3d; perspective: 1000px`** — pero la perspectiva debería estar en el contenedor padre para funcionar correctamente en 3D transforms. Aplicarla en el mismo elemento es redundante con el `perspective()` que se aplica inline en el JavaScript.
 
 **Recomendaciones:**
+
 1. Agregar `width` y `height` a la `<img>` del dashboard.
 2. Agregar `loading="lazy"` a la imagen.
 3. Agregar una línea de descripción: "Métricas en vivo, historial de conversaciones y reportes IA en una sola vista."
@@ -401,6 +420,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **Copy de la tercera testimonial:** "Pasamos de perder el 40% de los leads de WhatsApp a capturar el 92%." — Este es el testimonial más poderoso (datos específicos de mejora). Está en la tercera card que se oculta en mobile y tablet. Debería ser la segunda o primera card.
 
 **Recomendaciones:**
+
 1. Reorganizar los testimoniales poniendo el más específico y con datos primero.
 2. Agregar logos de empresa (aunque sean genéricos o inventados con coherencia al brand).
 3. Implementar animación escalonada en las estrellas (delay de 0.1s por estrella).
@@ -420,6 +440,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **Grid:** `repeat(auto-fit, minmax(300px, 1fr))` — buena elección responsive. Con 3 cards de mínimo 300px, en un contenedor de 1200px queda un gap apropiado.
 
 **Card Pro (featured):**
+
 - `border-color: rgba(0, 229, 191, 0.5)` — diferenciación con el acento verde
 - `background: rgba(0, 229, 191, 0.05)` — tinte muy sutil
 - Badge `.pricing-badge` con `border-radius: 6px` (hardcodeado, no usa variables)
@@ -427,6 +448,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **El card Pro no tiene ningún tratamiento adicional** más allá del color del borde y el fondo levemente distinto. En Stripe y Linear, el plan "popular" tiene escala ligeramente mayor, shadow más pronunciada, y a veces una línea de acento superior. La diferenciación actual es sutil — un usuario casual podría no notar que Pro es el plan destacado.
 
 **Precios:**
+
 - Base: $299/mes
 - Pro: $599/mes
 - Enterprise: $1,499/mes
@@ -434,12 +456,14 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **La card Enterprise** usa `.btn-secondary` (borde blanco semitransparente) en lugar de `.btn-primary`. Esto es correcto — el botón de Enterprise debe ser menos urgente. Bien pensado.
 
 **Problemas adicionales:**
+
 1. No hay período de trial mencionado en los cards (el hero dice "14 días gratis" pero pricing no lo menciona).
 2. No hay billing anual / mensual toggle — en SaaS premium es esperado.
 3. Las features de cada plan usan `li::before { content: '✓ '; }` — simple pero efectivo.
 4. La card Enterprise oculta en `max-width: 600px` con `#pricing .pricing-card:nth-child(n+2) { display: none; }`. En mobile solo se ve Base. La card Pro (la más vendida) está oculta en mobile.
 
 **Recomendaciones:**
+
 1. **Crítico:** Cambiar `section-label` a `eyebrow`.
 2. **Crítico:** Agregar `class="gradient-title"` al H2 de pricing.
 3. Mencionar "14 días gratis" en la card Pro.
@@ -458,6 +482,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **Estilos:** El `summary::after { content: '+' }` que rota 45° al abrir es una solución elegante. El color del `+` cambia de `--text-dim` a `--accent` al abrir — buen feedback visual.
 
 **El FAQ tiene solo 4 preguntas.** Para una landing SaaS típica, 6-8 preguntas es el estándar. Faltan preguntas relevantes como:
+
 - ¿Qué pasa con mis datos de WhatsApp?
 - ¿Funciona con WhatsApp Business API o solo con la app?
 - ¿Puedo integrar con mi CRM actual?
@@ -466,6 +491,7 @@ Esto asume que el `.gear-system` tiene `position: relative`, lo cual es correcto
 **El JS de FAQ** (líneas 1840-1849) cierra automáticamente el accordion anterior al abrir uno nuevo. Está bien implementado pero escucha en `details` dentro de `.faq-item`, cuando `.faq-item` ya es el `<details>` — el selector es `document.querySelectorAll('.faq-item details')` lo que busca un `<details>` dentro de `.faq-item`. Si `.faq-item` es el `<details>`, el selector no encuentra nada. **El accordion automático no funciona.**
 
 El selector correcto sería:
+
 ```javascript
 document.querySelectorAll('details.faq-item').forEach(detail => {
   detail.addEventListener('toggle', () => {
@@ -474,6 +500,7 @@ document.querySelectorAll('details.faq-item').forEach(detail => {
 **Sin animación de expand/collapse.** El `<details>` nativo no anima la apertura del contenido. Las referencias premium (Linear, Stripe) animan la altura del `<p>` interior con `max-height` o la Web Animations API.
 
 **Recomendaciones:**
+
 1. **Corregir el selector JS del accordion:** `.faq-item details` → `details.faq-item`.
 2. Agregar 4 preguntas más relevantes para el buyer típico de ROMA.
 3. Implementar animación de apertura con `@keyframes` o la API de animaciones.
@@ -487,6 +514,7 @@ document.querySelectorAll('details.faq-item').forEach(detail => {
 **Duplicación de reglas CSS:** `.cta-section` está definida **dos veces** en el CSS:
 
 Primera definición (líneas 893-944):
+
 ```css
 .cta-section {
   background: linear-gradient(180deg, #0a0e1a 0%, #050816 100%);
@@ -495,6 +523,7 @@ Primera definición (líneas 893-944):
 ```
 
 Segunda definición (líneas 1027-1031):
+
 ```css
 .cta-section {
   padding: 140px 24px; text-align: center;
@@ -511,6 +540,7 @@ El padding `140px 24px` viene de la segunda definición y sobreescribe el `paddi
 **El botón CTA tiene un emoji 🚀** directamente en el texto del link. Mismo problema de inconsistencia cross-platform.
 
 **Recomendaciones:**
+
 1. Unificar las dos definiciones de `.cta-section` en una sola.
 2. Reemplazar emojis en trust indicators y botón por pequeños iconos SVG inline.
 3. Agregar `aria-label` al botón principal del CTA.
@@ -526,13 +556,14 @@ El padding `140px 24px` viene de la segunda definición y sobreescribe el `paddi
 **Problema principal — Contenido incompleto:**
 
 | Columna | Items |
-|---|---|
+| --- | --- |
 | Producto | 4 links (Funcionalidades, Cómo funciona, Precios, Comenzar gratis) |
 | Recursos | **1 link** (WhatsApp) |
 | Empresa | **1 link** (Contacto) |
 | Legal | **1 link** (Términos de servicio) |
 
 Las columnas "Recursos", "Empresa" y "Legal" están prácticamente vacías. En una landing SaaS profesional, estas columnas deberían tener:
+
 - **Recursos:** Blog, Documentación, API Docs, Casos de éxito, Changelog
 - **Empresa:** Sobre nosotros, Equipo, Inversores, Careers, Press
 - **Legal:** Términos de servicio, Política de privacidad, Cookies, GDPR/CCPA
@@ -548,6 +579,7 @@ Las columnas "Recursos", "Empresa" y "Legal" están prácticamente vacías. En u
 **`nav-logo` class en el footer brand link:** `<a href="/" class="nav-logo footer-brand-link">` — la clase `.nav-logo` del nav se reutiliza en el footer, lo que aplica `animation: logo-glow 3s` al elemento padre además del logo hijo.
 
 **Recomendaciones:**
+
 1. **Urgente desde perspectiva legal:** Crear páginas reales de Términos y Política de Privacidad.
 2. Agregar Política de Privacidad en la columna Legal como mínimo.
 3. Completar las columnas Recursos y Empresa con al menos 3 links cada una.
@@ -561,7 +593,7 @@ Las columnas "Recursos", "Empresa" y "Legal" están prácticamente vacías. En u
 ### Inventario completo de animaciones
 
 | Animación | Duración | Uso | Evaluación |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `blurFadeIn` | 0.8s | Hero elements | Excelente |
 | `gradient-shift` | 15s | Hero::before | Bien calibrada |
 | `pulse-dot` | 2s | Chat status dot | Correcto |
@@ -589,13 +621,16 @@ Las columnas "Recursos", "Empresa" y "Legal" están prácticamente vacías. En u
 Las cards de Problem, Features, y Testimonials tienen `animation: slideInUp` y `opacity: 0` con `animation-delay` hardcodeados. Esto anima inmediatamente al cargar la página. Para contenido below the fold, las animaciones terminan antes de que el usuario llegue, y el usuario ve el estado final (visible) sin haber visto la animación de entrada. El efecto "wow" se pierde completamente.
 
 **Solución:** Reemplazar el enfoque CSS-only por el patrón ya establecido en el documento:
+
 ```css
 .card-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s var(--easing), transform 0.7s var(--easing); }
 .card-reveal.visible { opacity: 1; transform: translateY(0); }
 ```
+
 Y observar con el IntersectionObserver existente.
 
 **2. Animaciones definidas y no usadas (código muerto):**
+
 - `@keyframes marquee-scroll` — la marquee-track tiene `animation: none`
 - `@keyframes float` — no hay ningún elemento con `animation: float`
 - `@keyframes border-glow-pulse` — no hay uso en el HTML
@@ -633,7 +668,7 @@ La media query `@media (prefers-reduced-motion: reduce)` existe (líneas 1161-11
 ### Breakpoints definidos
 
 | Breakpoint | Cambios principales |
-|---|---|
+| --- | --- |
 | `max-width: 1024px` | Hero padding reduce, hero-right reduce a 360px, footer 2 columnas |
 | `max-width: 960px` | Nav links ocultos, hero stack vertical, grids a 1 columna, gears a 1 columna |
 | `max-width: 600px` | Secciones padding 56px, hero-right oculto, botones full-width, hero-stats a 1 columna |
@@ -644,11 +679,13 @@ La media query `@media (prefers-reduced-motion: reduce)` existe (líneas 1161-11
 El hero-right pasa de `height: 580px` a `height: 360px` y de `position: absolute` a parte del flex. El Spline 3D en `height: 360px` puede verse recortado. El `top: 0; right: auto` en 1024px cambia la posición — bien.
 
 **960px (tablet portrait / mobile landscape):**
+
 - Los nav-links desaparecen sin hamburger menu — GRAVE en términos de usabilidad.
 - El hero-right (`position: relative; max-width: 100%; height: 330px`) queda debajo del texto hero — el orden visual es texto → 3D → botones, lo que rompe el flujo narrativo esperado (texto → botones → proof).
 - Los grids pasan a 1 columna — correcto pero las feature cards hacen `display: none` para `nth-child(n+5)`. Se muestran solo 4 features de 6.
 
 **600px (mobile):**
+
 - `hero-right: display: none` — el Spline 3D desaparece completamente. Correcto para performance.
 - `section { padding: 56px 16px }` — buena reducción del padding vertical.
 - `hero-stats { grid-template-columns: 1fr }` — las 4 stats en columna ocupa mucho espacio vertical.
@@ -663,6 +700,7 @@ El hero-right pasa de `height: 580px` a `height: 360px` y de `position: absolute
 **2. El orden de hero en mobile no es óptimo:** En 960px el hero-right (Spline 3D) aparece entre el texto y los CTAs. En 600px desaparece. El usuario mobile ve: texto → (sin 3D) → botones. El texto del hero-left tiene `align-items: center` en mobile, lo que centra todo correctamente.
 
 **3. Card culling agresivo en mobile:** Ocultar 3 de 6 features, 2 de 3 testimoniales, y 2 de 3 pricing cards en mobile reduce significativamente el contenido disponible. Considerar:
+
 - Features: tabs o scroll horizontal para ver todas
 - Testimoniales: carousel
 - Pricing: toggle de plan o scroll
@@ -684,7 +722,7 @@ Se cargan pesos: 400, 500, 600, 700, 800, 900. Esto suma 6 variantes de Inter de
 ### Escala tipográfica
 
 | Elemento | Tamaño | Peso | Uso |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | H1 hero | `clamp(2.6rem, 7vw, 5rem)` | 900 | Correcto — impacto máximo |
 | H2 secciones | `clamp(2rem, 5vw, 3.2rem)` | 800 | Bien |
 | H3 cards | `1.1rem - 1.2rem` | 700 | Bien |
@@ -700,6 +738,7 @@ Se cargan pesos: 400, 500, 600, 700, 800, 900. Esto suma 6 variantes de Inter de
 ### Problemas de legibilidad
 
 **1. Line heights inconsistentes:**
+
 - Hero párrafo: `line-height: 1.7`
 - Feature cards: `line-height: 1.7`
 - Problem cards: `line-height: 1.75`
@@ -719,7 +758,7 @@ Los valores 1.7, 1.75, 1.8 son prácticamente iguales visualmente pero señalan 
 ### Contraste de colores (estimaciones WCAG 2.1)
 
 | Combinación | Ratio estimado | Requisito | Estado |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `--text (#f1f5f9)` sobre `--bg-deep (#050816)` | ~18:1 | AA: 4.5:1 | Pasa |
 | `--text-muted (#94a3b8)` sobre `--bg-card (#111836)` | ~7.5:1 | AA: 4.5:1 | Pasa |
 | `--text-dim (#64748b)` sobre `--bg-card (#111836)` | ~3.8:1 | AA: 4.5:1 | Falla en texto normal |
@@ -750,6 +789,7 @@ Los valores 1.7, 1.75, 1.8 son prácticamente iguales visualmente pero señalan 
 No hay estilos de `:focus-visible` definidos para ningún elemento interactivo. El foco por defecto del browser puede ser invisible sobre fondos oscuros. Esto es un problema serio para usuarios de keyboard.
 
 **Corrección mínima:**
+
 ```css
 :focus-visible {
   outline: 2px solid var(--accent);
@@ -765,6 +805,7 @@ No hay estilos de `:focus-visible` definidos para ningún elemento interactivo. 
 ### Padding de secciones
 
 El padding estándar de `.section` es `110px 24px`. Sin embargo:
+
 - `.cta-section` tiene `padding: 140px 24px` (segunda definición)
 - El hero tiene `padding: 150px 24px 80px`
 - El footer tiene `padding: 70px 24px 40px`
@@ -805,6 +846,7 @@ Las secciones tienen backgrounds ligeramente distintos que crean una separación
 ### Linear (linear.app)
 
 **Lo que Linear hace mejor:**
+
 - Cada feature tiene su propia página — más depth que una card
 - Los testimoniales tienen empresa, cargo Y foto real verificable
 - La tipografía usa system font stack en algunos contextos para máxima performance
@@ -815,6 +857,7 @@ Las secciones tienen backgrounds ligeramente distintos que crean una separación
 - Sin content ocultado en mobile — todo se adapta, nada desaparece
 
 **Lo que ROMA hace mejor:**
+
 - El canvas de anillos es más único que los gradients estáticos de Linear
 - El Spline 3D agrega valor diferencial visual
 - El color scheme es más llamativo (el azul de Linear es más conservador)
@@ -822,6 +865,7 @@ Las secciones tienen backgrounds ligeramente distintos que crean una separación
 ### Vercel (vercel.com)
 
 **Lo que Vercel hace mejor:**
+
 - Hero con demo interactivo inline — el usuario puede probar el producto sin registrarse
 - Logos de clientes reales como social proof
 - Uso de SVG absolutamente en todos los iconos
@@ -830,12 +874,14 @@ Las secciones tienen backgrounds ligeramente distintos que crean una separación
 - Navegación en mobile completamente funcional
 
 **Lo que ROMA hace mejor:**
+
 - El problema/solución está más claro narrativamente (Problem → Features → How → Proof)
 - Los stats en el hero son más específicos y memorables
 
 ### Stripe (stripe.com)
 
 **Lo que Stripe hace mejor:**
+
 - Gradients con much más profundidad y múltiples capas de luz
 - Testimoniales con logos de empresa y case studies enlazados
 - Pricing con tabla de comparación detallada
@@ -843,6 +889,7 @@ Las secciones tienen backgrounds ligeramente distintos que crean una separación
 - Motion design orquestado donde cada elemento tiene su momento — no hay "ruido visual" simultáneo
 
 **Lo que ROMA hace mejor:**
+
 - Copy más directo y orientado a conversión (Stripe es más técnico/general)
 - El chat widget de ROMA es una demo del producto en sí mismo — excelente
 
@@ -860,34 +907,34 @@ Las secciones tienen backgrounds ligeramente distintos que crean una separación
 
 ### P1 — Problemas de usabilidad alta (primera semana)
 
-6. **Implementar hamburger menu** para mobile (<960px) — los usuarios no pueden navegar
-7. **Conectar animaciones de cards al IntersectionObserver** — problema, features, testimonials, pricing
-8. **Agregar `aria-hidden="true"` al canvas y al spline-viewer**
-9. **Agregar `:focus-visible` styles** para keyboard navigation
-10. **Elevar `--text-dim` a `#7a8fa8`** para pasar contraste WCAG AA
+1. **Implementar hamburger menu** para mobile (<960px) — los usuarios no pueden navegar
+2. **Conectar animaciones de cards al IntersectionObserver** — problema, features, testimonials, pricing
+3. **Agregar `aria-hidden="true"` al canvas y al spline-viewer**
+4. **Agregar `:focus-visible` styles** para keyboard navigation
+5. **Elevar `--text-dim` a `#7a8fa8`** para pasar contraste WCAG AA
 
 ### P2 — Mejoras de calidad visual (primera quincena)
 
-11. **Convertir iconos de features PNG a SVG**
-12. **Completar el footer** con política de privacidad, redes sociales, y más links
-13. **Dar más prominencia a la card Pro** en pricing (scale, shadow, glow)
-14. **Eliminar la doble animación logo-glow** del nav (unificar en el img, no el wrapper)
-15. **Eliminar animación logo-glow del footer**
-16. **Agregar `width` y `height` a todas las `<img>`** (dashboard, avatares) para evitar CLS
-17. **Agregar `loading="lazy"` al dashboard image** y avatares
-18. **Eliminar CSS muerto:** `@keyframes marquee-scroll`, `float`, `border-glow-pulse`, `.steps`, `.section-enter`, `.card-enter`, `.star-pop` sin uso
+1. **Convertir iconos de features PNG a SVG**
+2. **Completar el footer** con política de privacidad, redes sociales, y más links
+3. **Dar más prominencia a la card Pro** en pricing (scale, shadow, glow)
+4. **Eliminar la doble animación logo-glow** del nav (unificar en el img, no el wrapper)
+5. **Eliminar animación logo-glow del footer**
+6. **Agregar `width` y `height` a todas las `<img>`** (dashboard, avatares) para evitar CLS
+7. **Agregar `loading="lazy"` al dashboard image** y avatares
+8. **Eliminar CSS muerto:** `@keyframes marquee-scroll`, `float`, `border-glow-pulse`, `.steps`, `.section-enter`, `.card-enter`, `.star-pop` sin uso
 
 ### P3 — Mejoras de conversión y contenido (primer mes)
 
-19. **Agregar fallback al Spline 3D** — imagen estática si el CDN no carga
-20. **Reorganizar testimoniales** — el más poderoso (datos específicos) debe ser primero
-21. **Agregar más preguntas al FAQ** (6-8 en lugar de 4)
-22. **Mencionar "14 días gratis" en las pricing cards**
-23. **Implementar animación de apertura en FAQ** con max-height transition
-24. **Reemplazar emojis en trust indicators** por iconos SVG
-25. **Agregar descripción al Dashboard section** (texto bajo el H2)
-26. **Optimizar canvas:** Pausar animación cuando el hero no es visible
-27. **Agregar toggle anual/mensual a Pricing** con descuento visible
+1. **Agregar fallback al Spline 3D** — imagen estática si el CDN no carga
+2. **Reorganizar testimoniales** — el más poderoso (datos específicos) debe ser primero
+3. **Agregar más preguntas al FAQ** (6-8 en lugar de 4)
+4. **Mencionar "14 días gratis" en las pricing cards**
+5. **Implementar animación de apertura en FAQ** con max-height transition
+6. **Reemplazar emojis en trust indicators** por iconos SVG
+7. **Agregar descripción al Dashboard section** (texto bajo el H2)
+8. **Optimizar canvas:** Pausar animación cuando el hero no es visible
+9. **Agregar toggle anual/mensual a Pricing** con descuento visible
 
 ---
 

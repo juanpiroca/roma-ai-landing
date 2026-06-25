@@ -1,4 +1,5 @@
 # ROMA AI — Specs de Animación del Logo
+
 ## Para implementación futura con Canvas/JS
 
 ---
@@ -14,9 +15,11 @@
 ---
 
 ## Animación completa pendiente — Opción 1 (recomendada por brand guide)
+
 ### "Partículas → Perfil → Pulso constante"
 
 ### Fase 1 — Partículas dispersas (0s – 0.8s)
+
 ```
 - ~250 partículas circulares (radio: 1.5–3px)
 - Colores: #4f6ef7 y #00e5bf alternadas (70/30)
@@ -26,6 +29,7 @@
 ```
 
 ### Fase 2 — Convergencia al perfil (0.8s – 2.0s)
+
 ```
 - Las partículas se mueven hacia sus posiciones "target" 
   (que forman el perfil de la cara + la letra R)
@@ -35,6 +39,7 @@
 ```
 
 ### Fase 3 — Logo completo aparece (2.0s – 2.8s)
+
 ```
 - El PNG del logo hace crossfade sobre las partículas (opacity 0 → 1)
 - Las partículas hacen fadeOut simultáneamente
@@ -43,6 +48,7 @@
 ```
 
 ### Fase 4 — Pulso constante (2.8s → ∞)
+
 ```css
 @keyframes logo-glow-full {
   0%, 100% {
@@ -62,7 +68,7 @@
 ## Tamaños de referencia exactos
 
 | Uso | Archivo | Tamaño display | Original |
-|-----|---------|---------------|---------|
+| ----- | --------- | --------------- | --------- |
 | Navbar | `logo-roma-symbol.png` | **44px alto × auto ancho** | 1254×1254px |
 | Footer | `logo-roma-full.png` | **90px alto × auto ancho** | 1254×1254px |
 | Hero standalone | `logo-roma-dark.png` | **200px alto × auto ancho** | 1254×1254px |
